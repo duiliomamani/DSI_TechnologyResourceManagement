@@ -16,7 +16,11 @@
         //Metodos
         public string MostrarCategoria()
         {
-            return $"{nombre} - {descripcion}";
+            return $"{nombre}";
+        }
+        public bool EsTipoSeleccionado(TipoRecursoTecnologico tipoRecursoTecnologico)
+        {
+            return nombre == tipoRecursoTecnologico.nombre;
         }
     }
 }

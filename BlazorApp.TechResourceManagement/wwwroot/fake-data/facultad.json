@@ -1,0 +1,32 @@
+[
+  {
+    "nombre": "Facultad de Arquitectura",
+    "descripcion": "FA",
+    "centrosDeInvestigacion": [
+      {
+        "sigla": "CIAL"
+      },
+      {
+        "sigla": "CIE"
+      }
+    ]
+  },
+  {
+    "nombre": "Facultad de Ciencas Quimicas",
+    "descripcion": "FCQ",
+    "centrosDeInvestigacion": [
+      {
+        "sigla": "CIQB"
+      }
+    ]
+  },
+  {
+    "nombre": "Facultad de Ciencas Economicas",
+    "descripcion": "FCQ",
+    "centrosDeInvestigacion": [
+      {
+        "sigla": "INED"
+      }
+    ]
+  }
+]

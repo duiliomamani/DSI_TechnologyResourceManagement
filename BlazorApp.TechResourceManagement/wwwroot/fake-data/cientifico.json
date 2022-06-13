@@ -1,0 +1,11 @@
+{
+  "legajo": "C-4445511",
+  "nombre": "Cientifico",
+  "apellido": "Loco",
+  "numeroDocumento": 12345678,
+  "correoElectronicoPersonal": "duiliomamani@gmail.com",
+  "correoElectronicoInstitucional": "80744@sistemas.utn.frc.edu.ar",
+  "usuario": {
+    "usuario": "C-4445511"
+  }
+}

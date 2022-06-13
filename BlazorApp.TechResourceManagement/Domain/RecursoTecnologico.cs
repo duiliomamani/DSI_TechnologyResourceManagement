@@ -12,6 +12,7 @@
         private IList<CambioEstadoRT> cambioEstadoRT { get; set; }
         private TipoRecursoTecnologico tipoDelRT { get; set; }
         private Modelo modeloDelRT { get; set; }
+        private Marca marcaDelRT { get; set; }
         private IList<CaracteristicaRecurso> caracteristicasRecurso { get; set; }
         private IList<Turno> turnos { get; set; }
         private IList<HorarioRT> disponibilidad { get; set; }
@@ -35,5 +36,31 @@
         }
 
         //Metodos
+        public Modelo GetModelo()
+        {
+            return modeloDelRT;
+        }
+        public void SetMarca(Marca marca)
+        {
+            marcaDelRT = marca;
+        }
+        public bool EsTipoSeleccionado(TipoRecursoTecnologico tipoRecursoTecnologico)
+        {
+            return tipoDelRT.EsTipoSeleccionado(tipoRecursoTecnologico);
+        }
+        public bool EstaDadoBaja()
+        {
+            var estadoActual = cambioEstadoRT.Where(x => x.EsEstadoActual()).First();
+            return estadoActual.EsBaja();
+        }
+        public string EstadoActual()
+        {
+            var estadoActual = cambioEstadoRT.Where(x => x.EsEstadoActual()).First();
+            return estadoActual.MostrarEstadoActual();
+        }
+        public string MostrarRT()
+        {
+            return $"{numeroRT} - {modeloDelRT.MostrarModelo()} - {EstadoActual()} - {marcaDelRT.MostrarMarca()} ";
+        }
     }
 }

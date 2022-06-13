@@ -21,7 +21,8 @@ namespace BlazorApp.TechResourceManagement
                     {
                         BaseAddress = new Uri(builder.HostEnvironment.BaseAddress),
                         Timeout = TimeSpan.FromMinutes(20)
-                    }
+                    },
+                    usuarioActual = new Domain.Usuario("C-4445511", "12345678")
                 };
                 return apiShared;
             });

@@ -2,26 +2,26 @@
 {
     public class PersonalCientifico
     {
-        private long _legajo { get; set; }
-        private string _nombre { get; set; }
-        private string _apellido { get; set; }
-        private long _numeroDocumento { get; set; }
-        private string _correoElectronicoInstitucional { get; set; }
-        private string _correoElectronicoPersonal { get; set; }
-        private long _telefonoCelular { get; set; }
-        private Usuario _usuario { get; set; }
-        public PersonalCientifico(long legajo, string nombre, string apellido,
+        private string legajo { get; set; }
+        private string nombre { get; set; }
+        private string apellido { get; set; }
+        private long numeroDocumento { get; set; }
+        private string correoElectronicoInstitucional { get; set; }
+        private string correoElectronicoPersonal { get; set; }
+        private long telefonoCelular { get; set; }
+        private Usuario usuario { get; set; }
+        public PersonalCientifico(string legajo, string nombre, string apellido,
             long numeroDocumento, string correoElectronicoInstitucional, string correoElectronicoPersonal,
             long telefonoCelular, Usuario usuario)
         {
-            _legajo = legajo;
-            _nombre = nombre;
-            _apellido = apellido;
-            _numeroDocumento = numeroDocumento;
-            _correoElectronicoInstitucional = correoElectronicoInstitucional;
-            _correoElectronicoPersonal = correoElectronicoPersonal;
-            _telefonoCelular = telefonoCelular;
-            _usuario = usuario;
+            this.legajo = legajo;
+            this.nombre = nombre;
+            this.apellido = apellido;
+            this.numeroDocumento = numeroDocumento;
+            this.correoElectronicoInstitucional = correoElectronicoInstitucional;
+            this.correoElectronicoPersonal = correoElectronicoPersonal;
+            this.telefonoCelular = telefonoCelular;
+            this.usuario = usuario;
         }
     }
 }

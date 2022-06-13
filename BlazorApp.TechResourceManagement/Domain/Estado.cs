@@ -18,7 +18,10 @@
             this.esCancelable = esCancelable;
         }
         //Metodos
-        public string MostrarEstado() => $"{nombre} - {descripcion}";
+        public string MostrarEstado() => $"{nombre}";
+        public bool EsAmbitoRT() => ambito == "RT";
+        public bool EsBajaTecnica() => EsAmbitoRT() && nombre == "BajaTecnica";
+        public bool EsBajaDefinitiva() => EsAmbitoRT() && nombre == "BajaDefinitiva";
 
     }
 }

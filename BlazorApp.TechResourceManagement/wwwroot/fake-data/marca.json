@@ -1,0 +1,38 @@
+[
+  {
+    "nombre": "Shidmazu",
+    "modelos": [
+      {
+        "nombre": "TXB622L"
+      },
+      {
+        "nombre": "TX3202L"
+      },
+      {
+        "nombre": "TX323L"
+      },
+      {
+        "nombre": "AUW220D"
+      }
+    ]
+  },
+  {
+    "nombre": "Highland",
+    "modelos": [
+      {
+        "nombre": "HCB 123"
+      },
+      {
+        "nombre": "HCB 153"
+      }
+    ]
+  },
+  {
+    "nombre": "Nikon",
+    "modelos": [
+      {
+        "nombre": "MM-400/800"
+      }
+    ]
+  }
+]

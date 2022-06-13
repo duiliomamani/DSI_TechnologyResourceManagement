@@ -8,36 +8,57 @@
 
 @page "/reserveTurn"
 
-@if (tiposRecursoTecnologicos == null)
-{
-    <Loading />
-}
-else
-{
-    <h3>Index.ReserveTurn</h3>
-    <EditForm Model="@modelData" OnValidSubmit="SendDto" class="row g-3">
-        <div class="col-12">
-            <div class="form-group">
-                <label for="Dni">Tipo de Recurso Tecnologico: </label>
-                <InputSelect id="tiposRecursosTecnologico" @bind-Value="@tpSeleccionado" class="form-select">
-                    <option value="0">TODAS</option>
-                    @for (var i = 1; i <= tiposRecursoTecnologicos.Count; i++)
-                    {
-                        <option value="@i">@tiposRecursoTecnologicos[i-1].MostrarCategoria()</option>
-                    }
-                </InputSelect>
+<div class="container-fluid">
+    <div class="px-3 py-4">
+        @if (cmbTiposRecursosTecnologicos == null)
+        {
+            <Loading />
+        }
+        else
+        {
+            <h3>Index.ReserveTurn</h3>
+            <EditForm Model="@modelData" OnValidSubmit="SendDto" class="row g-3">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="Dni">Tipo de Recurso Tecnologico: </label>
+                        <InputSelect id="TpRecursoTecnologico"
+                                 class="form-select"
+                                 ValueExpression="@(()=>cmbTpSeleccionado)" Value="@cmbTpSeleccionado"
+                                 ValueChanged="@((string cmbTpSeleccionado) => SolicitarSeleccionTipoRecurso(cmbTpSeleccionado))">
+                            <option value="null">TODAS</option>
+                            @foreach (var tp in cmbTiposRecursosTecnologicos)
+                        {
+                            <option value="@tp.MostrarCategoria()">@tp.MostrarCategoria()</option>
+                        }
+                    </InputSelect>
+                </div>
             </div>
-        </div>
-    </EditForm>
-}
+            <ul>
+                @if (gridRecursosTecnologicos != null)
+                    {
+
+                        @foreach (var rt in gridRecursosTecnologicos)
+                        {
+                            <li>
+                                @rt.MostrarRT()
+                            </li>
+                        }
+                    }
+                </ul>
+            </EditForm>
+        }
+    </div>
+</div>
 
 @code {
 
     public class ModelData { }
-    
-    public int? tpSeleccionado { get; set; }
 
-    private IList<TipoRecursoTecnologico> tiposRecursoTecnologicos { get; set; }
+    public string cmbTpSeleccionado { get; set; }
+
+    private IList<TipoRecursoTecnologico> cmbTiposRecursosTecnologicos { get; set; }
+
+    private IList<RecursoTecnologico> gridRecursosTecnologicos { get; set; }
 
     private ModelData modelData { get; set; } = new ModelData();
 
@@ -45,8 +66,26 @@ else
     protected override async Task OnInitializedAsync()
     {
         //Dependencia al GestorRTRT se inyecta arriba @inject
-        tiposRecursoTecnologicos = await _gestorRTRT.buscarTipoRecursoTecnologico();
+        await MostrarTiposRecursosTecnologicos();
     }
+
+    private async Task MostrarTiposRecursosTecnologicos()
+    {
+        cmbTiposRecursosTecnologicos = await _gestorRTRT.reservarTurnoRecursoTecnologico();
+    }
+
+    //On Change Seleccion Tipo Recurso Tecnologico
+    private async Task SolicitarSeleccionTipoRecurso(string cmbTpSeleccionado)
+    {
+        this.cmbTpSeleccionado = cmbTpSeleccionado;
+        await MostrarRecursosTecnologicos();
+    }
+
+    private async Task MostrarRecursosTecnologicos()
+    {
+        this.gridRecursosTecnologicos = await _gestorRTRT.tomarTipoRecurso(this.cmbTpSeleccionado);
+    }
+
 
     public void SendDto()
     {

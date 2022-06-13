@@ -3,31 +3,28 @@
     public class Usuario
     {
         //Variables
-        private string _usuario { get; set; }
-        private string _clave { get; set; }
-        private bool _habilitado { get; set; }
-        public string UsuarioNombre { get => _usuario; }
-        public string Clave { get => _clave; }
-        public bool Habilitado { get => _habilitado; }
+        private string usuario { get; set; }
+        private string clave { get; set; }
+        private bool habilitado { get; set; }
         //Constructor
         public Usuario(string usuario, string clave)
         {
-            _usuario = usuario;
-            _clave = clave;
+            this.usuario = usuario;
+            this.clave = clave;
             Habilitar();
         }
         //Metodos
         public void Habilitar()
         {
-            _habilitado = true;
+            habilitado = true;
         }
         public void Inhabilitar()
         {
-            _habilitado = !_habilitado;
+            habilitado = !habilitado;
         }
         public void ModificarPassword(string clave)
         {
-            _clave = clave;
+            this.clave = clave;
         }
     }
 }

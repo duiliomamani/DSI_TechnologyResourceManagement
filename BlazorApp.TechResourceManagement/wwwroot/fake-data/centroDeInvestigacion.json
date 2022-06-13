@@ -1,0 +1,20 @@
+[
+  {
+    "nombre": "Centro de Investigacion en Quimica Biologica",
+    "sigla": "CIQB",
+    "direccion": "Calle 123",
+    "edificio": "Central",
+    "piso": 1,
+    "telefonosContacto": [ "123-1231233", "111-1231233" ],
+    "correoElectronico": "contacto@ciqb.fcq.un.edu.ar",
+    "tiempoAntelacionReserva": "02:30:00",
+    "recursosTecnologicos": [
+      {
+        "numeroRT": 123
+      },
+      {
+        "numeroRT": 124
+      }
+    ]
+  }
+]
