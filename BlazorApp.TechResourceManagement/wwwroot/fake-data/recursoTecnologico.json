@@ -1,0 +1,87 @@
+[
+  {
+    "numeroRT": 123,
+    "fechaAlta": "2022-05-13T10:21:27",
+    "imagenes": [
+      "https://ibb.co/fQbXMjq",
+      "https://ibb.co/k4ncHzt"
+    ],
+    "periodicidadMantenimientoPrev": 4,
+    "duracionMantenimientoPrev": 2,
+    "fraccionarioHorarioTurnos": 2.3,
+    "cambioEstadoRT": [
+      {
+        "fechaHoraDesde": "2022-05-13T10:21:27",
+        "fechaHoraHasta": "2022-05-13T10:41:27",
+        "estado": {
+          "nombre": "Ingresado",
+          "ambito": "RT"
+        }
+      },
+      {
+        "fechaHoraDesde": "2022-05-13T10:41:27",
+        "fechaHoraHasta": null,
+        "estado": {
+          "nombre": "Disponible",
+          "ambito": "RT"
+        }
+      }
+    ],
+    "tipoDelRT": {
+      "nombre": "Balanza de presicion"
+    },
+    "modeloDelRT": {
+      "nombre": "TXB622L"
+    },
+    "caracteristicasRecurso": [
+      {
+        "valor": "620 g",
+        "caracteristica": {
+          "nombre": "Capacidad"
+        }
+      },
+      {
+        "valor": "0.01 g",
+        "caracteristica": {
+          "nombre": "Indicacion Minima"
+        }
+      },
+      {
+        "valor": "menor o igual a 0.01 g",
+        "caracteristica": {
+          "nombre": "Repetitividad"
+        }
+      },
+      {
+        "valor": "0.02 g",
+        "caracteristica": {
+          "nombre": "Linealidad"
+        }
+      },
+      {
+        "valor": "2.0 segundos",
+        "caracteristica": {
+          "nombre": "Tiempo de respuesta"
+        }
+      },
+      {
+        "valor": "LCD con luz negra",
+        "caracteristica": {
+          "nombre": "Monitor"
+        }
+      },
+      {
+        "valor": "Plato de la balanza 110 mm de diámetro",
+        "caracteristica": {
+          "nombre": "Dimensiones"
+        }
+      },
+      {
+        "valor": "1.55 kg",
+        "caracteristica": {
+          "nombre": "Peso del equipo"
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,51 @@
+[
+  {
+    "nombre": "Ingresado",
+    "descripcion": "Ingresado",
+    "ambito": "RT",
+    "esReservable": false,
+    "esCancelable": false
+  },
+  {
+    "nombre": "EnUso",
+    "descripcion": "EnUso",
+    "ambito": "RT",
+    "esReservable": false,
+    "esCancelable": false
+  },
+  {
+    "nombre": "Disponible",
+    "descripcion": "Disponible",
+    "ambito": "RT",
+    "esReservable": false,
+    "esCancelable": false
+  },
+  {
+    "nombre": "EnMantenimiento",
+    "descripcion": "EnMantenimiento",
+    "ambito": "RT",
+    "esReservable": false,
+    "esCancelable": false
+  },
+  {
+    "nombre": "ConIngresoEnMantenimientoCorrectivo",
+    "descripcion": "ConIngresoEnMantenimientoCorrectivo",
+    "ambito": "RT",
+    "esReservable": false,
+    "esCancelable": false
+  },
+  {
+    "nombre": "BajaTecnica",
+    "descripcion": "BajaTecnica",
+    "ambito": "RT",
+    "esReservable": false,
+    "esCancelable": false
+  },
+  {
+    "nombre": "BajaDefinitiva",
+    "descripcion": "BajaDefinitiva",
+    "ambito": "RT",
+    "esReservable": false,
+    "esCancelable": false
+  }
+]

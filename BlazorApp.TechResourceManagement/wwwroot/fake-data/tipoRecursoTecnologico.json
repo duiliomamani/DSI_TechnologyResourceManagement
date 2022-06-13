@@ -1,0 +1,142 @@
+[
+  {
+    "nombre": "Balanza de presicion",
+    "descripcion": "Utilizada para pesar cantidades hasta un número muy preciso",
+    "caracteristicas": [
+      {
+        "nombre": "Capacidad",
+        "descripcion": "Capacidad"
+      },
+      {
+        "nombre": "Indicacion Minima",
+        "descripcion": "Indicacion Minima"
+      },
+      {
+        "nombre": "Repetividad",
+        "descripcion": "Repetividad"
+      },
+      {
+        "nombre": "Linealidad",
+        "descripcion": "Linealidad"
+      },
+      {
+        "nombre": "Tiempo de respuesta",
+        "descripcion": "Tiempo de respuesta"
+      },
+      {
+        "nombre": "Monitor",
+        "descripcion": "Monitor"
+      },
+      {
+        "nombre": "Dimensiones",
+        "descripcion": "Dimensiones"
+      },
+      {
+        "nombre": "Peso del equipo",
+        "descripcion": "Peso del equipo"
+      }
+    ]
+  },
+  {
+    "nombre": "Microscopio de medicion",
+    "descripcion": "Adecuados para la medición de piezas procesadas pequeñas y artículos similares",
+    "caracteristicas": [
+      {
+        "nombre": "Contador con Lectura",
+        "descripcion": "Contador con Lectura"
+      },
+      {
+        "nombre": "Pantalla LCD",
+        "descripcion": "Pantalla LCD"
+      },
+      {
+        "nombre": "Velocidad de enfoque",
+        "descripcion": "Velocidad de enfoque"
+      },
+      {
+        "nombre": "Repetibilidad de enfoque",
+        "descripcion": "Repetibilidad de enfoque"
+      },
+      {
+        "nombre": "Velocidad de movimiento vertical",
+        "descripcion": "Velocidad de movimiento vertical"
+      },
+      {
+        "nombre": "Platina",
+        "descripcion": "Platina"
+      }
+    ]
+  },
+  {
+    "nombre": "Termometro digital de contacto",
+    "descripcion": "Aparatos para medir, registrar y valorar temperaturas",
+    "caracteristicas": [
+      {
+        "nombre": "Caracteristica 3",
+        "descripcion": "descripcion Caracteristica 3"
+      },
+      {
+        "nombre": "Caracteristica 1",
+        "descripcion": "descripcion Caracteristica 1"
+      }
+    ]
+  },
+  {
+    "nombre": "Termometro digital sin contacto",
+    "descripcion": "Aparatos para medir, registrar y valorar temperaturas",
+    "caracteristicas": [
+      {
+        "nombre": "Caracteristica 3",
+        "descripcion": "descripcion Caracteristica 3"
+      },
+      {
+        "nombre": "Caracteristica 1",
+        "descripcion": "descripcion Caracteristica 1"
+      }
+    ]
+  },
+  {
+    "nombre": "Medidor de pH - digitial",
+    "descripcion": "Instrumento utilizado para medir la acidez o la alcalinidad de una solución",
+    "caracteristicas": [
+      {
+        "nombre": "Monitor",
+        "descripcion": "Monitor"
+      },
+      {
+        "nombre": "Peso del equipo",
+        "descripcion": "Peso del equipo"
+      },
+      {
+        "nombre": "Indicacion Minima",
+        "descripcion": "Indicacion Minima"
+      },
+      {
+        "nombre": "Dimensiones",
+        "descripcion": "Dimensiones"
+      },
+      {
+        "nombre": "Presicion",
+        "descripcion": "Presicion"
+      },
+      {
+        "nombre": "Rango",
+        "descripcion": "Rango"
+      }
+    ]
+  },
+  {
+    "nombre": "Calibre electronico",
+    "descripcion": "Instrumento utilizado para medir la acidez o la alcalinidad de una solución",
+    "caracteristicas": [
+      {
+        "nombre": "Caracteristica 2",
+        "descripcion": "descripcion Caracteristica 2"
+      },
+      {
+        "nombre": "Caracteristica 3",
+        "descripcion": "descripcion Caracteristica 3"
+      }
+    ]
+  }
+]
