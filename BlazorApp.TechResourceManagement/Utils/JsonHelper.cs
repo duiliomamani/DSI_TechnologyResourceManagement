@@ -32,21 +32,18 @@ namespace BlazorApp.TechResourceManagement.Utils
             return jsonRead;
         }
 
-        public static T? JsonReader<T>(byte[] json) where T : new()
+        public static T JsonReader<T>(byte[] json) where T : new()
         {
-            T? obj = new();
-
             Stream st = new MemoryStream(json);
             StreamReader stream = new(st, Encoding.GetEncoding("UTF-8"));
             var jsonRead = stream.ReadToEnd();
-
-            obj = Deserialize<T>(jsonRead);
+            T obj = Deserialize<T>(jsonRead);
             stream.Close();
             return obj;
         }
 
 
-        public static T? Deserialize<T>(string text)
+        public static T Deserialize<T>(string text)
         {
             JsonSerializerSettings settings = new JsonSerializerSettings
             {

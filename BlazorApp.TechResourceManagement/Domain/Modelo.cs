@@ -14,7 +14,7 @@
 
         public bool EsTuMarca(Marca marca)
         {
-            return marca.EsTuModelo(this);
+            return marca.EsTuMarca(this);
         }
     }
 }

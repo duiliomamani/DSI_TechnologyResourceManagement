@@ -12,7 +12,6 @@
         private IList<CambioEstadoRT> cambioEstadoRT { get; set; }
         private TipoRecursoTecnologico tipoDelRT { get; set; }
         private Modelo modeloDelRT { get; set; }
-        private Marca marcaDelRT { get; set; }
         private IList<CaracteristicaRecurso> caracteristicasRecurso { get; set; }
         private IList<Turno> turnos { get; set; }
         private IList<HorarioRT> disponibilidad { get; set; }
@@ -36,14 +35,7 @@
         }
 
         //Metodos
-        public Modelo GetModelo()
-        {
-            return modeloDelRT;
-        }
-        public void SetMarca(Marca marca)
-        {
-            marcaDelRT = marca;
-        }
+        public Modelo MostrarModelo() => modeloDelRT;
         public bool EsRecursoActual(long numeroRT) => this.numeroRT == numeroRT;
         public bool EsTipoSeleccionado(TipoRecursoTecnologico tipoRecursoTecnologico)
         {
@@ -64,10 +56,10 @@
         }
         public dynamic MostrarRT()
         {
-            return new {
-                numeroRT = numeroRT, 
-                modeloDelRT = modeloDelRT.MostrarModelo(), 
-                marcaDelRT = marcaDelRT.MostrarMarca(),
+            return new
+            {
+                numeroRT = numeroRT,
+                modeloDelRT = modeloDelRT.MostrarModelo(),
                 estadoActual = GetEstadoActual()
             };
         }

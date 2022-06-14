@@ -16,7 +16,7 @@
         //Metodos
         public bool EsTuUsuario(Usuario usuarioActual)
         {
-            return this.usuario == usuarioActual.usuario;
+            return usuario == usuarioActual.usuario;
         }
         public void Habilitar()
         {

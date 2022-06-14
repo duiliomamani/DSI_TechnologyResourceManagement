@@ -23,8 +23,6 @@ namespace BlazorApp.TechResourceManagement.Bussiness
         private IList<TipoRecursoTecnologico> tiposRecursosTecnologicos { get; set; }
         private PersonalCientifico personalCientifico { get; set; }
         private IList<CentroDeInvestigacion> centrosDeInvestigacion { get; set; }
-        private IList<CentroDeInvestigacion> centrosDeInvestigacionFiltrados { get; set; } = new List<CentroDeInvestigacion>();
-        private IList<Marca> marcas { get; set; }
 
         public async Task<IList<TipoRecursoTecnologico>> ReservarTurnoRecursoTecnologico()
         {
@@ -48,24 +46,24 @@ namespace BlazorApp.TechResourceManagement.Bussiness
                 throw ex;
             }
         }
-        public async Task<IList<CentroDeInvestigacion>> TomarTipoRecurso(string tipoRecursoSeleccionado)
+        public async Task<IList<dynamic>> TomarTipoRecurso(string tipoRecursoSeleccionado)
         {
             //Obtengo de todos los recursos el seleccionado
             this.tipoRecursoSeleccionado = tiposRecursosTecnologicos.Where(x => x.EsTipoActual(tipoRecursoSeleccionado)).FirstOrDefault();
 
             return await BuscarRecursoTecnologicoPorCI(this.tipoRecursoSeleccionado);
         }
-        public async Task<IList<CentroDeInvestigacion>> BuscarRecursoTecnologicoPorCI(TipoRecursoTecnologico? tipoRecursoSeleccionado)
+        public async Task<IList<dynamic>> BuscarRecursoTecnologicoPorCI(TipoRecursoTecnologico? tipoRecursoSeleccionado)
         {
             try
             {
                 //Limpio la lista de centros de investigacion a mostrar en la pantalla
-                centrosDeInvestigacionFiltrados.Clear();
+                IList<dynamic> centrosDeInvestigacionFiltrados = new List<dynamic>();
 
                 //Obtengo los centros de investigacion
-                await ObtenerCIs();
-                //Obtengo las marcas para hacer una dependencia hacia el recurso tecnologico
-                await ObtenerMarcas();
+                var fileJson = await _httpClient.GetByteArrayAsync("fake-data/centroDeInvestigacion.json");
+
+                centrosDeInvestigacion = JsonHelper.JsonReader<List<CentroDeInvestigacion>>(fileJson);
 
                 foreach (var ci in centrosDeInvestigacion)
                 {
@@ -74,32 +72,47 @@ namespace BlazorApp.TechResourceManagement.Bussiness
                     if (tipoRecursoSeleccionado != null)
                     {
                         //Se buscan los recursos de ese tipo agrupados por Centros de Investigacion y que no es dado de baja
-                        recursosFiltrados = recursosFiltrados.Where(x =>
-                                                                        x.EsTipoSeleccionado(tipoRecursoSeleccionado) &&
-                                                                       !x.EstaDadoBaja())
+                        recursosFiltrados = recursosFiltrados.Where(recurso =>
+                                                                        recurso.EsTipoSeleccionado(tipoRecursoSeleccionado) &&
+                                                                       !recurso.EstaDadoBaja())
                                                              .ToList();
                     }
                     else
                     {
                         //Se buscan los recursos que no esten dados de baja agrupados por Centros de Investigacion
-                        recursosFiltrados = recursosFiltrados.Where(x => !x.EstaDadoBaja())
+                        recursosFiltrados = recursosFiltrados.Where(recurso => !recurso.EstaDadoBaja())
                                                              .ToList();
                     }
+                    IList<dynamic> ciRTAux = new List<dynamic>();
 
-                    //Recorro toda la lista de recursos para asignarle la marca
-                    recursosFiltrados.ToList().ForEach(async x =>
+                    //Obtengo las marcas para hacer una dependencia hacia el modelo
+                    var fileMarcasJson = await _httpClient.GetByteArrayAsync("fake-data/marca.json");
+
+                    List<Marca> marcas = JsonHelper.JsonReader<List<Marca>>(fileMarcasJson);
+
+                    //Recorro toda la lista de recursos para buscar la marca
+                    recursosFiltrados.ToList().ForEach(async recurso =>
                     {
+                        //Verificamos que el modelo pertenezca a su Marca implementando dependencia
                         //Obtengo la marca del modelo
-                        Marca? marcaDelRt = await ObtenerMarcaDelModelo(x.GetModelo());
-                        if (marcaDelRt != null)
-                            x.SetMarca(marcaDelRt);
+                        Marca marcaDelRt = marcas.First(marca => recurso.MostrarModelo().EsTuMarca(marca));
+
+                        ciRTAux.Add(new
+                        {
+                            numeroRT = recurso.MostrarRT().numeroRT,
+                            modeloDelRT = recurso.MostrarRT().modeloDelRT,
+                            estadoActual = recurso.MostrarRT().estadoActual,
+                            marcaDelRt = marcaDelRt.MostrarMarca()
+                        });
                     });
 
-                    //Setteo los recursos tecnologicos filtrados a mostrar
-                    ci.SetRecusosTecnologicos(recursosFiltrados);
-
                     //Agrego un centro de investigacion
-                    centrosDeInvestigacionFiltrados.Add(ci);
+                    centrosDeInvestigacionFiltrados.Add(new
+                    {
+                        datosCI = ci.MostrarCI(),
+                        sigla = ci.GetSigla(),
+                        recursosTecnologicos = ciRTAux
+                    });
                 }
 
                 return centrosDeInvestigacionFiltrados;
@@ -109,65 +122,42 @@ namespace BlazorApp.TechResourceManagement.Bussiness
                 throw ex;
             }
         }
-        public async Task<Marca?> ObtenerMarcaDelModelo(Modelo modelo)
-        {
-            //Verificamos que el modelo pertenezca a su Marca implementando dependencia
-            foreach (var marca in marcas)
-            {
-                if (modelo.EsTuMarca(marca))
-                {
-                    return marca;
-                }
-            }
-            return null;
-        }
-        public async Task ObtenerMarcas()
-        {
-            var fileJson = await _httpClient.GetByteArrayAsync("fake-data/marca.json");
-
-            marcas = JsonHelper.JsonReader<List<Marca>>(fileJson);
-        }
-        public async Task ObtenerCIs()
-        {
-            var fileJson = await _httpClient.GetByteArrayAsync("fake-data/centroDeInvestigacion.json");
-
-            centrosDeInvestigacion = JsonHelper.JsonReader<List<CentroDeInvestigacion>>(fileJson);
-        }
-        public async Task GetUsuarioActual()
+        public async Task ObtenerUsuarioActual()
         {
             //A traves del estado actual de la sesion busco el usuario actual logueado
             var authState = await _authStateProvider.GetAuthenticationStateAsync();
             usuarioActual = new Usuario(authState.User.Identity.Name, "**********");
         }
-        public async Task ObtenerCientificoActual()
+
+        public async Task<bool> ValidarPertenencia(string siglaCI)
         {
+            //Centro Investigacion Seleccionado
+            centroInvestigacionSeleccionado = centrosDeInvestigacion.First(x => x.EsCIActual(siglaCI));
+
+            //Obtengo el usuario actual
+            await ObtenerUsuarioActual();
+
             var fileJson = await _httpClient.GetByteArrayAsync("fake-data/cientifico.json");
 
             //Obtengo todos los cientificos de los centros de investigaciones
             IList<PersonalCientifico> personalCientificos = JsonHelper.JsonReader<List<PersonalCientifico>>(fileJson);
 
-            personalCientifico = personalCientificos.Where(x => x.EsTuUsuario(usuarioActual)).FirstOrDefault();
-        }
-        public async Task<List<Turno>> ObtenerTurnosRT(long numeroRT, string siglaCI)
-        {
-            //Centro Investigacion Seleccionado
-            centroInvestigacionSeleccionado = centrosDeInvestigacionFiltrados.Where(x => x.EsCIActual(siglaCI)).First();
-
-            //RecursoTecnologico Seleccionado
-            recursoTecnologicoSeleccionado = centroInvestigacionSeleccionado.MisRecursosTecnologicos().Where(x => x.EsRecursoActual(numeroRT)).First();
-            
-            await GetUsuarioActual();
-            
-            await ObtenerCientificoActual();
-
-            var cientificos = centroInvestigacionSeleccionado.MisCientificos();
+            //Filtro dentro de todos los cientificos el usuario actual con su cientifico
+            personalCientifico = personalCientificos.First(x => x.EsTuUsuario(usuarioActual));
 
             //Verifico que sea el cientifico activo este dentro del CI selecciondo por el RecursoTecnologico
-            bool esCientificoActivo = cientificos.Any(x => x.EsCientificoActivo(personalCientifico));
+            return centroInvestigacionSeleccionado.MisCientificos().Any(x => x.EsCientificoActual(personalCientifico));
+        }
+        public async Task<List<Turno>> TomarRecursoTecnologico(long numeroRT, string siglaCI)
+        {
 
+            bool esCientificoActivo = await ValidarPertenencia(siglaCI);
+
+            //Obtener Turnos Corresponde al cientifico usuario logueado
             if (esCientificoActivo)
             {
-                //Obtener Turnos
+                //RecursoTecnologico Seleccionado
+                recursoTecnologicoSeleccionado = centroInvestigacionSeleccionado.MisRecursosTecnologicos().First(x => x.EsRecursoActual(numeroRT));
                 return new List<Turno>();
             }
             else

@@ -28,5 +28,16 @@
     "usuario": {
       "usuario": "C-4445513"
     }
+  },
+  {
+    "legajo": "C-4445514",
+    "nombre": "Cientifico",
+    "apellido": "Jimmy Neutron",
+    "numeroDocumento": 12345678,
+    "correoElectronicoInstitucional": "cientifico_jimmy_neutron@un.edu.ar",
+    "usuario": {
+      "usuario": "C-4445514"
+    }
   }
+
 ]

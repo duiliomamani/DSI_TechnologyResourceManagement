@@ -15,7 +15,7 @@
         public string MostrarMarca() => nombre;
         public IList<Modelo> MostrarMisModelos() => modelos;
 
-        public bool EsTuModelo(Modelo modelo)
+        public bool EsTuMarca(Modelo modelo)
         {
             return modelos.Any(x => x.MostrarModelo() == modelo.MostrarModelo());
         }
