@@ -1,5 +1,9 @@
-﻿@using BlazorApp.TechResourceManagement.Shared.Footer
+﻿@using BlazorApp.TechResourceManagement.Pages.Authentication
+@using BlazorApp.TechResourceManagement.Shared.Footer
+
 @inherits LayoutComponentBase
+
+@inject NavigationManager Navigation
 
 <div class="page">
     <div class="sidebar">
@@ -8,6 +12,7 @@
 
     <main>
         <div class="top-row px-4">
+            <LoginDisplay />
             <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
         </div>
 

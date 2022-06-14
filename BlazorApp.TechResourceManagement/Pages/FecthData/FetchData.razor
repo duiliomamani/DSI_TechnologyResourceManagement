@@ -1,7 +1,8 @@
-﻿@page "/fetchdata"
+﻿@attribute [Authorize] 
+
 @inject HttpClient Http
 
-<PageTitle>Weather forecast</PageTitle>
+@page "/fetchdata"
 
 <h1>Weather forecast</h1>
 

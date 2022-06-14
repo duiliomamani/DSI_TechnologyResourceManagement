@@ -1,6 +1,9 @@
 using BlazorApp.TechResourceManagement.Bussiness;
+using BlazorApp.TechResourceManagement.Utils;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace BlazorApp.TechResourceManagement
 {
@@ -11,22 +14,20 @@ namespace BlazorApp.TechResourceManagement
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
             builder.RootComponents.Add<HeadOutlet>("head::after");
+            builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            builder.Services.AddScoped(provider =>
+
+            builder.Services.AddScoped<GestorRTRT>();
+
+            builder.Services.AddOidcAuthentication(options =>
             {
-                var apiShared = new GestorRTRT
-                {
-                    _httpClient = new HttpClient()
-                    {
-                        BaseAddress = new Uri(builder.HostEnvironment.BaseAddress),
-                        Timeout = TimeSpan.FromMinutes(20)
-                    },
-                    usuarioActual = new Domain.Usuario("C-4445511", "12345678")
-                };
-                return apiShared;
+                builder.Configuration.Bind("Auth0", options.ProviderOptions);
+                options.ProviderOptions.ResponseType = "code";
+                options.ProviderOptions.DefaultScopes.Add("profile");
+                options.ProviderOptions.DefaultScopes.Add("address");
             });
-            var str = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+
             await builder.Build().RunAsync();
         }
     }

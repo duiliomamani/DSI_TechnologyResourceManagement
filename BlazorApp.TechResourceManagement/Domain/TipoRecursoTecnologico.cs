@@ -18,6 +18,10 @@
         {
             return $"{nombre}";
         }
+        public bool EsTipoActual(string nombre)
+        {
+            return this.nombre == nombre;
+        }
         public bool EsTipoSeleccionado(TipoRecursoTecnologico tipoRecursoTecnologico)
         {
             return nombre == tipoRecursoTecnologico.nombre;

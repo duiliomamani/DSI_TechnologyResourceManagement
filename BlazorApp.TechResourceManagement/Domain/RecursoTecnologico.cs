@@ -44,17 +44,21 @@
         {
             marcaDelRT = marca;
         }
+        public bool EsRecursoActual(long numeroRT) => this.numeroRT == numeroRT;
         public bool EsTipoSeleccionado(TipoRecursoTecnologico tipoRecursoTecnologico)
         {
+            //Verifica que es del tipo seleccionado
             return tipoDelRT.EsTipoSeleccionado(tipoRecursoTecnologico);
         }
         public bool EstaDadoBaja()
         {
+            //Verifico que el estado es dado de Baja
             var estadoActual = cambioEstadoRT.Where(x => x.EsEstadoActual()).First();
             return estadoActual.EsBaja();
         }
         public string GetEstadoActual()
         {
+            //Obtengo el estado actual
             var estadoActual = cambioEstadoRT.Where(x => x.EsEstadoActual()).First();
             return estadoActual.MostrarEstadoActual();
         }

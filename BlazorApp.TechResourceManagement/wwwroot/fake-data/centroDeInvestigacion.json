@@ -92,7 +92,28 @@
             }
           }
         ]
-      },
+      }
+    ],
+    "cientificos": [
+      {
+        "fechaHoraDesde": "2021-05-13T10:21:27",
+        "fechaHoraHasta": null,
+        "personalCientifico": {
+          "legajo": "C-4445513"
+        }
+      }
+    ]
+  },
+  {
+    "nombre": "Centro de Investigacion en Ciencias Quimicas",
+    "sigla": "CICSQ",
+    "direccion": "Calle 444",
+    "edificio": "Laboratorios",
+    "piso": 2,
+    "telefonosContacto": [ "123-1231233", "111-1231233" ],
+    "correoElectronico": "contacto@cicsq.fcq.un.edu.ar",
+    "tiempoAntelacionReserva": "02:30:00",
+    "recursosTecnologicos": [
       {
         "numeroRT": 124,
         "fechaAlta": "2022-05-14T10:21:27",
@@ -124,7 +145,7 @@
           "nombre": "Balanza de presicion"
         },
         "modeloDelRT": {
-          "nombre": "HCB 153"
+          "nombre": "TX3202L"
         },
         "caracteristicasRecurso": [
           {
@@ -170,42 +191,38 @@
             }
           }
         ]
-      }
-    ]
-  },
-  {
-    "nombre": "Centro de Investigacion en Quimica Biologica 2",
-    "sigla": "CIQB2",
-    "direccion": "Calle 123",
-    "edificio": "Central",
-    "piso": 1,
-    "telefonosContacto": [ "123-1231233", "111-1231233" ],
-    "correoElectronico": "contacto@ciqb2.fcq.un.edu.ar",
-    "tiempoAntelacionReserva": "02:30:00",
-    "recursosTecnologicos": [
+      },
       {
         "numeroRT": 125,
-        "fechaAlta": "2022-05-13T10:21:27",
+        "fechaAlta": "2022-05-14T10:21:27",
         "imagenes": [
-          "https://ibb.co/fQbXMjq"
+          "https://ibb.co/1dzb9k6"
         ],
         "periodicidadMantenimientoPrev": 4,
         "duracionMantenimientoPrev": 2,
         "fraccionarioHorarioTurnos": 2.5,
         "cambioEstadoRT": [
           {
-            "fechaHoraDesde": "2022-05-13T10:21:27",
-            "fechaHoraHasta": "2022-05-13T10:41:27",
+            "fechaHoraDesde": "2022-05-14T10:21:27",
+            "fechaHoraHasta": "2022-05-14T10:41:27",
             "estado": {
               "nombre": "Ingresado",
               "ambito": "RT"
             }
           },
           {
-            "fechaHoraDesde": "2022-05-13T10:41:27",
-            "fechaHoraHasta": null,
+            "fechaHoraDesde": "2022-05-14T10:41:27",
+            "fechaHoraHasta": "2022-06-14T10:41:27",
             "estado": {
               "nombre": "Disponible",
+              "ambito": "RT"
+            }
+          },
+          {
+            "fechaHoraDesde": "2022-06-13T10:41:27",
+            "fechaHoraHasta": null,
+            "estado": {
+              "nombre": "EnMantenimiento",
               "ambito": "RT"
             }
           }
@@ -214,37 +231,13 @@
           "nombre": "Medidor de pH - digitial"
         },
         "modeloDelRT": {
-          "nombre": "TXB622L"
+          "nombre": "PCE-PH 15"
         },
         "caracteristicasRecurso": [
           {
-            "valor": "620 g",
-            "caracteristica": {
-              "nombre": "Capacidad"
-            }
-          },
-          {
-            "valor": "0.01 g",
+            "valor": "0.01 pH",
             "caracteristica": {
               "nombre": "Indicacion Minima"
-            }
-          },
-          {
-            "valor": "menor o igual a 0.01 g",
-            "caracteristica": {
-              "nombre": "Repetitividad"
-            }
-          },
-          {
-            "valor": "0.02 g",
-            "caracteristica": {
-              "nombre": "Linealidad"
-            }
-          },
-          {
-            "valor": "2.0 segundos",
-            "caracteristica": {
-              "nombre": "Tiempo de respuesta"
             }
           },
           {
@@ -254,13 +247,13 @@
             }
           },
           {
-            "valor": "Plato de la balanza 110 mm de diámetro",
+            "valor": "175 x 51 x 25 mm",
             "caracteristica": {
               "nombre": "Dimensiones"
             }
           },
           {
-            "valor": "1.55 kg",
+            "valor": "Aprox. 57 g ",
             "caracteristica": {
               "nombre": "Peso del equipo"
             }
@@ -271,7 +264,7 @@
         "numeroRT": 126,
         "fechaAlta": "2022-05-14T10:21:27",
         "imagenes": [
-          "https://ibb.co/nrKf2s8"
+          "https://ibb.co/F44LRdP"
         ],
         "periodicidadMantenimientoPrev": 3,
         "duracionMantenimientoPrev": 1,
@@ -295,32 +288,32 @@
           }
         ],
         "tipoDelRT": {
-          "nombre": "Microscopio de medicion"
+          "nombre": "Balanza de presicion"
         },
         "modeloDelRT": {
           "nombre": "HCB 153"
         },
         "caracteristicasRecurso": [
           {
-            "valor": "3200 g",
+            "valor": "150 g",
             "caracteristica": {
               "nombre": "Capacidad"
             }
           },
           {
-            "valor": "0.01 g",
+            "valor": "0.005 g",
             "caracteristica": {
               "nombre": "Indicacion Minima"
             }
           },
           {
-            "valor": "menor o igual a 0.01 g",
+            "valor": "menor o igual a 0.005 g",
             "caracteristica": {
               "nombre": "Repetitividad"
             }
           },
           {
-            "valor": "2 - 5 segundos",
+            "valor": "2 segundos",
             "caracteristica": {
               "nombre": "Tiempo de respuesta"
             }
@@ -332,18 +325,34 @@
             }
           },
           {
-            "valor": "Plato de la balanza 18 x 19 cm",
+            "valor": "Plato de la balanza 120mm ø",
             "caracteristica": {
               "nombre": "Dimensiones"
             }
           },
           {
-            "valor": "2.8 kg",
+            "valor": "2 kg",
             "caracteristica": {
               "nombre": "Peso del equipo"
             }
           }
         ]
+      }
+    ],
+    "cientificos": [
+      {
+        "fechaHoraDesde": "2021-05-13T10:21:27",
+        "fechaHoraHasta": null,
+        "personalCientifico": {
+          "legajo": "C-4445511"
+        }
+      },
+      {
+        "fechaHoraDesde": "2021-05-13T10:21:27",
+        "fechaHoraHasta": null,
+        "personalCientifico": {
+          "legajo": "C-4445512"
+        }
       }
     ]
   }

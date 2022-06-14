@@ -3,8 +3,11 @@
 @using BlazorApp.TechResourceManagement.Pages.Home.Components
 @using System.ComponentModel.DataAnnotations
 
+@attribute [Authorize] 
+
 @inject NavigationManager _navigationManager
 @inject GestorRTRT _gestorRTRT
+@inject IJSRuntime JsRuntime
 
 @page "/reserveTurn"
 
@@ -16,7 +19,7 @@
         }
         else
         {
-            <h3>Index.ReserveTurn</h3>
+            <h3>Reservar turno de recurso tecnológico</h3>
             <EditForm Model="@modelData" OnValidSubmit="SendDto" class="row g-3">
                 <div class="col-12">
                     <div class="form-group">
@@ -28,9 +31,9 @@
                                  ValueChanged="@((string cmbTpSeleccionado) => SolicitarSeleccionTipoRecurso(cmbTpSeleccionado))">
                             <option value="null">TODAS</option>
                             @foreach (var tp in cmbTiposRecursosTecnologicos)
-                        {
-                            <option value="@tp.MostrarCategoria()">@tp.MostrarCategoria()</option>
-                        }
+                            {
+                                <option value="@tp.MostrarCategoria()">@tp.MostrarCategoria()</option>
+                            }
                         </InputSelect>
                     </div>
                 </div>
@@ -78,12 +81,18 @@
                                                         }
                                                         <td>
                                                             <div class=" btn-group">
-                                                                <button type="button" class="btn btn-primary btn-sm">
-                                                                    <i class="fa-solid fa-square-check"></i>
-                                                                </button>
-                                                                <button type="button" class="btn btn-danger btn-sm">
-                                                                    <i class="fa-solid fa-square-minus"></i>
-                                                                </button>
+                                                                @if (estaSeleccionado && rt.MostrarRT().numeroRT == txtRTSeleccionado)
+                                                                {
+                                                                    <button type="button" class="btn btn-primary btn-sm" @onclick="(args)=> SolicitarDeseleccionRecursoTecnologico(rt.MostrarRT().numeroRT, ci.GetSigla())">
+                                                                        <i class="fa-solid fa-square-check"></i>
+                                                                    </button>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <button type="button" class="btn btn-danger btn-sm" @onclick="(args)=> SolicitarSeleccionRecursoTecnologico(rt.MostrarRT().numeroRT, ci.GetSigla())">
+                                                                        <i class="fa-solid fa-square-minus"></i>
+                                                                    </button>
+                                                                }
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -114,10 +123,15 @@
     public class ModelData { }
 
     public string cmbTpSeleccionado { get; set; }
+    public long txtRTSeleccionado { get; set; }
+    public string txtCISeleccionado { get; set; }
+    public bool estaSeleccionado { get; set; } = false;
 
     private IList<TipoRecursoTecnologico> cmbTiposRecursosTecnologicos { get; set; }
 
     private IList<CentroDeInvestigacion> gridCIsConRecursosTecnologicos { get; set; }
+
+    private IList<Turno> gridTurnos { get; set; }
 
     private ModelData modelData { get; set; } = new ModelData();
 
@@ -128,9 +142,11 @@
         await MostrarTiposRecursosTecnologicos();
     }
 
+    //Muestra los tipos de recursos tecnologicos
     private async Task MostrarTiposRecursosTecnologicos()
     {
         cmbTiposRecursosTecnologicos = await _gestorRTRT.ReservarTurnoRecursoTecnologico();
+        await MostrarRecursosTecnologicos();
     }
 
     //On Change Seleccion Tipo Recurso Tecnologico
@@ -139,12 +155,48 @@
         this.cmbTpSeleccionado = cmbTpSeleccionado;
         await MostrarRecursosTecnologicos();
     }
-
+    //Muestra los recursos Tecnologicos por CIs
     private async Task MostrarRecursosTecnologicos()
     {
         this.gridCIsConRecursosTecnologicos = await _gestorRTRT.TomarTipoRecurso(this.cmbTpSeleccionado);
     }
 
+    //On Change Seleccion Recurso Tecnologico
+    private async Task SolicitarSeleccionRecursoTecnologico(long txtRTSeleccionado, string txtCISeleccionado)
+    {
+        this.SetRecursoSeleccionado(txtRTSeleccionado, txtCISeleccionado);
+
+        //Obtener los turnos
+        gridTurnos = await _gestorRTRT.ObtenerTurnosRT(this.txtRTSeleccionado, this.txtCISeleccionado);
+        if (gridTurnos == null)
+        {
+            this.ClearRecursoSeleccionado();
+            await JsRuntime.InvokeAsync<string>("alert", "El cientifico logueado no pertenece a ese centro de investigacion");
+        }
+    }
+
+    //On Change Seleccion Recurso Tecnologico
+    private async Task SolicitarDeseleccionRecursoTecnologico(long txtRTSeleccionado, string txtCISeleccionado)
+    {
+        if (txtRTSeleccionado == this.txtRTSeleccionado)
+        {
+            this.ClearRecursoSeleccionado();
+        }
+    }
+
+    private void SetRecursoSeleccionado(long txtRTSeleccionado, string txtCISeleccionado)
+    {
+        this.estaSeleccionado = txtRTSeleccionado != this.txtRTSeleccionado? true : !this.estaSeleccionado;
+        this.txtRTSeleccionado = txtRTSeleccionado;
+        this.txtCISeleccionado = txtCISeleccionado;
+    }
+
+    private void ClearRecursoSeleccionado()
+    {
+        this.estaSeleccionado = !this.estaSeleccionado;
+        this.txtCISeleccionado = string.Empty;
+        this.txtRTSeleccionado = 0;
+    }
 
     public void SendDto()
     {

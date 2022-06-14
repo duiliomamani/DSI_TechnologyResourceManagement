@@ -2,17 +2,22 @@
 {
     public class AsignacionCientificoDelCI
     {
-        private DateTime _fechaHoraDesde { get; set; }
-        private DateTime? _fechaHoraHasta { get; set; }
-        private PersonalCientifico _personalCientifico { get; set; }
-        private IList<Turno> _turnos { get; set; }
+        private DateTime fechaHoraDesde { get; set; }
+        private DateTime? fechaHoraHasta { get; set; }
+        private PersonalCientifico personalCientifico { get; set; }
+        private IList<Turno> turnos { get; set; }
         public AsignacionCientificoDelCI(DateTime fechaHoraDesde, DateTime? fechaHoraHasta,
             PersonalCientifico personalCientifico, IList<Turno> turnos)
         {
-            _fechaHoraDesde = fechaHoraDesde;
-            _fechaHoraHasta = fechaHoraHasta;
-            _personalCientifico = personalCientifico;
-            _turnos = turnos;
+            this.fechaHoraDesde = fechaHoraDesde;
+            this.fechaHoraHasta = fechaHoraHasta;
+            this.personalCientifico = personalCientifico;
+            this.turnos = turnos;
+        }
+
+        public bool EsCientificoActivo(PersonalCientifico personalCientifico)
+        {
+            return this.personalCientifico.EsCientificoActual(personalCientifico);
         }
 
     }

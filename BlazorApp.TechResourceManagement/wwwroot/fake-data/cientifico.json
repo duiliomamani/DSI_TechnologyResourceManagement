@@ -1,11 +1,32 @@
-{
-  "legajo": "C-4445511",
-  "nombre": "Cientifico",
-  "apellido": "Loco",
-  "numeroDocumento": 12345678,
-  "correoElectronicoPersonal": "duiliomamani@gmail.com",
-  "correoElectronicoInstitucional": "80744@sistemas.utn.frc.edu.ar",
-  "usuario": {
-    "usuario": "C-4445511"
+[
+  {
+    "legajo": "C-4445511",
+    "nombre": "Cientifico",
+    "apellido": "Loco",
+    "numeroDocumento": 12345678,
+    "correoElectronicoInstitucional": "cientifico_loco@un.edu.ar",
+    "usuario": {
+      "usuario": "C-4445511"
+    }
+  },
+  {
+    "legajo": "C-4445512",
+    "nombre": "Cientifico",
+    "apellido": "Loco2",
+    "numeroDocumento": 12345678,
+    "correoElectronicoInstitucional": "cientifico_loco2@un.edu.ar",
+    "usuario": {
+      "usuario": "C-4445512"
+    }
+  },
+  {
+    "legajo": "C-4445513",
+    "nombre": "Cientifico",
+    "apellido": "Loco3",
+    "numeroDocumento": 12345678,
+    "correoElectronicoInstitucional": "cientifico_loco3@un.edu.ar",
+    "usuario": {
+      "usuario": "C-4445513"
+    }
   }
-}
+]

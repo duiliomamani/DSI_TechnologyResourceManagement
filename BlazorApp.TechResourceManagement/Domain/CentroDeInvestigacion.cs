@@ -55,7 +55,10 @@
 
         //Metodos
         public string MostrarCI() => $"{nombre} - {sigla}";
+        public string GetSigla() => sigla;
+        public bool EsCIActual(string sigla) => this.sigla == sigla;
         public IList<RecursoTecnologico> MisRecursosTecnologicos() => recursosTecnologicos;
+        public IList<AsignacionCientificoDelCI> MisCientificos() => cientificos;
         public IList<RecursoTecnologico> SetRecusosTecnologicos(IList<RecursoTecnologico> recursos) => recursosTecnologicos = recursos;
     }
 }

@@ -14,6 +14,10 @@
             Habilitar();
         }
         //Metodos
+        public bool EsTuUsuario(Usuario usuarioActual)
+        {
+            return this.usuario == usuarioActual.usuario;
+        }
         public void Habilitar()
         {
             habilitado = true;
