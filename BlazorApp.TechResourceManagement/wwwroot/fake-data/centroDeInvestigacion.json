@@ -10,10 +10,340 @@
     "tiempoAntelacionReserva": "02:30:00",
     "recursosTecnologicos": [
       {
-        "numeroRT": 123
+        "numeroRT": 123,
+        "fechaAlta": "2022-05-13T10:21:27",
+        "imagenes": [
+          "https://ibb.co/fQbXMjq"
+        ],
+        "periodicidadMantenimientoPrev": 4,
+        "duracionMantenimientoPrev": 2,
+        "fraccionarioHorarioTurnos": 2.5,
+        "cambioEstadoRT": [
+          {
+            "fechaHoraDesde": "2022-05-13T10:21:27",
+            "fechaHoraHasta": "2022-05-13T10:41:27",
+            "estado": {
+              "nombre": "Ingresado",
+              "ambito": "RT"
+            }
+          },
+          {
+            "fechaHoraDesde": "2022-05-13T10:41:27",
+            "fechaHoraHasta": null,
+            "estado": {
+              "nombre": "Disponible",
+              "ambito": "RT"
+            }
+          }
+        ],
+        "tipoDelRT": {
+          "nombre": "Balanza de presicion"
+        },
+        "modeloDelRT": {
+          "nombre": "TXB622L"
+        },
+        "caracteristicasRecurso": [
+          {
+            "valor": "620 g",
+            "caracteristica": {
+              "nombre": "Capacidad"
+            }
+          },
+          {
+            "valor": "0.01 g",
+            "caracteristica": {
+              "nombre": "Indicacion Minima"
+            }
+          },
+          {
+            "valor": "menor o igual a 0.01 g",
+            "caracteristica": {
+              "nombre": "Repetitividad"
+            }
+          },
+          {
+            "valor": "0.02 g",
+            "caracteristica": {
+              "nombre": "Linealidad"
+            }
+          },
+          {
+            "valor": "2.0 segundos",
+            "caracteristica": {
+              "nombre": "Tiempo de respuesta"
+            }
+          },
+          {
+            "valor": "LCD con luz negra",
+            "caracteristica": {
+              "nombre": "Monitor"
+            }
+          },
+          {
+            "valor": "Plato de la balanza 110 mm de diámetro",
+            "caracteristica": {
+              "nombre": "Dimensiones"
+            }
+          },
+          {
+            "valor": "1.55 kg",
+            "caracteristica": {
+              "nombre": "Peso del equipo"
+            }
+          }
+        ]
       },
       {
-        "numeroRT": 124
+        "numeroRT": 124,
+        "fechaAlta": "2022-05-14T10:21:27",
+        "imagenes": [
+          "https://ibb.co/nrKf2s8"
+        ],
+        "periodicidadMantenimientoPrev": 3,
+        "duracionMantenimientoPrev": 1,
+        "fraccionarioHorarioTurnos": 1.5,
+        "cambioEstadoRT": [
+          {
+            "fechaHoraDesde": "2022-05-14T10:21:27",
+            "fechaHoraHasta": "2022-05-14T10:41:27",
+            "estado": {
+              "nombre": "Ingresado",
+              "ambito": "RT"
+            }
+          },
+          {
+            "fechaHoraDesde": "2022-05-14T10:41:27",
+            "fechaHoraHasta": null,
+            "estado": {
+              "nombre": "Disponible",
+              "ambito": "RT"
+            }
+          }
+        ],
+        "tipoDelRT": {
+          "nombre": "Balanza de presicion"
+        },
+        "modeloDelRT": {
+          "nombre": "HCB 153"
+        },
+        "caracteristicasRecurso": [
+          {
+            "valor": "3200 g",
+            "caracteristica": {
+              "nombre": "Capacidad"
+            }
+          },
+          {
+            "valor": "0.01 g",
+            "caracteristica": {
+              "nombre": "Indicacion Minima"
+            }
+          },
+          {
+            "valor": "menor o igual a 0.01 g",
+            "caracteristica": {
+              "nombre": "Repetitividad"
+            }
+          },
+          {
+            "valor": "2 - 5 segundos",
+            "caracteristica": {
+              "nombre": "Tiempo de respuesta"
+            }
+          },
+          {
+            "valor": "LCD con luz negra",
+            "caracteristica": {
+              "nombre": "Monitor"
+            }
+          },
+          {
+            "valor": "Plato de la balanza 18 x 19 cm",
+            "caracteristica": {
+              "nombre": "Dimensiones"
+            }
+          },
+          {
+            "valor": "2.8 kg",
+            "caracteristica": {
+              "nombre": "Peso del equipo"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "nombre": "Centro de Investigacion en Quimica Biologica 2",
+    "sigla": "CIQB2",
+    "direccion": "Calle 123",
+    "edificio": "Central",
+    "piso": 1,
+    "telefonosContacto": [ "123-1231233", "111-1231233" ],
+    "correoElectronico": "contacto@ciqb2.fcq.un.edu.ar",
+    "tiempoAntelacionReserva": "02:30:00",
+    "recursosTecnologicos": [
+      {
+        "numeroRT": 125,
+        "fechaAlta": "2022-05-13T10:21:27",
+        "imagenes": [
+          "https://ibb.co/fQbXMjq"
+        ],
+        "periodicidadMantenimientoPrev": 4,
+        "duracionMantenimientoPrev": 2,
+        "fraccionarioHorarioTurnos": 2.5,
+        "cambioEstadoRT": [
+          {
+            "fechaHoraDesde": "2022-05-13T10:21:27",
+            "fechaHoraHasta": "2022-05-13T10:41:27",
+            "estado": {
+              "nombre": "Ingresado",
+              "ambito": "RT"
+            }
+          },
+          {
+            "fechaHoraDesde": "2022-05-13T10:41:27",
+            "fechaHoraHasta": null,
+            "estado": {
+              "nombre": "Disponible",
+              "ambito": "RT"
+            }
+          }
+        ],
+        "tipoDelRT": {
+          "nombre": "Medidor de pH - digitial"
+        },
+        "modeloDelRT": {
+          "nombre": "TXB622L"
+        },
+        "caracteristicasRecurso": [
+          {
+            "valor": "620 g",
+            "caracteristica": {
+              "nombre": "Capacidad"
+            }
+          },
+          {
+            "valor": "0.01 g",
+            "caracteristica": {
+              "nombre": "Indicacion Minima"
+            }
+          },
+          {
+            "valor": "menor o igual a 0.01 g",
+            "caracteristica": {
+              "nombre": "Repetitividad"
+            }
+          },
+          {
+            "valor": "0.02 g",
+            "caracteristica": {
+              "nombre": "Linealidad"
+            }
+          },
+          {
+            "valor": "2.0 segundos",
+            "caracteristica": {
+              "nombre": "Tiempo de respuesta"
+            }
+          },
+          {
+            "valor": "LCD con luz negra",
+            "caracteristica": {
+              "nombre": "Monitor"
+            }
+          },
+          {
+            "valor": "Plato de la balanza 110 mm de diámetro",
+            "caracteristica": {
+              "nombre": "Dimensiones"
+            }
+          },
+          {
+            "valor": "1.55 kg",
+            "caracteristica": {
+              "nombre": "Peso del equipo"
+            }
+          }
+        ]
+      },
+      {
+        "numeroRT": 126,
+        "fechaAlta": "2022-05-14T10:21:27",
+        "imagenes": [
+          "https://ibb.co/nrKf2s8"
+        ],
+        "periodicidadMantenimientoPrev": 3,
+        "duracionMantenimientoPrev": 1,
+        "fraccionarioHorarioTurnos": 1.5,
+        "cambioEstadoRT": [
+          {
+            "fechaHoraDesde": "2022-05-14T10:21:27",
+            "fechaHoraHasta": "2022-05-14T10:41:27",
+            "estado": {
+              "nombre": "Ingresado",
+              "ambito": "RT"
+            }
+          },
+          {
+            "fechaHoraDesde": "2022-05-14T10:41:27",
+            "fechaHoraHasta": null,
+            "estado": {
+              "nombre": "Disponible",
+              "ambito": "RT"
+            }
+          }
+        ],
+        "tipoDelRT": {
+          "nombre": "Microscopio de medicion"
+        },
+        "modeloDelRT": {
+          "nombre": "HCB 153"
+        },
+        "caracteristicasRecurso": [
+          {
+            "valor": "3200 g",
+            "caracteristica": {
+              "nombre": "Capacidad"
+            }
+          },
+          {
+            "valor": "0.01 g",
+            "caracteristica": {
+              "nombre": "Indicacion Minima"
+            }
+          },
+          {
+            "valor": "menor o igual a 0.01 g",
+            "caracteristica": {
+              "nombre": "Repetitividad"
+            }
+          },
+          {
+            "valor": "2 - 5 segundos",
+            "caracteristica": {
+              "nombre": "Tiempo de respuesta"
+            }
+          },
+          {
+            "valor": "LCD con luz negra",
+            "caracteristica": {
+              "nombre": "Monitor"
+            }
+          },
+          {
+            "valor": "Plato de la balanza 18 x 19 cm",
+            "caracteristica": {
+              "nombre": "Dimensiones"
+            }
+          },
+          {
+            "valor": "2.8 kg",
+            "caracteristica": {
+              "nombre": "Peso del equipo"
+            }
+          }
+        ]
       }
     ]
   }

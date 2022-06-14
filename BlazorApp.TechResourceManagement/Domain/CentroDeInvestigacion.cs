@@ -2,8 +2,8 @@
 {
     public class CentroDeInvestigacion
     {
-        private string nombre { get; set; }    
-        private string sigla {  get; set; }
+        private string nombre { get; set; }
+        private string sigla { get; set; }
         private string direccion { get; set; }
         private string edificio { get; set; }
         private int piso { get; set; }
@@ -24,12 +24,12 @@
 
         public CentroDeInvestigacion(string nombre, string sigla, string direccion, string edificio, int piso,
             string coordenadas, IList<string> telefonosContacto, string correoElectronico,
-            string numeroResolucionCreacion, DateTime fechaResolucionCreacion, 
+            string numeroResolucionCreacion, DateTime fechaResolucionCreacion,
             string reglamento, IList<string> caracteristicasGenerales,
-            DateTime fechaAlta, TimeSpan tiempoAntelacionReserva, 
-            DateTime? fechaBaja, string motivoBaja, 
+            DateTime fechaAlta, TimeSpan tiempoAntelacionReserva,
+            DateTime? fechaBaja, string motivoBaja,
             IList<AsignacionDirectorCI> directorDelCi,
-            IList<AsignacionCientificoDelCI> cientificos, 
+            IList<AsignacionCientificoDelCI> cientificos,
             IList<RecursoTecnologico> recursosTecnologicos)
         {
             this.nombre = nombre;
@@ -52,5 +52,10 @@
             this.cientificos = cientificos;
             this.recursosTecnologicos = recursosTecnologicos;
         }
+
+        //Metodos
+        public string MostrarCI() => $"{nombre} - {sigla}";
+        public IList<RecursoTecnologico> MisRecursosTecnologicos() => recursosTecnologicos;
+        public IList<RecursoTecnologico> SetRecusosTecnologicos(IList<RecursoTecnologico> recursos) => recursosTecnologicos = recursos;
     }
 }

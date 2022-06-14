@@ -4,7 +4,7 @@
 @using System.ComponentModel.DataAnnotations
 
 @inject NavigationManager _navigationManager
-@inject IGestorRTRT _gestorRTRT
+@inject GestorRTRT _gestorRTRT
 
 @page "/reserveTurn"
 
@@ -23,28 +23,87 @@
                         <label for="Dni">Tipo de Recurso Tecnologico: </label>
                         <InputSelect id="TpRecursoTecnologico"
                                  class="form-select"
-                                 ValueExpression="@(()=>cmbTpSeleccionado)" Value="@cmbTpSeleccionado"
+                                 ValueExpression="@(()=>cmbTpSeleccionado)"
+                                 Value="@cmbTpSeleccionado"
                                  ValueChanged="@((string cmbTpSeleccionado) => SolicitarSeleccionTipoRecurso(cmbTpSeleccionado))">
                             <option value="null">TODAS</option>
                             @foreach (var tp in cmbTiposRecursosTecnologicos)
                         {
                             <option value="@tp.MostrarCategoria()">@tp.MostrarCategoria()</option>
                         }
-                    </InputSelect>
+                        </InputSelect>
+                    </div>
                 </div>
-            </div>
-            <ul>
-                @if (gridRecursosTecnologicos != null)
-                    {
-
-                        @foreach (var rt in gridRecursosTecnologicos)
+                @if (gridCIsConRecursosTecnologicos != null)
+                {
+                    <div class="accordion" id="acordionCIs">
+                        @foreach (var ci in gridCIsConRecursosTecnologicos)
                         {
-                            <li>
-                                @rt.MostrarRT()
-                            </li>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panel-heading-@ci.GetHashCode()">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panel-@ci.GetHashCode()" aria-expanded="true" aria-controls="panel-@ci.GetHashCode()">
+                                        @ci.MostrarCI()
+                                    </button>
+                                </h2>
+                                <div id="panel-@ci.GetHashCode()" class="accordion-collapse collapse show" aria-labelledby="panel-heading-@ci.GetHashCode()" data-bs-parent="#acordionCIs">
+                                    <div class="accordion-body">
+                                        <table class="table table-striped table-responsive-xl">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nro Recurso Tecnologico</th>
+                                                    <th>Marca</th>
+                                                    <th>Modelo</th>
+                                                    <th>Estado</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var rt in ci.MisRecursosTecnologicos())
+                                                {
+                                                    <tr>
+                                                        <td>@rt.MostrarRT().numeroRT</td>
+                                                        <td>@rt.MostrarRT().modeloDelRT</td>
+                                                        <td>@rt.MostrarRT().marcaDelRT</td>
+                                                        @switch (rt.MostrarRT().estadoActual)
+                                                        {
+                                                            case "Disponible":
+                                                                <td><h3 class="badge bg-primary">@rt.MostrarRT().estadoActual</h3></td>
+                                                                break;
+                                                            case "EnMantenimiento":
+                                                                <td><h3 class="badge bg-success">@rt.MostrarRT().estadoActual</h3></td>
+                                                                break;
+                                                            case "ConIngresoEnMantenimientoCorrectivo":
+                                                                <td><h3 class="badge bg-secondary">@rt.MostrarRT().estadoActual</h3></td>
+                                                                break;
+                                                        }
+                                                        <td>
+                                                            <div class=" btn-group">
+                                                                <button type="button" class="btn btn-primary btn-sm">
+                                                                    <i class="fa-solid fa-square-check"></i>
+                                                                </button>
+                                                                <button type="button" class="btn btn-danger btn-sm">
+                                                                    <i class="fa-solid fa-square-minus"></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                                @if (!ci.MisRecursosTecnologicos().Any())
+                                                {
+                                                    <tr class="text-center">
+                                                        <td colspan="5">
+                                                            <span class="badge bg-secondary">Table no contain elements. Table is empty</span>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         }
-                    }
-                </ul>
+                    </div>
+                }
             </EditForm>
         }
     </div>
@@ -58,7 +117,7 @@
 
     private IList<TipoRecursoTecnologico> cmbTiposRecursosTecnologicos { get; set; }
 
-    private IList<RecursoTecnologico> gridRecursosTecnologicos { get; set; }
+    private IList<CentroDeInvestigacion> gridCIsConRecursosTecnologicos { get; set; }
 
     private ModelData modelData { get; set; } = new ModelData();
 
@@ -71,7 +130,7 @@
 
     private async Task MostrarTiposRecursosTecnologicos()
     {
-        cmbTiposRecursosTecnologicos = await _gestorRTRT.reservarTurnoRecursoTecnologico();
+        cmbTiposRecursosTecnologicos = await _gestorRTRT.ReservarTurnoRecursoTecnologico();
     }
 
     //On Change Seleccion Tipo Recurso Tecnologico
@@ -83,7 +142,7 @@
 
     private async Task MostrarRecursosTecnologicos()
     {
-        this.gridRecursosTecnologicos = await _gestorRTRT.tomarTipoRecurso(this.cmbTpSeleccionado);
+        this.gridCIsConRecursosTecnologicos = await _gestorRTRT.TomarTipoRecurso(this.cmbTpSeleccionado);
     }
 
 

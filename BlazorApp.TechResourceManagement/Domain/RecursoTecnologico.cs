@@ -53,14 +53,19 @@
             var estadoActual = cambioEstadoRT.Where(x => x.EsEstadoActual()).First();
             return estadoActual.EsBaja();
         }
-        public string EstadoActual()
+        public string GetEstadoActual()
         {
             var estadoActual = cambioEstadoRT.Where(x => x.EsEstadoActual()).First();
             return estadoActual.MostrarEstadoActual();
         }
-        public string MostrarRT()
+        public dynamic MostrarRT()
         {
-            return $"{numeroRT} - {modeloDelRT.MostrarModelo()} - {EstadoActual()} - {marcaDelRT.MostrarMarca()} ";
+            return new {
+                numeroRT = numeroRT, 
+                modeloDelRT = modeloDelRT.MostrarModelo(), 
+                marcaDelRT = marcaDelRT.MostrarMarca(),
+                estadoActual = GetEstadoActual()
+            };
         }
     }
 }
