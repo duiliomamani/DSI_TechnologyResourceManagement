@@ -12,9 +12,9 @@
   {
     "legajo": "C-4445512",
     "nombre": "Cientifico",
-    "apellido": "Loco2",
+    "apellido": "Pinky Cerebro",
     "numeroDocumento": 12345678,
-    "correoElectronicoInstitucional": "cientifico_loco2@un.edu.ar",
+    "correoElectronicoInstitucional": "cientifico_pinky_cerebero@un.edu.ar",
     "usuario": {
       "usuario": "C-4445512"
     }
@@ -22,9 +22,9 @@
   {
     "legajo": "C-4445513",
     "nombre": "Cientifico",
-    "apellido": "Loco3",
+    "apellido": "Dexter",
     "numeroDocumento": 12345678,
-    "correoElectronicoInstitucional": "cientifico_loco3@un.edu.ar",
+    "correoElectronicoInstitucional": "cientifico_dexter@un.edu.ar",
     "usuario": {
       "usuario": "C-4445513"
     }

@@ -1,16 +1,17 @@
 ﻿using BlazorApp.TechResourceManagement.Domain;
 using BlazorApp.TechResourceManagement.Utils;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Http;
 
 namespace BlazorApp.TechResourceManagement.Bussiness
 {
     public class GestorRTRT
     {
-        private AuthenticationStateProvider _authStateProvider;
+        private AuthenticationStateProvider _authStateProvider { get; set; }
         private HttpClient _httpClient { get; set; }
 
-        public GestorRTRT(AuthenticationStateProvider authenticationStateProvider, HttpClient httpClient)
+        //Se injectan las dependencias del GestorRTRT
+        public GestorRTRT(AuthenticationStateProvider authenticationStateProvider,
+                          HttpClient httpClient)
         {
             _authStateProvider = authenticationStateProvider;
             _httpClient = httpClient;
@@ -134,6 +135,7 @@ namespace BlazorApp.TechResourceManagement.Bussiness
         }
         public async Task GetUsuarioActual()
         {
+            //A traves del estado actual de la sesion busco el usuario actual logueado
             var authState = await _authStateProvider.GetAuthenticationStateAsync();
             usuarioActual = new Usuario(authState.User.Identity.Name, "**********");
         }
@@ -141,8 +143,8 @@ namespace BlazorApp.TechResourceManagement.Bussiness
         {
             var fileJson = await _httpClient.GetByteArrayAsync("fake-data/cientifico.json");
 
+            //Obtengo todos los cientificos de los centros de investigaciones
             IList<PersonalCientifico> personalCientificos = JsonHelper.JsonReader<List<PersonalCientifico>>(fileJson);
-
 
             personalCientifico = personalCientificos.Where(x => x.EsTuUsuario(usuarioActual)).FirstOrDefault();
         }
@@ -153,7 +155,9 @@ namespace BlazorApp.TechResourceManagement.Bussiness
 
             //RecursoTecnologico Seleccionado
             recursoTecnologicoSeleccionado = centroInvestigacionSeleccionado.MisRecursosTecnologicos().Where(x => x.EsRecursoActual(numeroRT)).First();
-
+            
+            await GetUsuarioActual();
+            
             await ObtenerCientificoActual();
 
             var cientificos = centroInvestigacionSeleccionado.MisCientificos();

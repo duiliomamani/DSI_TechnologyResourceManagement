@@ -9,7 +9,7 @@
         Please wait, we are checking your authorization status...
     </Authorizing>
     <Authorized>
-        Hello, @context.User.Identity.Name!
+        Hello, @context.User.Claims.FirstOrDefault(x=> x.Type == "nickname")?.Value
         <a href="#" @onclick="BeginSignOut">Log out</a>
     </Authorized>
     <NotAuthorized>
