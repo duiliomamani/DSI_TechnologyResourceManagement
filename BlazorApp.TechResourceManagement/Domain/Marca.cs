@@ -5,6 +5,8 @@
         //Variables
         private string nombre { get; set; }
         private IList<Modelo> modelos { get; set; }
+        //Getter
+        public string Nombre { get => nombre; }
         //Constructor
         public Marca(string nombre, IList<Modelo> modelos)
         {
@@ -12,12 +14,12 @@
             this.modelos = modelos;
         }
         //Metodos
-        public string MostrarMarca() => nombre;
+        public Marca MostrarMarca() => this;
         public IList<Modelo> MostrarMisModelos() => modelos;
 
         public bool EsTuMarca(Modelo modelo)
         {
-            return modelos.Any(x => x.MostrarModelo() == modelo.MostrarModelo());
+            return modelos.Any(x => x.MostrarModelo().Nombre == modelo.MostrarModelo().Nombre);
         }
     }
 }

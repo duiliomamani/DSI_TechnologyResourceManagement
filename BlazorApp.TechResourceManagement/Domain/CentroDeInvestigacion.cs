@@ -22,6 +22,9 @@
         private IList<AsignacionCientificoDelCI> cientificos { get; set; }
         private IList<RecursoTecnologico> recursosTecnologicos { get; set; }
 
+        public string Nombre { get => nombre; }
+        public string Sigla { get => sigla; }
+
         public CentroDeInvestigacion(string nombre, string sigla, string direccion, string edificio, int piso,
             string coordenadas, IList<string> telefonosContacto, string correoElectronico,
             string numeroResolucionCreacion, DateTime fechaResolucionCreacion,
@@ -54,10 +57,13 @@
         }
 
         //Metodos
-        public string MostrarCI() => $"{nombre} - {sigla}";
-        public string GetSigla() => sigla;
+        public CentroDeInvestigacion MostrarCI() => this;
         public bool EsCIActual(string sigla) => this.sigla == sigla;
         public IList<RecursoTecnologico> MisRecursosTecnologicos() => recursosTecnologicos;
         public IList<AsignacionCientificoDelCI> MisCientificos() => cientificos;
+        public bool EsCientificoDelCI(PersonalCientifico personalCientifico)
+        {
+            return MisCientificos().Any(x => x.EsCientificoActual(personalCientifico));
+        }
     }
 }

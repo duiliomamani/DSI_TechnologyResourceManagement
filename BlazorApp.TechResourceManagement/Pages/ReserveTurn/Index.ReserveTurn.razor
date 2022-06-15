@@ -43,12 +43,12 @@
                         @foreach (var ci in gridCIsConRecursosTecnologicos)
                         {
                             <div class="accordion-item">
-                                <h2 class="accordion-header" id="panel-heading-@ci.sigla">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panel-@ci.sigla" aria-expanded="true" aria-controls="panel-@ci.sigla">
-                                        @ci.datosCI
+                                <h2 class="accordion-header" id="panel-heading-@ci.CI.Sigla">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panel-@ci.CI.Sigla" aria-expanded="true" aria-controls="panel-@ci.CI.Sigla">
+                                        @ci.CI.Nombre
                                     </button>
                                 </h2>
-                                <div id="panel-@ci.sigla" class="accordion-collapse collapse show" aria-labelledby="panel-heading-@ci.sigla" data-bs-parent="#acordionCIs">
+                                <div id="panel-@ci.CI.Sigla" class="accordion-collapse collapse show" aria-labelledby="panel-heading-@ci.CI.Sigla" data-bs-parent="#acordionCIs">
                                     <div class="accordion-body">
                                         <table class="table table-striped table-responsive-xl">
                                             <thead>
@@ -61,35 +61,35 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach (var rt in ci.recursosTecnologicos)
+                                                @foreach (var rt in ci.RecursosTecnologicos)
                                                 {
                                                     <tr>
-                                                        <td>@rt.numeroRT</td>
-                                                        <td>@rt.modeloDelRT</td>
-                                                        <td>@rt.marcaDelRt</td>
-                                                        @switch (rt.estadoActual)
+                                                        <td>@rt.Recurso.NumeroRT</td>
+                                                        <td>@rt.Recurso.ModeloDelRT.Nombre</td>
+                                                        <td>@rt.MarcaDelRt.Nombre</td>
+                                                        @switch (rt.Recurso.GetEstadoActual())
                                                         {
                                                             case "Disponible":
-                                                                <td><h3 class="badge bg-primary">@rt.estadoActual</h3></td>
+                                                                <td><h3 class="badge bg-primary">@rt.Recurso.GetEstadoActual()</h3></td>
                                                                 break;
                                                             case "EnMantenimiento":
-                                                                <td><h3 class="badge bg-success">@rt.estadoActual</h3></td>
+                                                                <td><h3 class="badge bg-success">@rt.Recurso.GetEstadoActual()</h3></td>
                                                                 break;
                                                             case "ConIngresoEnMantenimientoCorrectivo":
-                                                                <td><h3 class="badge bg-secondary">@rt.estadoActual</h3></td>
+                                                                <td><h3 class="badge bg-secondary">@rt.Recurso.GetEstadoActual()</h3></td>
                                                                 break;
                                                         }
                                                         <td>
                                                             <div class=" btn-group">
-                                                                @if (estaSeleccionado && rt.numeroRT == txtRTSeleccionado)
+                                                                @if (estaSeleccionado && rt.Recurso.NumeroRT == txtRTSeleccionado)
                                                                 {
-                                                                    <button type="button" class="btn btn-primary btn-sm" @onclick="(args)=> SolicitarDeseleccionRecursoTecnologico(rt.numeroRT, ci.sigla)">
+                                                                    <button type="button" class="btn btn-primary btn-sm" @onclick="(args)=> SolicitarDeseleccionRecursoTecnologico(rt.Recurso.NumeroRT, ci.CI.Sigla)">
                                                                         <i class="fa-solid fa-square-check"></i>
                                                                     </button>
                                                                 }
                                                                 else
                                                                 {
-                                                                    <button type="button" class="btn btn-danger btn-sm" @onclick="(args)=> SolicitarSeleccionRecursoTecnologico(rt.numeroRT, ci.sigla)">
+                                                                    <button type="button" class="btn btn-danger btn-sm" @onclick="(args)=> SolicitarSeleccionRecursoTecnologico(rt.Recurso.NumeroRT, ci.CI.Sigla)">
                                                                         <i class="fa-solid fa-square-minus"></i>
                                                                     </button>
                                                                 }
@@ -97,7 +97,7 @@
                                                         </td>
                                                     </tr>
                                                 }
-                                                @if (ci.recursosTecnologicos.Count == 0)
+                                                @if (ci.RecursosTecnologicos.Count == 0)
                                                 {
                                                     <tr class="text-center">
                                                         <td colspan="5">

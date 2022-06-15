@@ -99,19 +99,16 @@ namespace BlazorApp.TechResourceManagement.Bussiness
 
                         ciRTAux.Add(new
                         {
-                            numeroRT = recurso.MostrarRT().numeroRT,
-                            modeloDelRT = recurso.MostrarRT().modeloDelRT,
-                            estadoActual = recurso.MostrarRT().estadoActual,
-                            marcaDelRt = marcaDelRt.MostrarMarca()
+                            Recurso = recurso.MostrarRT(),
+                            MarcaDelRt = marcaDelRt.MostrarMarca()
                         });
                     });
 
                     //Agrego un centro de investigacion
                     centrosDeInvestigacionFiltrados.Add(new
                     {
-                        datosCI = ci.MostrarCI(),
-                        sigla = ci.GetSigla(),
-                        recursosTecnologicos = ciRTAux
+                        CI = ci.MostrarCI(),
+                        RecursosTecnologicos = ciRTAux
                     });
                 }
 
@@ -131,9 +128,6 @@ namespace BlazorApp.TechResourceManagement.Bussiness
 
         public async Task<bool> ValidarPertenencia(string siglaCI)
         {
-            //Centro Investigacion Seleccionado
-            centroInvestigacionSeleccionado = centrosDeInvestigacion.First(x => x.EsCIActual(siglaCI));
-
             //Obtengo el usuario actual
             await ObtenerUsuarioActual();
 
@@ -145,8 +139,11 @@ namespace BlazorApp.TechResourceManagement.Bussiness
             //Filtro dentro de todos los cientificos el usuario actual con su cientifico
             personalCientifico = personalCientificos.First(x => x.EsTuUsuario(usuarioActual));
 
+            //Centro Investigacion Seleccionado
+            centroInvestigacionSeleccionado = centrosDeInvestigacion.First(x => x.EsCIActual(siglaCI));
+
             //Verifico que sea el cientifico activo este dentro del CI selecciondo por el RecursoTecnologico
-            return centroInvestigacionSeleccionado.MisCientificos().Any(x => x.EsCientificoActual(personalCientifico));
+            return centroInvestigacionSeleccionado.EsCientificoDelCI(personalCientifico);
         }
         public async Task<List<Turno>> TomarRecursoTecnologico(long numeroRT, string siglaCI)
         {

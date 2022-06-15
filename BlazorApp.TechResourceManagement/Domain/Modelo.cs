@@ -2,15 +2,17 @@
 {
     public class Modelo
     {
-        //Variables
+        //Variables privadas
         private string nombre { get; set; }
+        //Getter
+        public string Nombre { get => nombre; }
         //Constructor
         public Modelo(string nombre)
         {
             this.nombre = nombre;
         }
         //Metodos
-        public string MostrarModelo() => nombre;
+        public Modelo MostrarModelo() => this;
 
         public bool EsTuMarca(Marca marca)
         {

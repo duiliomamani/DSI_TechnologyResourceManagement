@@ -2,7 +2,7 @@
 {
     public class RecursoTecnologico
     {
-        //Variables
+        //Variables privadas
         private long numeroRT { get; set; }
         private DateTime fechaAlta { get; set; } = DateTime.Now;
         private IList<string> imagenes { get; set; }
@@ -16,6 +16,11 @@
         private IList<Turno> turnos { get; set; }
         private IList<HorarioRT> disponibilidad { get; set; }
         private IList<Mantenimiento> mantenimientos { get; set; }
+
+        //Getter
+        public long NumeroRT { get => numeroRT; }
+        public Modelo ModeloDelRT { get => modeloDelRT; }
+
         //Constructor
         public RecursoTecnologico(long numeroRT, DateTime fechaAlta, IList<string> imagenes, int periodicidadMantenimientoPrev, int duracionMantenimientoPrev, double fraccionarioHorarioTurnos, IList<CambioEstadoRT> cambioEstadoRT, TipoRecursoTecnologico tipoDelRT, Modelo modeloDelRT, IList<CaracteristicaRecurso> caracteristicasRecurso, IList<Turno> turnos, IList<HorarioRT> disponibilidad, IList<Mantenimiento> mantenimientos)
         {
@@ -54,14 +59,6 @@
             var estadoActual = cambioEstadoRT.Where(x => x.EsEstadoActual()).First();
             return estadoActual.MostrarEstadoActual();
         }
-        public dynamic MostrarRT()
-        {
-            return new
-            {
-                numeroRT = numeroRT,
-                modeloDelRT = modeloDelRT.MostrarModelo(),
-                estadoActual = GetEstadoActual()
-            };
-        }
+        public RecursoTecnologico MostrarRT() => this;
     }
 }

@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "nombre": "Centro de Investigacion en Quimica Biologica",
     "sigla": "CIQB",
@@ -80,7 +80,7 @@
             }
           },
           {
-            "valor": "Plato de la balanza 110 mm de di�metro",
+            "valor": "Plato de la balanza 110 mm de diámetro",
             "caracteristica": {
               "nombre": "Dimensiones"
             }
@@ -89,6 +89,156 @@
             "valor": "1.55 kg",
             "caracteristica": {
               "nombre": "Peso del equipo"
+            }
+          }
+        ]
+      },
+      {
+        "numeroRT": 407,
+        "fechaAlta": "2022-05-03T17:11:45",
+        "imagenes": [
+          ""
+        ],
+        "periodicidadMantenimientoPrev": 3,
+        "duracionMantenimientoPrev": 3,
+        "fraccionarioHorarioTurnos": 3,
+        "cambioEstadoRT": [
+          {
+            "fechaHoraDesde": "2022-05-04T09:11:19",
+            "fechaHoraHasta": "2022-05-04T11:26:32",
+            "estado": {
+              "nombre": "Ingresado",
+              "ambito": "RT"
+            }
+          },
+          {
+            "fechaHoraDesde": "2022-05-04T13:11:02",
+            "fechaHoraHasta": null,
+            "estado": {
+              "nombre": "Disponible",
+              "ambito": "RT"
+            }
+          }
+        ],
+        "tipoDelRT": {
+          "nombre": "Microscopio"
+        },
+        "modeloDelRT": {
+          "nombre": "MM-400/800"
+        },
+        "caracteristicasRecurso": [
+          {
+            "valor": "0.1μm",
+            "caracteristica": {
+              "nombre": "Contador con lectura"
+            }
+          },
+          {
+            "valor": "320x240 píxeles",
+            "caracteristica": {
+              "nombre": "Pantalla LCD"
+            }
+          },
+          {
+            "valor": "0.5 segundos",
+            "caracteristica": {
+              "nombre": "Velocidad de enfoque"
+            }
+          },
+          {
+            "valor": "hasta 0.5 μm",
+            "caracteristica": {
+              "nombre": "Repetibilidad de enfoque"
+            }
+          },
+          {
+            "valor": "10 mm/seg",
+            "caracteristica": {
+              "nombre": "Velocidad de movimiento vertical"
+            }
+          },
+          {
+            "valor": "12” X 6”",
+            "caracteristica": {
+              "nombre": "Platina"
+            }
+          }
+        ]
+      },
+      {
+        "numeroRT": 211,
+        "fechaAlta": "2022-05-13T14:08:17",
+        "imagenes": [
+          ""
+        ],
+        "periodicidadMantenimientoPrev": 2,
+        "duracionMantenimientoPrev": 1,
+        "fraccionarioHorarioTurnos": 4,
+        "cambioEstadoRT": [
+          {
+            "fechaHoraDesde": "2022-05-11T17:01:59",
+            "fechaHoraHasta": "2022-05-12T23:41:15",
+            "estado": {
+              "nombre": "Ingresado",
+              "ambito": "RT"
+            }
+          },
+          {
+            "fechaHoraDesde": "2022-05-12T23:55:22",
+            "fechaHoraHasta": null,
+            "estado": {
+              "nombre": "Disponible",
+              "ambito": "RT"
+            }
+          }
+        ],
+        "tipoDelRT": {
+          "nombre": "Centrifuga"
+        },
+        "modeloDelRT": {
+          "nombre": "800D"
+        },
+        "caracteristicasRecurso": [
+          {
+            "valor": "0 – 30 minutos",
+            "caracteristica": {
+              "nombre": "Temporizador"
+            }
+          },
+          {
+            "valor": "4000 RPM",
+            "caracteristica": {
+              "nombre": "Máxima velocidad"
+            }
+          },
+          {
+            "valor": "1790 x gr",
+            "caracteristica": {
+              "nombre": "Máximo RCF"
+            }
+          },
+          {
+            "valor": "Pasos de 500 en 500 RPM",
+            "caracteristica": {
+              "nombre": "Regulación de velocidad"
+            }
+          },
+          {
+            "valor": "Graduado por minuto",
+            "caracteristica": {
+              "nombre": "Regulación de tiempo"
+            }
+          },
+          {
+            "valor": "6 tubos de 15/ 20 ml",
+            "caracteristica": {
+              "nombre": "Capacidad"
+            }
+          },
+          {
+            "valor": "230mm x 270mm",
+            "caracteristica": {
+              "nombre": "Dimensiones"
             }
           }
         ]
@@ -228,12 +378,18 @@
           }
         ],
         "tipoDelRT": {
-          "nombre": "Medidor de pH - digitial"
+          "nombre": "Peachimetro"
         },
         "modeloDelRT": {
-          "nombre": "PCE-PH 15"
+          "nombre": "Medidor PH Digital con ATC"
         },
         "caracteristicasRecurso": [
+          {
+            "valor": "0.0-14.0",
+            "caracteristica": {
+              "nombre": "Intervalo de medición de pH"
+            }
+          },
           {
             "valor": "0.01 pH",
             "caracteristica": {
@@ -241,19 +397,31 @@
             }
           },
           {
-            "valor": "LCD con luz negra",
+            "valor": "0.1 pH",
             "caracteristica": {
-              "nombre": "Monitor"
+              "nombre": "Resolución"
             }
           },
           {
-            "valor": "175 x 51 x 25 mm",
+            "valor": "± 0.1 pH (20 ° C)",
+            "caracteristica": {
+              "nombre": "Precisión"
+            }
+          },
+          {
+            "valor": "15 x 3x 1.5 cm",
             "caracteristica": {
               "nombre": "Dimensiones"
             }
           },
           {
-            "valor": "Aprox. 57 g ",
+            "valor": "0 - 50 ° C",
+            "caracteristica": {
+              "nombre": "Temperatura de funcionamiento"
+            }
+          },
+          {
+            "valor": "Aprox. 65g ",
             "caracteristica": {
               "nombre": "Peso del equipo"
             }
@@ -325,7 +493,7 @@
             }
           },
           {
-            "valor": "Plato de la balanza 120mm �",
+            "valor": "Plato de la balanza 120mm ø",
             "caracteristica": {
               "nombre": "Dimensiones"
             }
@@ -334,6 +502,144 @@
             "valor": "2 kg",
             "caracteristica": {
               "nombre": "Peso del equipo"
+            }
+          }
+        ]
+      },
+      {
+        "numeroRT": 385,
+        "fechaAlta": "2022-04-24T19:58:42",
+        "imagenes": [
+          ""
+        ],
+        "periodicidadMantenimientoPrev": 2,
+        "duracionMantenimientoPrev": 1,
+        "fraccionarioHorarioTurnos": 2,
+        "cambioEstadoRT": [
+          {
+            "fechaHoraDesde": "2022-04-23T12:34:08",
+            "fechaHoraHasta": "2022-04-23T12:55:42",
+            "estado": {
+              "nombre": "Ingresado",
+              "ambito": "RT"
+            }
+          },
+          {
+            "fechaHoraDesde": "2022-04-24T20:05:19",
+            "fechaHoraHasta": null,
+            "estado": {
+              "nombre": "Disponible",
+              "ambito": "RT"
+            }
+          }
+        ],
+        "tipoDelRT": {
+          "nombre": "Peachimetro"
+        },
+        "modeloDelRT": {
+          "nombre": "PH Digital"
+        },
+        "caracteristicasRecurso": [
+          {
+            "valor": "0.0-14.0",
+            "caracteristica": {
+              "nombre": "Intervalo de medición de pH"
+            }
+          },
+          {
+            "valor": "0.1 pH",
+            "caracteristica": {
+              "nombre": "Resolución"
+            }
+          },
+          {
+            "valor": "± 0.1 pH (20 ° C)",
+            "caracteristica": {
+              "nombre": "Precisión"
+            }
+          },
+          {
+            "valor": "0 - 60 ° C",
+            "caracteristica": {
+              "nombre": "Temperatura de funcionamiento"
+            }
+          },
+          {
+            "valor": "155 x 31 x 18 mm",
+            "caracteristica": {
+              "nombre": "Dimensiones"
+            }
+          },
+          {
+            "valor": "Automático / Manual",
+            "caracteristica": {
+              "nombre": "Calibración"
+            }
+          }
+        ]
+      },
+      {
+        "numeroRT": 225,
+        "fechaAlta": "2022-04-14T15:26:12",
+        "imagenes": [
+          ""
+        ],
+        "periodicidadMantenimientoPrev": 2,
+        "duracionMantenimientoPrev": 1,
+        "fraccionarioHorarioTurnos": 2,
+        "cambioEstadoRT": [
+          {
+            "fechaHoraDesde": "2022-04-13T22:54:51",
+            "fechaHoraHasta": "2022-04-13T23:37:05",
+            "estado": {
+              "nombre": "Ingresado",
+              "ambito": "RT"
+            }
+          },
+          {
+            "fechaHoraDesde": "2022-04-14T16:11:07",
+            "fechaHoraHasta": null,
+            "estado": {
+              "nombre": "Disponible",
+              "ambito": "RT"
+            }
+          }
+        ],
+        "tipoDelRT": {
+          "nombre": "Electroforesis"
+        },
+        "modeloDelRT": {
+          "nombre": "SE660"
+        },
+        "caracteristicasRecurso": [
+          {
+            "valor": "45 °C",
+            "caracteristica": {
+              "nombre": "Temperatura máxima"
+            }
+          },
+          {
+            "valor": "32 cm",
+            "caracteristica": {
+              "nombre": "Ancho"
+            }
+          },
+          {
+            "valor": "37 cm",
+            "caracteristica": {
+              "nombre": "Altura"
+            }
+          },
+          {
+            "valor": "50 W",
+            "caracteristica": {
+              "nombre": "Vataje"
+            }
+          },
+          {
+            "valor": "De 15 °C a 30 °C",
+            "caracteristica": {
+              "nombre": "Temperatura de almacenamiento"
             }
           }
         ]

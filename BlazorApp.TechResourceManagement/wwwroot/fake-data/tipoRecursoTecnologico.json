@@ -96,12 +96,12 @@
     ]
   },
   {
-    "nombre": "Medidor de pH - digitial",
+    "nombre": "Peachimetro",
     "descripcion": "Instrumento utilizado para medir la acidez o la alcalinidad de una solución",
     "caracteristicas": [
       {
-        "nombre": "Monitor",
-        "descripcion": "Monitor"
+        "nombre": "Intervalo de medición de pH",
+        "descripcion": "Intervalo de medición de pH"
       },
       {
         "nombre": "Peso del equipo",
@@ -110,6 +110,14 @@
       {
         "nombre": "Indicacion Minima",
         "descripcion": "Indicacion Minima"
+      },
+      {
+        "nombre": "Resolución",
+        "descripcion": "Resolución"
+      },
+      {
+        "nombre": "Temperatura de funcionamiento",
+        "descripcion": "Temperatura de funcionamiento"
       },
       {
         "nombre": "Dimensiones",
@@ -122,6 +130,10 @@
       {
         "nombre": "Rango",
         "descripcion": "Rango"
+      },
+      {
+        "nombre": "Calibración",
+        "descripcion": "Calibración"
       }
     ]
   },
@@ -136,6 +148,66 @@
       {
         "nombre": "Caracteristica 3",
         "descripcion": "descripcion Caracteristica 3"
+      }
+    ]
+  },
+  {
+    "nombre": "Centrifuga",
+    "descripcion": "Máquina que pone en rotación una muestra para separar por fuerza centrífuga sus componentes o fases",
+    "caracteristicas": [
+      {
+        "nombre": "Temporizador",
+        "descripcion": "Temporizador"
+      },
+      {
+        "nombre": "Máxima velocidad",
+        "descripcion": "Máxima velocidad"
+      },
+      {
+        "nombre": "Máximo RCF",
+        "descripcion": "Máximo RCF"
+      },
+      {
+        "nombre": "Regulación de velocidad",
+        "descripcion": "Regulación de velocidad"
+      },
+      {
+        "nombre": "Regulación de tiempo",
+        "descripcion": "Regulación de tiempo"
+      },
+      {
+        "nombre": "Capacidad",
+        "descripcion": "Capacidad"
+      },
+      {
+        "nombre": "Dimensiones",
+        "descripcion": "Dimensiones"
+      }
+    ]
+  },
+  {
+    "nombre": "Electroforesis",
+    "descripcion": "Sistemas de electroforesis vertical",
+    "caracteristicas": [
+      {
+        "nombre": "Temperatura máxima",
+        "descripcion": "Temperatura máxima"
+      },
+      {
+        "nombre": "Ancho",
+        "descripcion": "Ancho"
+      },
+      {
+        "nombre": "Altura",
+        "descripcion": "Altura"
+      },
+      {
+        "nombre": "Vataje",
+        "descripcion": "Vataje"
+      },
+      {
+        "nombre": "Temperatura de almacenamiento",
+        "descripcion": "Temperatura de almacenamiento"
       }
     ]
   }

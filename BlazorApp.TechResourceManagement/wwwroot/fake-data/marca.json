@@ -28,10 +28,29 @@
     ]
   },
   {
-    "nombre": "PCE",
+    "nombre": "PHMetro",
     "modelos": [
       {
-        "nombre": "PCE-PH 15"
+        "nombre": "Medidor PH Digital con ATC"
+      },
+      {
+        "nombre": "PH Digital"
+      }
+    ]
+  },
+  {
+    "nombre": "CGOLDENWALL",
+    "modelos": [
+      {
+        "nombre": "800D"
+      }
+    ]
+  },
+  {
+    "nombre": "Hoefer",
+    "modelos": [
+      {
+        "nombre": "SE660"
       }
     ]
   },
