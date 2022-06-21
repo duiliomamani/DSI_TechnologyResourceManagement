@@ -6,6 +6,7 @@
         private string nombre { get; set; }
         private string descripcion { get; set; }
         private IList<Caracteristica> caracteristicas { get; set; }
+
         //Constructor
         public TipoRecursoTecnologico(string nombre, string descripcion, IList<Caracteristica> caracteristicas)
         {
@@ -14,10 +15,7 @@
             this.caracteristicas = caracteristicas;
         }
         //Metodos
-        public string MostrarCategoria()
-        {
-            return $"{nombre}";
-        }
+        public string MostrarCategoria { get => nombre; }
         public bool EsTipoActual(string nombre)
         {
             return this.nombre == nombre;

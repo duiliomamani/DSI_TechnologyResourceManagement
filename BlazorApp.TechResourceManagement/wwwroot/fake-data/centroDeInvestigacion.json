@@ -91,6 +91,64 @@
               "nombre": "Peso del equipo"
             }
           }
+        ],
+        "turnos": [
+          {
+            "fechaGeneracion": "2022-05-14T14:08:17",
+            "diaSemana": "Tuesday",
+            "fechaHoraInicio": "2022-06-23T14:08:17",
+            "fechaHoraFin": "2022-06-23T14:09:17",
+            "cambioEstadoTurno": [
+              {
+                "fechaHoraDesde": "2022-06-20T14:08:17",
+                "fechaHoraHasta": "2022-06-21T14:08:17",
+                "estado": {
+                  "nombre": "Reservado",
+                  "ambito": "Turno"
+                }
+              },
+              {
+                "fechaHoraDesde": "2022-06-21T14:08:18",
+                "fechaHoraHasta": null,
+                "estado": {
+                  "nombre": "PendienteConfirmacion",
+                  "ambito": "Turno"
+                }
+              }
+            ]
+          },
+          {
+            "fechaGeneracion": "2022-05-14T14:08:17",
+            "diaSemana": "Thursday",
+            "fechaHoraInicio": "2022-06-24T14:08:17",
+            "fechaHoraFin": "2022-06-24T14:09:17",
+            "cambioEstadoTurno": [
+              {
+                "fechaHoraDesde": "2022-06-20T14:08:17",
+                "fechaHoraHasta": null,
+                "estado": {
+                  "nombre": "Disponible",
+                  "ambito": "Turno"
+                }
+              }
+            ]
+          },
+          {
+            "fechaGeneracion": "2022-05-14T14:08:17",
+            "diaSemana": "Monday",
+            "fechaHoraInicio": "2022-06-27T14:08:17",
+            "fechaHoraFin": "2022-06-27T14:10:17",
+            "cambioEstadoTurno": [
+              {
+                "fechaHoraDesde": "2022-06-20T14:08:17",
+                "fechaHoraHasta": null,
+                "estado": {
+                  "nombre": "Disponible",
+                  "ambito": "Turno"
+                }
+              }
+            ]
+          }
         ]
       },
       {
@@ -163,7 +221,8 @@
               "nombre": "Platina"
             }
           }
-        ]
+        ],
+        "turnos": []
       },
       {
         "numeroRT": 211,
@@ -241,7 +300,8 @@
               "nombre": "Dimensiones"
             }
           }
-        ]
+        ],
+        "turnos": []
       }
     ],
     "cientificos": [
@@ -426,7 +486,8 @@
               "nombre": "Peso del equipo"
             }
           }
-        ]
+        ],
+        "turnos": []
       },
       {
         "numeroRT": 126,
@@ -576,7 +637,8 @@
               "nombre": "Calibración"
             }
           }
-        ]
+        ],
+        "turnos": []
       },
       {
         "numeroRT": 225,
@@ -642,7 +704,8 @@
               "nombre": "Temperatura de almacenamiento"
             }
           }
-        ]
+        ],
+        "turnos": []
       }
     ],
     "cientificos": [

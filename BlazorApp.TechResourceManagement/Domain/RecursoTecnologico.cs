@@ -41,6 +41,7 @@
 
         //Metodos
         public Modelo MostrarModelo() => modeloDelRT;
+        public IList<Turno> MostrarMisTurnos(DateTime dateTime) => turnos.Where(tur => tur.EsPosteriorAlDiaDeHoy(dateTime)).ToList();
         public bool EsRecursoActual(long numeroRT) => this.numeroRT == numeroRT;
         public bool EsTipoSeleccionado(TipoRecursoTecnologico tipoRecursoTecnologico)
         {

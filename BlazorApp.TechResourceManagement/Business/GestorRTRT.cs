@@ -145,9 +145,13 @@ namespace BlazorApp.TechResourceManagement.Bussiness
             //Verifico que sea el cientifico activo este dentro del CI selecciondo por el RecursoTecnologico
             return centroInvestigacionSeleccionado.EsCientificoDelCI(personalCientifico);
         }
-        public async Task<List<Turno>> TomarRecursoTecnologico(long numeroRT, string siglaCI)
+        public DateTime GetFechaHoraActual()
         {
-
+            return DateTime.Now;
+        }
+        public async Task<IList<Turno>> TomarRecursoTecnologico(long numeroRT, string siglaCI)
+        {
+            IList<Turno> turnos;
             bool esCientificoActivo = await ValidarPertenencia(siglaCI);
 
             //Obtener Turnos Corresponde al cientifico usuario logueado
@@ -155,7 +159,8 @@ namespace BlazorApp.TechResourceManagement.Bussiness
             {
                 //RecursoTecnologico Seleccionado
                 recursoTecnologicoSeleccionado = centroInvestigacionSeleccionado.MisRecursosTecnologicos().First(x => x.EsRecursoActual(numeroRT));
-                return new List<Turno>();
+                turnos = recursoTecnologicoSeleccionado.MostrarMisTurnos(GetFechaHoraActual());
+                return turnos.Any() ? turnos : null;
             }
             else
             {

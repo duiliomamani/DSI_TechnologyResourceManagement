@@ -3,28 +3,35 @@
     public class Turno
     {
         //Variables
-        private DateTime _fechaGeneracion { get; set; }
-        private DayOfWeek _diaSemana { get; set; }
-        private DateTime _fechaHoraInicio { get; set; }
-        private DateTime? _fechaHoraFin { get; set; }
-        private IList<CambioEstadoTurno> _cambioEstadoTurnos { get; set; }
+        private DateTime fechaGeneracion { get; set; }
+        private DayOfWeek diaSemana { get; set; }
+        private DateTime fechaHoraInicio { get; set; }
+        private DateTime fechaHoraFin { get; set; }
+        private IList<CambioEstadoTurno> cambioEstadoTurno { get; set; }
+        public string Text = "Turno";
+        //Getter
+        public DateTime FechaHoraInicio { get => fechaHoraInicio; }
+        public DateTime? FechaHoraFin { get => fechaHoraFin; }
         //Constructor
-        public Turno() { }
-        public Turno(DateTime fechaGeneracion, DayOfWeek diaSemana, DateTime fechaHoraInicio, DateTime? fechaHoraFin)
+        public Turno(DateTime fechaGeneracion, DayOfWeek diaSemana, DateTime fechaHoraInicio, DateTime fechaHoraFin, IList<CambioEstadoTurno> cambioEstadoTurno)
         {
-            _fechaGeneracion = fechaGeneracion;
-            _diaSemana = diaSemana;
-            _fechaHoraInicio = fechaHoraInicio;
-            _fechaHoraFin = fechaHoraFin;
+            this.fechaGeneracion = fechaGeneracion;
+            this.diaSemana = diaSemana;
+            this.fechaHoraInicio = fechaHoraInicio;
+            this.fechaHoraFin = fechaHoraFin;
+            this.cambioEstadoTurno = cambioEstadoTurno;
         }
         //Metodos
-        public string MostrarTurno()
+        public Turno MostrarTurno() => this;
+        public string MostrarEstadoActual() => cambioEstadoTurno.First(e => e.EsActualCET()).MostrarEstadoActual().MostrarEstado();
+
+        public bool EsPosteriorAlDiaDeHoy(DateTime dateTime)
         {
-            return $"Turno {_fechaGeneracion} - Dia de Semana {_diaSemana}";
+            return fechaHoraInicio.Date >= dateTime.Date;
         }
         public bool EstoyDisponible()
         {
-            return _cambioEstadoTurnos.Count == 1;
+            return cambioEstadoTurno.Any(e => e.EsActualCET());
         }
     }
 }

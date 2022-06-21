@@ -2,12 +2,19 @@
 {
     public class CambioEstadoTurno
     {
-        private DateTime _fechaHoraDesde { get; set; }
-        private DateTime? _fechaHoraHasta { get; set; }
-        public CambioEstadoTurno(DateTime fechaHoraDesde, DateTime? fechaHoraHasta)
+        private DateTime fechaHoraDesde { get; set; }
+        private DateTime? fechaHoraHasta { get; set; }
+        private Estado estado { get; set; }
+        public CambioEstadoTurno(DateTime fechaHoraDesde, DateTime? fechaHoraHasta, Estado estado)
         {
-            _fechaHoraDesde = fechaHoraDesde;
-            _fechaHoraHasta = fechaHoraHasta;
+            this.fechaHoraDesde = fechaHoraDesde;
+            this.fechaHoraHasta = fechaHoraHasta;
+            this.estado = estado;
+        }
+        public Estado MostrarEstadoActual() => estado;
+        public bool EsActualCET()
+        {
+            return !fechaHoraHasta.HasValue;
         }
     }
 }

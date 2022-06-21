@@ -1,11 +1,13 @@
 ﻿@using BlazorApp.TechResourceManagement.Bussiness
 @using BlazorApp.TechResourceManagement.Domain
+@using BlazorApp.TechResourceManagement.Models
 @using BlazorApp.TechResourceManagement.Pages.Home.Components
 @using System.ComponentModel.DataAnnotations
+@using BlazorApp.TechResourceManagement.Pages.ReserveTurn.Components
 
-@attribute [Authorize] 
+@attribute [Authorize]
 
-@inject NavigationManager _navigationManager
+@inject DialogService DialogService
 @inject GestorRTRT _gestorRTRT
 @inject IJSRuntime JsRuntime
 
@@ -20,24 +22,15 @@
         else
         {
             <h3>Reservar turno de recurso tecnológico</h3>
-            <EditForm Model="@modelData" OnValidSubmit="SendDto" class="row g-3">
+            <div class="row g-3">
                 <div class="col-12">
                     <div class="form-group">
                         <label for="Dni">Tipo de Recurso Tecnologico: </label>
-                        <InputSelect id="TpRecursoTecnologico"
-                                 class="form-select"
-                                 ValueExpression="@(()=>cmbTpSeleccionado)"
-                                 Value="@cmbTpSeleccionado"
-                                 ValueChanged="@((string cmbTpSeleccionado) => TomarSeleccionTipoRecurso(cmbTpSeleccionado))">
-                            <option value="null">TODAS</option>
-                            @foreach (var tp in cmbTiposRecursosTecnologicos)
-                            {
-                                <option value="@tp.MostrarCategoria()">@tp.MostrarCategoria()</option>
-                            }
-                        </InputSelect>
-                    </div>
+                         <RadzenDropDown AllowClear="true" TValue="string" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowFiltering="true" Class="w-100" 
+                            Placeholder="Todas" Data=@cmbTiposRecursosTecnologicos TextProperty="MostrarCategoria" ValueProperty="MostrarCategoria" Change=@(args => TomarSeleccionTipoRecurso(args)) />
                 </div>
-                @if (gridCIsConRecursosTecnologicos != null)
+            </div>
+            @if (gridCIsConRecursosTecnologicos != null)
                 {
                     <div class="accordion" id="acordionCIs">
                         @foreach (var ci in gridCIsConRecursosTecnologicos)
@@ -113,27 +106,32 @@
                         }
                     </div>
                 }
-            </EditForm>
+            </div>
+
+            if (gridTurnos != null)
+            {
+                <RadzenScheduler @ref=@scheduler SlotRender=@OnSlotRender style="height: 768px;" TItem="Turno" Data=@gridTurnos StartProperty="FechaHoraInicio" EndProperty="FechaHoraFin"
+                         SelectedIndex="2" TextProperty="Text"
+                         SlotSelect=@OnSlotSelect AppointmentSelect=@OnAppointmentSelect AppointmentRender=@OnAppointmentRender>
+                    <RadzenDayView />
+                    <RadzenWeekView />
+                    <RadzenMonthView />
+                </RadzenScheduler>
+            }
         }
     </div>
 </div>
 
 @code {
 
-    public class ModelData { }
-
-    public string cmbTpSeleccionado { get; set; }
-    public long txtRTSeleccionado { get; set; }
-    public string txtCISeleccionado { get; set; }
-    public bool estaSeleccionado { get; set; } = false;
-
+    private string cmbTpSeleccionado { get; set; }
+    private long txtRTSeleccionado { get; set; }
+    private string txtCISeleccionado { get; set; }
+    private bool estaSeleccionado { get; set; } = false;
+    private RadzenScheduler<Turno> scheduler;
     private IList<TipoRecursoTecnologico> cmbTiposRecursosTecnologicos { get; set; }
-
     private IList<dynamic> gridCIsConRecursosTecnologicos { get; set; }
-
     private IList<Turno> gridTurnos { get; set; }
-
-    private ModelData modelData { get; set; } = new ModelData();
 
     //Metodo Inicilizador de la Pantalla
     protected override async Task OnInitializedAsync()
@@ -150,9 +148,10 @@
     }
 
     //On Change Seleccion Tipo Recurso Tecnologico
-    private async Task TomarSeleccionTipoRecurso(string cmbTpSeleccionado)
+    private async Task TomarSeleccionTipoRecurso(object value)
     {
-        this.cmbTpSeleccionado = cmbTpSeleccionado;
+        var cmbTpSeleccionado = value is IEnumerable<object> ? string.Join(", ", (IEnumerable<object>)value) : value;
+        this.cmbTpSeleccionado = cmbTpSeleccionado.ToString();
         this.gridCIsConRecursosTecnologicos = await _gestorRTRT.TomarTipoRecurso(this.cmbTpSeleccionado);
     }
 
@@ -165,7 +164,7 @@
         gridTurnos = await _gestorRTRT.TomarRecursoTecnologico(this.txtRTSeleccionado, this.txtCISeleccionado);
         if (gridTurnos == null)
         {
-            this.ClearRecursoSeleccionado();
+            //this.ClearRecursoSeleccionado();
             await JsRuntime.InvokeAsync<string>("alert", "El cientifico logueado no pertenece a ese centro de investigacion");
         }
     }
@@ -181,7 +180,7 @@
 
     private void TomarSeleccionRecursoTecnologico(long txtRTSeleccionado, string txtCISeleccionado)
     {
-        this.estaSeleccionado = txtRTSeleccionado != this.txtRTSeleccionado? true : !this.estaSeleccionado;
+        this.estaSeleccionado = txtRTSeleccionado != this.txtRTSeleccionado ? true : !this.estaSeleccionado;
         this.txtRTSeleccionado = txtRTSeleccionado;
         this.txtCISeleccionado = txtCISeleccionado;
     }
@@ -193,7 +192,53 @@
         this.txtRTSeleccionado = 0;
     }
 
-    public void SendDto()
+    public void OnSlotRender(SchedulerSlotRenderEventArgs args)
     {
+        // Highlight today in month view
+        if (args.View.Text == "Month" && args.Start.Date == DateTime.Today)
+        {
+            args.Attributes["style"] = "background: rgba(255,220,40,.2);";
+        }
+
+        // Highlight working hours (9-18)
+        if ((args.View.Text == "Week" || args.View.Text == "Day") && args.Start.Hour > 8 && args.Start.Hour < 19)
+        {
+            args.Attributes["style"] = "background: rgba(255,220,40,.2);";
+        }
+    }
+
+    public async Task OnSlotSelect(SchedulerSlotSelectEventArgs args)
+    {
+        Turno data = await DialogService.OpenAsync<AddAppointmentPage>("Add Appointment",
+            new Dictionary<string, object> { { "Start", args.Start }, { "End", args.End } });
+
+        if (data != null)
+        {
+            gridTurnos.Add(data);
+            // Either call the Reload method or reassign the Data property of the Scheduler
+            await scheduler.Reload();
+        }
+    }
+
+    public async Task OnAppointmentSelect(SchedulerAppointmentSelectEventArgs<Turno> args)
+    {
+        await scheduler.Reload();
+    }
+
+    public void OnAppointmentRender(SchedulerAppointmentRenderEventArgs<Turno> args)
+    {
+        // Never call StateHasChanged in AppointmentRender - would lead to infinite loop
+        switch (args.Data.MostrarTurno().MostrarEstadoActual())
+        {
+            case "Disponible":
+                args.Attributes["class"] = "p-3 mb-2 bg-primary text-white";
+                break;
+            case "PendienteConfirmacion":
+                args.Attributes["class"] = "p-3 mb-2 bg-secondary text-white";
+                break;
+            case "Reservado":
+                args.Attributes["class"] = "p-3 mb-2 bg-danger text-white";
+                break;
+        }
     }
 }
