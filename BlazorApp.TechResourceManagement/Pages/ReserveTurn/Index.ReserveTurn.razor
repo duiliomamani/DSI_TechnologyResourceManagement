@@ -245,8 +245,8 @@
                 new Dictionary<string, object>() {
                     { "RTSeleccionado", recursoTecnologico },
                     { "turno", turno } },
-                new DialogOptions() { Width = "700px", Height = "570px", Resizable = true, Draggable = true });
-        if (rt)
+                new DialogOptions() { Width = "700px", Height = "570px", Resizable = true, Draggable = true, ShowClose = false, CloseDialogOnEsc = false, CloseDialogOnOverlayClick = false });
+        if (rt != null && rt)
         {
             gridTurnos = await _gestorRTRT.TomarRecursoTecnologico(recursoTecnologico, this.txtCISeleccionado);
             child.ActualizarSchulder();
