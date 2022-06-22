@@ -26,7 +26,17 @@
         public Estado MostrarEstadoActual() => cambioEstadoTurno.First(e => e.EsActualCET()).MostrarActualEstado().MostrarEstado();
         public bool EsPosteriorAlDiaDeHoy(DateTime dateTime)
         {
-            return fechaHoraInicio.Date >= dateTime.Date;
+            return fechaHoraInicio >= dateTime;
+        }
+        public bool CumpleConAntelacion(DateTime dateTime, TimeSpan timeSpan)
+        {
+            if (fechaHoraInicio.Date == dateTime.Date)
+            {
+                //Verifico la diferencias de minutos que pasaron y si puede reservar
+                var rt = (fechaHoraInicio.TimeOfDay.TotalMinutes - dateTime.TimeOfDay.TotalMinutes);
+                return rt >= timeSpan.TotalMinutes;
+            }
+            return fechaHoraInicio > dateTime;
         }
         public bool EstoyDisponible()
         {

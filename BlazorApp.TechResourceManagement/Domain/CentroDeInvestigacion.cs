@@ -58,6 +58,7 @@
 
         //Metodos
         public CentroDeInvestigacion MostrarCI() => this;
+        public TimeSpan TiempoAntelacionReserva() => tiempoAntelacionReserva;
         public bool EsCIActual(string sigla) => this.sigla == sigla;
         public IList<RecursoTecnologico> MisRecursosTecnologicos() => recursosTecnologicos;
         public IList<AsignacionCientificoDelCI> MisCientificos() => cientificos;

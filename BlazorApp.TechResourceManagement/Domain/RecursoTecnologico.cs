@@ -44,6 +44,7 @@
         //Metodos
         public Modelo MostrarModelo() => ModeloDelRT;
         public IList<Turno> MostrarMisTurnos(DateTime dateTime) => turnos.Where(tur => tur.EsPosteriorAlDiaDeHoy(dateTime)).ToList();
+        public IList<Turno> MostrarMisTurnosNOCI(DateTime dateTime, TimeSpan timeSpan) => turnos.Where(tur => tur.EsPosteriorAlDiaDeHoy(dateTime) && tur.CumpleConAntelacion(dateTime, timeSpan)).ToList();
         public bool EsRecursoActual(long? numeroRT) => numeroRT.HasValue && this.numeroRT == numeroRT.Value;
         public bool EsTipoSeleccionado(TipoRecursoTecnologico tipoRecursoTecnologico)
         {

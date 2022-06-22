@@ -153,16 +153,20 @@ namespace BlazorApp.TechResourceManagement.Bussiness
             {
                 //RecursoTecnologico Seleccionado
                 BuscarTurnos(recursoTecnologicoSeleccionado, out turnos);
-                return turnos.Any() ? turnos : null;
             }
             else
             {
-                return null;
+                BuscarTurnosNOCi(recursoTecnologicoSeleccionado, out turnos);
             }
+            return turnos.Any() ? turnos : null;
         }
         private void BuscarTurnos(RecursoTecnologico RT, out IList<Turno> turnos)
         {
             turnos = RT.MostrarMisTurnos(GetFechaHoraActual());
+        }
+        private void BuscarTurnosNOCi(RecursoTecnologico RT, out IList<Turno> turnos)
+        {
+            turnos = RT.MostrarMisTurnosNOCI(GetFechaHoraActual(),centroInvestigacionSeleccionado.TiempoAntelacionReserva());
         }
         public IDictionary<bool, Tuple<RecursoTecnologico, Turno>> TomarTurno(Turno turno)
         {
@@ -197,8 +201,10 @@ namespace BlazorApp.TechResourceManagement.Bussiness
 
             turno.Reservar(reservado);
 
-            centrosDeInvestigacion.ToList().ForEach(ci => {
-                if (ci.EsCIActual(centroInvestigacionSeleccionado.Sigla)){
+            centrosDeInvestigacion.ToList().ForEach(ci =>
+            {
+                if (ci.EsCIActual(centroInvestigacionSeleccionado.Sigla))
+                {
                     ci.MisRecursosTecnologicos().Remove(recursoTecnologicoSeleccionado);
                     recursoTecnologicoSeleccionado.MostrarMisTurnos(DateTime.Now).Remove(turno);
                     recursoTecnologicoSeleccionado.MostrarMisTurnos(DateTime.Now).Add(turno);

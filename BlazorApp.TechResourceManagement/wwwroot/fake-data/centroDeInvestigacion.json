@@ -7,7 +7,7 @@
     "piso": 1,
     "telefonosContacto": [ "123-1231233", "111-1231233" ],
     "correoElectronico": "contacto@ciqb.fcq.un.edu.ar",
-    "tiempoAntelacionReserva": "02:30:00",
+    "tiempoAntelacionReserva": "01:30:00",
     "recursosTecnologicos": [
       {
         "numeroRT": 123,
@@ -230,7 +230,88 @@
             }
           }
         ],
-        "turnos": []
+        "turnos": [
+          {
+            "fechaGeneracion": "2022-05-14T14:08:17",
+            "diaSemana": "Tuesday",
+            "fechaHoraInicio": "2022-06-23T14:08:17",
+            "fechaHoraFin": "2022-06-23T14:09:17",
+            "cambioEstadoTurno": [
+              {
+                "fechaHoraDesde": "2022-06-20T14:08:17",
+                "fechaHoraHasta": "2022-06-20T14:10:17",
+                "estado": {
+                  "nombre": "Disponible",
+                  "ambito": "Turno"
+                }
+              },
+              {
+                "fechaHoraDesde": "2022-06-20T14:10:17",
+                "fechaHoraHasta": "2022-06-21T14:08:17",
+                "estado": {
+                  "nombre": "Reservado",
+                  "ambito": "Turno"
+                }
+              },
+              {
+                "fechaHoraDesde": "2022-06-21T14:08:18",
+                "fechaHoraHasta": null,
+                "estado": {
+                  "nombre": "PendienteConfirmacion",
+                  "ambito": "Turno"
+                }
+              }
+            ]
+          },
+          {
+            "fechaGeneracion": "2022-05-14T14:08:17",
+            "diaSemana": "Thursday",
+            "fechaHoraInicio": "2022-06-24T14:08:17",
+            "fechaHoraFin": "2022-06-24T14:09:17",
+            "cambioEstadoTurno": [
+              {
+                "fechaHoraDesde": "2022-06-20T14:08:17",
+                "fechaHoraHasta": null,
+                "estado": {
+                  "nombre": "Disponible",
+                  "ambito": "Turno"
+                }
+              }
+            ]
+          },
+          {
+            "fechaGeneracion": "2022-05-14T14:08:17",
+            "diaSemana": "Thursday",
+            "fechaHoraInicio": "2022-06-24T15:08:17",
+            "fechaHoraFin": "2022-06-24T15:09:17",
+            "cambioEstadoTurno": [
+              {
+                "fechaHoraDesde": "2022-06-20T14:08:17",
+                "fechaHoraHasta": null,
+                "estado": {
+                  "nombre": "Disponible",
+                  "ambito": "Turno"
+                }
+              }
+            ]
+          },
+          {
+            "fechaGeneracion": "2022-05-14T14:08:17",
+            "diaSemana": "Monday",
+            "fechaHoraInicio": "2022-06-27T14:08:17",
+            "fechaHoraFin": "2022-06-27T14:10:17",
+            "cambioEstadoTurno": [
+              {
+                "fechaHoraDesde": "2022-06-20T14:08:17",
+                "fechaHoraHasta": null,
+                "estado": {
+                  "nombre": "Disponible",
+                  "ambito": "Turno"
+                }
+              }
+            ]
+          }
+        ]
       },
       {
         "numeroRT": 211,
@@ -309,7 +390,72 @@
             }
           }
         ],
-        "turnos": []
+        "turnos": [
+          {
+            "fechaGeneracion": "2022-05-14T14:08:17",
+            "diaSemana": "Tuesday",
+            "fechaHoraInicio": "2022-06-23T14:08:17",
+            "fechaHoraFin": "2022-06-23T14:09:17",
+            "cambioEstadoTurno": [
+              {
+                "fechaHoraDesde": "2022-06-20T14:08:17",
+                "fechaHoraHasta": "2022-06-20T14:10:17",
+                "estado": {
+                  "nombre": "Disponible",
+                  "ambito": "Turno"
+                }
+              },
+              {
+                "fechaHoraDesde": "2022-06-20T14:10:17",
+                "fechaHoraHasta": "2022-06-21T14:08:17",
+                "estado": {
+                  "nombre": "Reservado",
+                  "ambito": "Turno"
+                }
+              },
+              {
+                "fechaHoraDesde": "2022-06-21T14:08:18",
+                "fechaHoraHasta": null,
+                "estado": {
+                  "nombre": "PendienteConfirmacion",
+                  "ambito": "Turno"
+                }
+              }
+            ]
+          },
+          {
+            "fechaGeneracion": "2022-05-14T14:08:17",
+            "diaSemana": "Thursday",
+            "fechaHoraInicio": "2022-06-24T14:08:17",
+            "fechaHoraFin": "2022-06-24T14:09:17",
+            "cambioEstadoTurno": [
+              {
+                "fechaHoraDesde": "2022-06-20T14:08:17",
+                "fechaHoraHasta": null,
+                "estado": {
+                  "nombre": "Disponible",
+                  "ambito": "Turno"
+                }
+              }
+            ]
+          },
+          {
+            "fechaGeneracion": "2022-05-14T14:08:17",
+            "diaSemana": "Monday",
+            "fechaHoraInicio": "2022-06-27T14:08:17",
+            "fechaHoraFin": "2022-06-27T14:10:17",
+            "cambioEstadoTurno": [
+              {
+                "fechaHoraDesde": "2022-06-20T14:08:17",
+                "fechaHoraHasta": null,
+                "estado": {
+                  "nombre": "Disponible",
+                  "ambito": "Turno"
+                }
+              }
+            ]
+          }
+        ]
       }
     ],
     "cientificos": [
@@ -408,6 +554,72 @@
               "nombre": "Peso del equipo"
             }
           }
+        ],
+        "turnos": [
+          {
+            "fechaGeneracion": "2022-05-14T14:08:17",
+            "diaSemana": "Wednesday",
+            "fechaHoraInicio": "2022-06-22T20:08:17",
+            "fechaHoraFin": "2022-06-22T20:09:17",
+            "cambioEstadoTurno": [
+              {
+                "fechaHoraDesde": "2022-06-22T14:08:17",
+                "fechaHoraHasta": null,
+                "estado": {
+                  "nombre": "Disponible",
+                  "ambito": "Turno"
+                }
+              }
+            ]
+          },
+          {
+            "fechaGeneracion": "2022-05-14T14:08:17",
+            "diaSemana": "Tuesday",
+            "fechaHoraInicio": "2022-06-23T14:08:17",
+            "fechaHoraFin": "2022-06-23T14:09:17",
+            "cambioEstadoTurno": [
+              {
+                "fechaHoraDesde": "2022-06-20T14:08:17",
+                "fechaHoraHasta": "2022-06-20T14:10:17",
+                "estado": {
+                  "nombre": "Disponible",
+                  "ambito": "Turno"
+                }
+              },
+              {
+                "fechaHoraDesde": "2022-06-20T14:10:17",
+                "fechaHoraHasta": "2022-06-21T14:08:17",
+                "estado": {
+                  "nombre": "Reservado",
+                  "ambito": "Turno"
+                }
+              },
+              {
+                "fechaHoraDesde": "2022-06-21T14:08:18",
+                "fechaHoraHasta": null,
+                "estado": {
+                  "nombre": "PendienteConfirmacion",
+                  "ambito": "Turno"
+                }
+              }
+            ]
+          },
+          {
+            "fechaGeneracion": "2022-05-14T14:08:17",
+            "diaSemana": "Monday",
+            "fechaHoraInicio": "2022-06-27T14:08:17",
+            "fechaHoraFin": "2022-06-27T14:10:17",
+            "cambioEstadoTurno": [
+              {
+                "fechaHoraDesde": "2022-06-20T14:08:17",
+                "fechaHoraHasta": null,
+                "estado": {
+                  "nombre": "Disponible",
+                  "ambito": "Turno"
+                }
+              }
+            ]
+          }
         ]
       },
       {
@@ -495,7 +707,72 @@
             }
           }
         ],
-        "turnos": []
+        "turnos": [
+          {
+            "fechaGeneracion": "2022-05-14T14:08:17",
+            "diaSemana": "Tuesday",
+            "fechaHoraInicio": "2022-06-23T14:08:17",
+            "fechaHoraFin": "2022-06-23T14:09:17",
+            "cambioEstadoTurno": [
+              {
+                "fechaHoraDesde": "2022-06-20T14:08:17",
+                "fechaHoraHasta": "2022-06-20T14:10:17",
+                "estado": {
+                  "nombre": "Disponible",
+                  "ambito": "Turno"
+                }
+              },
+              {
+                "fechaHoraDesde": "2022-06-20T14:10:17",
+                "fechaHoraHasta": "2022-06-21T14:08:17",
+                "estado": {
+                  "nombre": "Reservado",
+                  "ambito": "Turno"
+                }
+              },
+              {
+                "fechaHoraDesde": "2022-06-21T14:08:18",
+                "fechaHoraHasta": null,
+                "estado": {
+                  "nombre": "PendienteConfirmacion",
+                  "ambito": "Turno"
+                }
+              }
+            ]
+          },
+          {
+            "fechaGeneracion": "2022-05-14T14:08:17",
+            "diaSemana": "Thursday",
+            "fechaHoraInicio": "2022-06-24T14:08:17",
+            "fechaHoraFin": "2022-06-24T14:09:17",
+            "cambioEstadoTurno": [
+              {
+                "fechaHoraDesde": "2022-06-20T14:08:17",
+                "fechaHoraHasta": null,
+                "estado": {
+                  "nombre": "Disponible",
+                  "ambito": "Turno"
+                }
+              }
+            ]
+          },
+          {
+            "fechaGeneracion": "2022-05-14T14:08:17",
+            "diaSemana": "Monday",
+            "fechaHoraInicio": "2022-06-27T14:08:17",
+            "fechaHoraFin": "2022-06-27T14:10:17",
+            "cambioEstadoTurno": [
+              {
+                "fechaHoraDesde": "2022-06-20T14:08:17",
+                "fechaHoraHasta": null,
+                "estado": {
+                  "nombre": "Disponible",
+                  "ambito": "Turno"
+                }
+              }
+            ]
+          }
+        ]
       },
       {
         "numeroRT": 126,
@@ -573,7 +850,8 @@
               "nombre": "Peso del equipo"
             }
           }
-        ]
+        ],
+        "turnos": []
       },
       {
         "numeroRT": 385,
@@ -713,7 +991,72 @@
             }
           }
         ],
-        "turnos": []
+        "turnos": [
+          {
+            "fechaGeneracion": "2022-05-14T14:08:17",
+            "diaSemana": "Tuesday",
+            "fechaHoraInicio": "2022-06-23T14:08:17",
+            "fechaHoraFin": "2022-06-23T14:09:17",
+            "cambioEstadoTurno": [
+              {
+                "fechaHoraDesde": "2022-06-20T14:08:17",
+                "fechaHoraHasta": "2022-06-20T14:10:17",
+                "estado": {
+                  "nombre": "Disponible",
+                  "ambito": "Turno"
+                }
+              },
+              {
+                "fechaHoraDesde": "2022-06-20T14:10:17",
+                "fechaHoraHasta": "2022-06-21T14:08:17",
+                "estado": {
+                  "nombre": "Reservado",
+                  "ambito": "Turno"
+                }
+              },
+              {
+                "fechaHoraDesde": "2022-06-21T14:08:18",
+                "fechaHoraHasta": null,
+                "estado": {
+                  "nombre": "PendienteConfirmacion",
+                  "ambito": "Turno"
+                }
+              }
+            ]
+          },
+          {
+            "fechaGeneracion": "2022-05-14T14:08:17",
+            "diaSemana": "Thursday",
+            "fechaHoraInicio": "2022-06-24T14:08:17",
+            "fechaHoraFin": "2022-06-24T14:09:17",
+            "cambioEstadoTurno": [
+              {
+                "fechaHoraDesde": "2022-06-20T14:08:17",
+                "fechaHoraHasta": null,
+                "estado": {
+                  "nombre": "Disponible",
+                  "ambito": "Turno"
+                }
+              }
+            ]
+          },
+          {
+            "fechaGeneracion": "2022-05-14T14:08:17",
+            "diaSemana": "Monday",
+            "fechaHoraInicio": "2022-06-27T14:08:17",
+            "fechaHoraFin": "2022-06-27T14:10:17",
+            "cambioEstadoTurno": [
+              {
+                "fechaHoraDesde": "2022-06-20T14:08:17",
+                "fechaHoraHasta": null,
+                "estado": {
+                  "nombre": "Disponible",
+                  "ambito": "Turno"
+                }
+              }
+            ]
+          }
+        ]
       }
     ],
     "cientificos": [
