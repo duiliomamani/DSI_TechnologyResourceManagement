@@ -11,14 +11,14 @@
         <RadzenCard class="w-100 m-3">
             <h3 class="h5">Informacion del Recurso Tecnologico</h3>
             <div class="flex-row">
-                <RadzenImage Path="@recursoTecnologico.Imagenes.FirstOrDefault()" Class="rounded-circle float-start mt-1 mr-3 w-25" />
+                <RadzenImage Path="@RTSeleccionado.Imagenes.FirstOrDefault()" Class="rounded-circle float-start mt-1 mr-3 w-25" />
                 <div class="float-end">
                     <div>Nro</div>
-                    <b>#@(recursoTecnologico.NumeroRT)</b>
+                    <b>#@(RTSeleccionado.NumeroRT)</b>
                     <div class="mt-3">Tipo</div>
-                    <b>@recursoTecnologico.TipoRecursoTecnologico.Nombre</b>
+                    <b>@RTSeleccionado.TipoRecursoTecnologico.Nombre</b>
                     <div class="mt-3">Modelo</div>
-                    <b>@recursoTecnologico.ModeloDelRT.Nombre</b>
+                    <b>@RTSeleccionado.ModeloDelRT.Nombre</b>
                 </div>
             </div>
         </RadzenCard>
@@ -63,13 +63,13 @@
 
 @code {
     [Parameter]
-    public RecursoTecnologico recursoTecnologico { get; set; }
+    public RecursoTecnologico RTSeleccionado { get; set; }
     [Parameter]
     public EventCallback<(bool, string, string)> OnShowDialogCallback { get; set; }
     [Parameter]
     public Turno turno { get; set; }
-    public bool whatsapp { get; set; }
-    public bool email { get; set; } = true;
+    private bool whatsapp { get; set; }
+    private bool email { get; set; } = true;
 
     private async Task TomarConfirmacion()
     {

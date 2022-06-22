@@ -7,9 +7,9 @@
 {
     <div class="container-fluid">
         <div class="px-3 py-4">
-            <RadzenScheduler @ref=@scheduler SlotRender=@OnSlotRender style="height: 768px;" TItem="Turno" Data=@gridTurnos StartProperty="FechaHoraInicio" EndProperty="FechaHoraFin"
+            <RadzenScheduler @ref=@scheduler SlotRender=@CargarSchulder style="height: 768px;" TItem="Turno" Data=@gridTurnos StartProperty="FechaHoraInicio" EndProperty="FechaHoraFin"
                          SelectedIndex="1" TextProperty="TextDisplay"
-                         SlotSelect=@OnSlotSelect AppointmentSelect=@SolicitarSeleccionTurno AppointmentRender=@OnAppointmentRender>
+                         SlotSelect=@OnSlotSelect AppointmentSelect=@SolicitarSeleccionTurno AppointmentRender=@CargarTurnos>
                 <RadzenWeekView />
                 <RadzenMonthView />
             </RadzenScheduler>
@@ -37,7 +37,7 @@
     }
 
     //Render Schulder
-    public void OnSlotRender(SchedulerSlotRenderEventArgs args)
+    public void CargarSchulder(SchedulerSlotRenderEventArgs args)
     {
         // Highlight today in month view
         bool poseeTurno = gridTurnos.Any(turno => turno.FechaHoraInicio.Date == args.Start.Date && turno.EstoyDisponible());
@@ -68,7 +68,7 @@
         }
     }
     //Render Schulder
-    public void OnAppointmentRender(SchedulerAppointmentRenderEventArgs<Turno> args)
+    public void CargarTurnos(SchedulerAppointmentRenderEventArgs<Turno> args)
     {
         // Never call StateHasChanged in AppointmentRender - would lead to infinite loop
         args.Attributes["title"] = $"{args.Data.FechaHoraInicio.ToString("dd-MM-yyyy HH:mm")}-{args.Data.FechaHoraFin.ToString("dd-MM-yyyy HH:mm")}";
