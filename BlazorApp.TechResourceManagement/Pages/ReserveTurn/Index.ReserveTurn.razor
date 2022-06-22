@@ -119,9 +119,10 @@
     </div>
 </div>
 
-<SchulderTurn gridTurnos="@gridTurnos" OnShowDialogCallback="@((args)=> SolicitarConfirmacionTurno(args.Item1,args.Item2, args.Item3))"></SchulderTurn>
+<SchulderTurn @ref="child" gridTurnos="@gridTurnos" OnShowDialogCallback="@((args)=> SolicitarConfirmacionTurno(args.Item1,args.Item2, args.Item3))"></SchulderTurn>
 
 @code {
+    private SchulderTurn child;
     private IList<Turno> gridTurnos { get; set; }
     private string cmbTpSeleccionado { get; set; }
     private RecursoTecnologico? RTSeleccionado { get; set; }
@@ -181,6 +182,7 @@
 
     private void TomarSeleccionRecursoTecnologico(RecursoTecnologico RTSeleccionado, string txtCISeleccionado)
     {
+        //Tomo la seleccion del recurso tecnologico y agrego logica al FrontEnd
         this.estaSeleccionado = !RTSeleccionado.EsRecursoActual(this.RTSeleccionado?.NumeroRT) ? true : !this.estaSeleccionado;
         this.RTSeleccionado = RTSeleccionado;
         this.txtCISeleccionado = txtCISeleccionado;
@@ -188,11 +190,11 @@
 
     private void ClearRecursoSeleccionado()
     {
+        //Limpio la seleccion del recurso
         this.estaSeleccionado = !this.estaSeleccionado;
         this.txtCISeleccionado = string.Empty;
         this.RTSeleccionado = null;
     }
-
 
     public async void SinTurnos(bool withMessageAsString, string message)
     {
@@ -228,7 +230,8 @@
                             <h3>@message</h3>
                         </div>
                     </div>
-                </div>,
+                </div>
+                ,
                 new DialogOptions()
                 {
                     Style = "min-height:auto;min-width:auto;width:auto",
@@ -236,13 +239,17 @@
                     CloseDialogOnOverlayClick = true
                 });
     }
-
     public async Task SolicitarConfirmacionTurno(string message, Turno turno, RecursoTecnologico recursoTecnologico)
     {
-        await DialogService.OpenAsync<DetailTurn>(message,
+        var rt = await DialogService.OpenAsync<DetailTurn>(message,
                 new Dictionary<string, object>() {
                     { "recursoTecnologico", recursoTecnologico },
                     { "turno", turno } },
                 new DialogOptions() { Width = "700px", Height = "570px", Resizable = true, Draggable = true });
+        if (rt)
+        {
+            gridTurnos = await _gestorRTRT.TomarRecursoTecnologico(recursoTecnologico, this.txtCISeleccionado);
+            child.ActualizarSchulder();
+        }
     }
 }

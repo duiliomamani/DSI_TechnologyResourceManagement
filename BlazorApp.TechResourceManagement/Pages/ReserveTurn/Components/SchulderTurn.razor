@@ -31,6 +31,11 @@
         await OnShowDialogCallback.InvokeAsync(("Informacion Reserva Turno", turno, recursoTecnologico));
     }
 
+    public async void ActualizarSchulder()
+    {
+        await scheduler.Reload();
+    }
+
     //Render Schulder
     public void OnSlotRender(SchedulerSlotRenderEventArgs args)
     {
@@ -90,12 +95,14 @@
     // Seleccion del turno
     public async Task SolicitarSeleccionTurno(SchedulerAppointmentSelectEventArgs<Turno> args)
     {
+        //Toma la seleccion del turno del schulder
         await this.TomarSeleccionTurno(args.Data);
         return;
     }
 
     private async Task TomarSeleccionTurno(Turno turno)
     {
+        //voy a Seleccionar el turno dentro del gestor y lo voy a mostrar
         var ret = _gestorRTRT.TomarTurno(turno);
 
         if (ret.Keys.First())
