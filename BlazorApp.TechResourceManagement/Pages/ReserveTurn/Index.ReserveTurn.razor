@@ -164,7 +164,7 @@
         if (gridTurnos == null)
         {
             //this.ClearRecursoSeleccionado();
-            this.SinTurnos(true, "El recurso tecnologico seleccionado no posee turnos.");
+            this.DialogoInformacion(true, "El recurso tecnologico seleccionado no posee turnos.", "images/resource-tech-background-1.jpg");
             this.ClearRecursoSeleccionado();
             //await JsRuntime.InvokeAsync<string>("alert", "El recurso tecnologico no posee turnos");
         }
@@ -196,7 +196,32 @@
         this.RTSeleccionado = null;
     }
 
-    public async void SinTurnos(bool withMessageAsString, string message)
+    public async Task SolicitarConfirmacionTurno(string message, Turno turno, RecursoTecnologico recursoTecnologico)
+    {
+        var rt = await DialogService.OpenAsync<DetailTurn>(message,
+                new Dictionary<string, object>() {
+                    { "RTSeleccionado", recursoTecnologico },
+                    { "turno", turno } },
+                new DialogOptions()
+                    {
+                        Width = "750px",
+                        Height = "710px",
+                        Resizable = true,
+                        Draggable = true,
+                        ShowClose = false,
+                        CloseDialogOnEsc = false,
+                        CloseDialogOnOverlayClick = false
+                    });
+        if (rt != null && rt)
+        {
+            gridTurnos = await _gestorRTRT.TomarRecursoTecnologico(recursoTecnologico, this.txtCISeleccionado);
+            this.DialogoInformacion(true, "Confirmacion de Reserva de Turno", "images/resource-tech-background-4.jpg");
+            child.ActualizarSchulder();
+        }
+    }
+
+
+    public async void DialogoInformacion(bool withMessageAsString, string message, string pathImage)
     {
         InvokeAsync(async () =>
         {
@@ -209,47 +234,34 @@
 
         if (withMessageAsString)
         {
-            await MostrarDialogoSinTurnos(message, "images/resource-tech-background-1.jpg");
+            await MostrarDialogoInformacion(message, pathImage);
         }
         else
         {
-            await MostrarDialogoSinTurnos(string.Empty, "images/resource-tech-background-0.jpg");
+            await MostrarDialogoInformacion(string.Empty, "images/resource-tech-background-0.jpg");
         }
     }
 
     // Busy dialog from markup
-    public async Task MostrarDialogoSinTurnos(string message, string pathImage)
+    public async Task MostrarDialogoInformacion(string message, string pathImage)
     {
         await DialogService.OpenAsync("Información", ds =>
-                @<div>
-                    <div class="row">
-                        <div class="col text-center p-5">
-                            <RadzenImage Path="@pathImage"
-                                     class=" d-inline-block justify-content-between align-items-center"
-                                     Style="width: 200px; margin-bottom: 40px;" />
-                            <h3>@message</h3>
-                        </div>
+            @<div>
+                <div class="row">
+                    <div class="col text-center p-5">
+                        <RadzenImage Path="@pathImage"
+                                 class=" d-inline-block justify-content-between align-items-center"
+                                 Style="width: 200px; margin-bottom: 40px;" />
+                        <h3>@message</h3>
                     </div>
                 </div>
-                ,
-                new DialogOptions()
+            </div>,
+            new DialogOptions()
                 {
                     Style = "min-height:auto;min-width:auto;width:auto",
+                    Resizable = true,
                     CloseDialogOnEsc = true,
                     CloseDialogOnOverlayClick = true
                 });
-    }
-    public async Task SolicitarConfirmacionTurno(string message, Turno turno, RecursoTecnologico recursoTecnologico)
-    {
-        var rt = await DialogService.OpenAsync<DetailTurn>(message,
-                new Dictionary<string, object>() {
-                    { "RTSeleccionado", recursoTecnologico },
-                    { "turno", turno } },
-                new DialogOptions() { Width = "700px", Height = "570px", Resizable = true, Draggable = true, ShowClose = false, CloseDialogOnEsc = false, CloseDialogOnOverlayClick = false });
-        if (rt != null && rt)
-        {
-            gridTurnos = await _gestorRTRT.TomarRecursoTecnologico(recursoTecnologico, this.txtCISeleccionado);
-            child.ActualizarSchulder();
-        }
     }
 }

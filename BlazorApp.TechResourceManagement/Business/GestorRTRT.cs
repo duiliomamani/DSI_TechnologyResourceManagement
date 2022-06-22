@@ -166,7 +166,7 @@ namespace BlazorApp.TechResourceManagement.Bussiness
         }
         private void BuscarTurnosNOCi(RecursoTecnologico RT, out IList<Turno> turnos)
         {
-            turnos = RT.MostrarMisTurnosNOCI(GetFechaHoraActual(),centroInvestigacionSeleccionado.TiempoAntelacionReserva());
+            turnos = RT.MostrarMisTurnosNOCI(GetFechaHoraActual(), centroInvestigacionSeleccionado.TiempoAntelacionReserva());
         }
         public IDictionary<bool, Tuple<RecursoTecnologico, Turno>> TomarTurno(Turno turno)
         {
@@ -187,12 +187,11 @@ namespace BlazorApp.TechResourceManagement.Bussiness
         {
             return turno.EstoyDisponible();
         }
-        public IList<Turno> TomarConfirmacion(Turno turno)
+        public async Task TomarConfirmacion(Turno turno)
         {
-            RegistrarReserva(turno);
-            return null;
+            await RegistrarReserva(turno);
         }
-        public async void RegistrarReserva(Turno turno)
+        public async Task RegistrarReserva(Turno turno)
         {
             //Obtengo los centros de investigacion
             IList<Estado> estados = await GetJsonAsync<List<Estado>>("fake-data/estado.json");
@@ -211,8 +210,6 @@ namespace BlazorApp.TechResourceManagement.Bussiness
                     ci.MisRecursosTecnologicos().Add(recursoTecnologicoSeleccionado);
                 }
             });
-            //PostJsonAsync("fake-data/centroDeInvestigacion.json", centrosDeInvestigacion);
-            //JsonHelper.JsonWriter("fake-data", "centroDeInvestigacion.json", JsonHelper.Serialize(centrosDeInvestigacion));
         }
         private async Task<T> GetJsonAsync<T>(string path) where T : new()
         {

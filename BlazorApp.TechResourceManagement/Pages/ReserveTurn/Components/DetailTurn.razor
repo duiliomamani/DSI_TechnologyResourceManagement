@@ -73,53 +73,8 @@
 
     private async Task TomarConfirmacion()
     {
+        await _gestorRTRT.TomarConfirmacion(turno);
+
         DialogService.Close(true);
-
-        var rt = _gestorRTRT.TomarConfirmacion(turno);
-
-        this.MostrarConfirmacionTurno(true, "Confirmacion de Reserva de Turno");
-    }
-
-    public async void MostrarConfirmacionTurno(bool withMessageAsString, string message)
-    {
-        InvokeAsync(async () =>
-        {
-            // Simulate background task
-            await Task.Delay(2000);
-
-            // Close the dialog
-            DialogService.Close();
-        });
-
-        if (withMessageAsString)
-        {
-            await MostrarDialogoConfirmacionTurno(message, "images/resource-tech-background-4.jpg");
-        }
-        else
-        {
-            await MostrarDialogoConfirmacionTurno(string.Empty, "images/resource-tech-background-0.jpg");
-        }
-    }
-
-    // Busy dialog from markup
-    public async Task MostrarDialogoConfirmacionTurno(string message, string pathImage)
-    {
-        await DialogService.OpenAsync("Información", ds =>
-        @<div>
-            <div class="row">
-                <div class="col text-center p-5">
-                    <RadzenImage Path="@pathImage"
-                             class=" d-inline-block justify-content-between align-items-center"
-                             Style="width: 200px; margin-bottom: 40px;" />
-                    <h3>@message</h3>
-                </div>
-            </div>
-        </div>,
-        new DialogOptions()
-            {
-                Style = "min-height:auto;min-width:auto;width:auto",
-                CloseDialogOnEsc = true,
-                CloseDialogOnOverlayClick = true
-            });
     }
 }
