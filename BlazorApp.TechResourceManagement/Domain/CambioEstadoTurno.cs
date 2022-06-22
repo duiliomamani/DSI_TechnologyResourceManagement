@@ -11,10 +11,14 @@
             this.fechaHoraHasta = fechaHoraHasta;
             this.estado = estado;
         }
-        public Estado MostrarEstadoActual() => estado;
+        public Estado MostrarEstado() => estado;
         public bool EsActualCET()
         {
             return !fechaHoraHasta.HasValue;
+        }
+        public bool EsDisponible()
+        {
+            return estado.EsDisponible();
         }
     }
 }

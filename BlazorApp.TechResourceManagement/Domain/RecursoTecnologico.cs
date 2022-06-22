@@ -51,15 +51,11 @@
         public bool EstaDadoBaja()
         {
             //Verifico que el estado es dado de Baja
-            var estadoActual = cambioEstadoRT.Where(x => x.EsEstadoActual()).First();
-            return estadoActual.EsBaja();
+            return cambioEstadoRT.Any(x => x.EsEstadoActual() && x.EsBaja());
         }
-        public string GetEstadoActual()
-        {
-            //Obtengo el estado actual
-            var estadoActual = cambioEstadoRT.Where(x => x.EsEstadoActual()).First();
-            return estadoActual.MostrarEstadoActual();
-        }
+
+        public string GetEstadoActual() => cambioEstadoRT.First(e => e.EsEstadoActual()).MostrarEstado().MostrarEstado();
+
         public RecursoTecnologico MostrarRT() => this;
     }
 }

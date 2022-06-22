@@ -20,6 +20,8 @@
         //Metodos
         public string MostrarEstado() => $"{nombre}";
         public bool EsAmbitoRT() => ambito == "RT";
+        public bool EsAmbitoTurno() => ambito == "Turno";
+        public bool EsDisponible() => EsAmbitoTurno() && nombre == "Disponible";
         public bool EsBajaTecnica() => EsAmbitoRT() && nombre == "BajaTecnica";
         public bool EsBajaDefinitiva() => EsAmbitoRT() && nombre == "BajaDefinitiva";
 

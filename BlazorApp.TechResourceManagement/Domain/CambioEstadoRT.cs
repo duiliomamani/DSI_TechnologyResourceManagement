@@ -13,15 +13,12 @@
         }
         public bool EsEstadoActual()
         {
-            return estado.EsAmbitoRT() && !fechaHoraHasta.HasValue;
+            return !fechaHoraHasta.HasValue;
         }
-        public string MostrarEstadoActual()
-        {
-            return estado.EsAmbitoRT() && !fechaHoraHasta.HasValue ? estado.MostrarEstado() : string.Empty;
-        }
+        public Estado MostrarEstado() => estado;
         public bool EsBaja()
         {
-            return estado.EsAmbitoRT() && (estado.EsBajaTecnica() || estado.EsBajaDefinitiva());
+            return estado.EsBajaTecnica() || estado.EsBajaDefinitiva();
         }
     }
 }

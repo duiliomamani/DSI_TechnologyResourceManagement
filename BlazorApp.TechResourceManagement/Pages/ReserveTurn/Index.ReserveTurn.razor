@@ -26,22 +26,31 @@
                 <div class="col-12">
                     <div class="form-group">
                         <label for="Dni">Tipo de Recurso Tecnologico: </label>
-                         <RadzenDropDown AllowClear="true" TValue="string" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowFiltering="true" Class="w-100" 
-                            Placeholder="Todas" Data=@cmbTiposRecursosTecnologicos TextProperty="MostrarCategoria" ValueProperty="MostrarCategoria" Change=@(args => TomarSeleccionTipoRecurso(args)) />
+                        <RadzenDropDown AllowClear="true" TValue="string"
+                                    FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                    AllowFiltering="true" Class="w-100"
+                                    Placeholder="Todas"
+                                    Data=@cmbTiposRecursosTecnologicos
+                                    TextProperty="MostrarCategoria"
+                                    ValueProperty="MostrarCategoria"
+                                    Change=@(args => TomarSeleccionTipoRecurso(args)) />
+                    </div>
                 </div>
-            </div>
-            @if (gridCIsConRecursosTecnologicos != null)
+                @if (gridCIsConRecursosTecnologicos != null)
                 {
                     <div class="accordion" id="acordionCIs">
                         @foreach (var ci in gridCIsConRecursosTecnologicos)
                         {
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="panel-heading-@ci.CI.Sigla">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panel-@ci.CI.Sigla" aria-expanded="true" aria-controls="panel-@ci.CI.Sigla">
+                                    <button class="accordion-button @(gridCIsConRecursosTecnologicos.IndexOf(ci) != 0 ? "collapsed" : "")" type="button"
+                                data-bs-toggle="collapse"
+                                aria-expanded="false"
+                                data-bs-target="#panel-@ci.CI.Sigla">
                                         @ci.CI.Nombre
                                     </button>
                                 </h2>
-                                <div id="panel-@ci.CI.Sigla" class="accordion-collapse collapse show" aria-labelledby="panel-heading-@ci.CI.Sigla" data-bs-parent="#acordionCIs">
+                                <div id="panel-@ci.CI.Sigla" class="accordion-collapse  @(gridCIsConRecursosTecnologicos.IndexOf(ci) != 0 ? "collapse" : "collapse show")" aria-labelledby="panel-heading-@ci.CI.Sigla" data-bs-parent="#acordionCIs">
                                     <div class="accordion-body">
                                         <table class="table table-striped table-responsive-xl">
                                             <thead>
@@ -107,23 +116,25 @@
                     </div>
                 }
             </div>
-
-            if (gridTurnos != null)
-            {
-                <RadzenScheduler @ref=@scheduler SlotRender=@OnSlotRender style="height: 768px;" TItem="Turno" Data=@gridTurnos StartProperty="FechaHoraInicio" EndProperty="FechaHoraFin"
-                         SelectedIndex="2" TextProperty="Text"
-                         SlotSelect=@OnSlotSelect AppointmentSelect=@OnAppointmentSelect AppointmentRender=@OnAppointmentRender>
-                    <RadzenDayView />
-                    <RadzenWeekView />
-                    <RadzenMonthView />
-                </RadzenScheduler>
-            }
         }
     </div>
 </div>
 
-@code {
+@if (gridTurnos != null)
+{
+    <div class="container-fluid">
+        <div class="px-3 py-4">
+            <RadzenScheduler @ref=@scheduler SlotRender=@OnSlotRender style="height: 768px;" TItem="Turno" Data=@gridTurnos StartProperty="FechaHoraInicio" EndProperty="FechaHoraFin"
+                         SelectedIndex="1" TextProperty="TextDisplay"
+                         SlotSelect=@OnSlotSelect AppointmentSelect=@OnAppointmentSelect AppointmentRender=@OnAppointmentRender>
+                <RadzenWeekView />
+                <RadzenMonthView />
+            </RadzenScheduler>
+        </div>
+    </div>
+}
 
+@code {
     private string cmbTpSeleccionado { get; set; }
     private long txtRTSeleccionado { get; set; }
     private string txtCISeleccionado { get; set; }
@@ -165,7 +176,9 @@
         if (gridTurnos == null)
         {
             //this.ClearRecursoSeleccionado();
-            await JsRuntime.InvokeAsync<string>("alert", "El cientifico logueado no pertenece a ese centro de investigacion");
+            this.ShowBusyDialog(true, "El recurso tecnologico seleccionado no posee turnos.");
+            this.ClearRecursoSeleccionado();
+            //await JsRuntime.InvokeAsync<string>("alert", "El recurso tecnologico no posee turnos");
         }
     }
 
@@ -175,6 +188,7 @@
         if (txtRTSeleccionado == this.txtRTSeleccionado)
         {
             this.ClearRecursoSeleccionado();
+            this.gridTurnos = null;
         }
     }
 
@@ -195,15 +209,31 @@
     public void OnSlotRender(SchedulerSlotRenderEventArgs args)
     {
         // Highlight today in month view
-        if (args.View.Text == "Month" && args.Start.Date == DateTime.Today)
+        bool poseeTurno = gridTurnos.Any(turno => turno.FechaHoraInicio.Date == args.Start.Date && turno.EstoyDisponible());
+        if (args.View.Text == "Month" && poseeTurno)
         {
-            args.Attributes["style"] = "background: rgba(255,220,40,.2);";
+            args.Attributes["class"] = "bg-primary bg-gradient";
+        }
+        else
+        {
+            args.Attributes["class"] = "bg-danger bg-gradient";
         }
 
         // Highlight working hours (9-18)
-        if ((args.View.Text == "Week" || args.View.Text == "Day") && args.Start.Hour > 8 && args.Start.Hour < 19)
+        if ((args.View.Text == "Week" || args.View.Text == "Day") )
         {
-            args.Attributes["style"] = "background: rgba(255,220,40,.2);";
+            if (args.Start.Hour > 8 && args.Start.Hour < 19 && poseeTurno)
+            {
+                args.Attributes["class"] = "bg-primary bg-gradient";
+            }
+            else if (args.Start.Hour > 8 && args.Start.Hour < 19 && !poseeTurno)
+            {
+                args.Attributes["class"] = "bg-danger bg-gradient";
+            }
+            else
+            {
+                args.Attributes["class"] = "bg-secondary bg-gradient";
+            }
         }
     }
 
@@ -228,17 +258,62 @@
     public void OnAppointmentRender(SchedulerAppointmentRenderEventArgs<Turno> args)
     {
         // Never call StateHasChanged in AppointmentRender - would lead to infinite loop
+        args.Attributes["title"] = $"{args.Data.FechaHoraInicio.ToLongDateString()}-{args.Data.FechaHoraFin.ToLongDateString()}";
+
         switch (args.Data.MostrarTurno().MostrarEstadoActual())
         {
             case "Disponible":
-                args.Attributes["class"] = "p-3 mb-2 bg-primary text-white";
+                args.Attributes["class"] = "mb-2 bg-primary bg-gradient border rounded text-white";
                 break;
             case "PendienteConfirmacion":
-                args.Attributes["class"] = "p-3 mb-2 bg-secondary text-white";
+                args.Attributes["class"] = "mb-2 bg-secondary bg-gradient border rounded text-white";
                 break;
             case "Reservado":
-                args.Attributes["class"] = "p-3 mb-2 bg-danger text-white";
+                args.Attributes["class"] = "mb-2 bg-danger bg-gradient rounded border text-white";
                 break;
         }
+    }
+
+    public async Task ShowBusyDialog(bool withMessageAsString, string message)
+    {
+        InvokeAsync(async () =>
+        {
+            // Simulate background task
+            await Task.Delay(2000);
+
+            // Close the dialog
+            DialogService.Close();
+        });
+
+        if (withMessageAsString)
+        {
+            await BusyDialog(message);
+        }
+        else
+        {
+            await BusyDialog(string.Empty);
+        }
+    }
+
+    // Busy dialog from markup
+    public async Task BusyDialog(string message)
+    {
+        await DialogService.OpenAsync("Información", ds =>
+                @<div>
+                    <div class="row">
+                        <div class="col text-center p-5">
+                            <RadzenImage Path="images/resource-tech-background-1.jpg"
+                                     class=" d-inline-block justify-content-between align-items-center"
+                                     Style="width: 200px; margin-bottom: 40px;" />
+                            <h3>@message</h3>
+                        </div>
+                    </div>
+                </div>,
+                new DialogOptions()
+                {
+                    Style = "min-height:auto;min-width:auto;width:auto",
+                    CloseDialogOnEsc = true,
+                    CloseDialogOnOverlayClick = true
+                });
     }
 }
