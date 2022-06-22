@@ -7,29 +7,56 @@ namespace BlazorApp.TechResourceManagement.Utils
 {
     public static class JsonHelper
     {
-        public static void JsonWriter(string source, string nameJson, string output)
+        public static void JsonWriter(string source, string destination, string output)
         {
-            var path = "fake-data\\" + source + "\\" + nameJson;
-            if (!File.Exists(path))
-                path = string.Format("{0}\\fake-data\\{1}\\{2}", Directory.GetCurrentDirectory(), source, nameJson);
-            if (File.Exists(path))
-            {
-                File.WriteAllText(path, output, Encoding.UTF8);
-            }
+            //File file;
+            //var ms = new MemoryStream();
+            //ms.Write(output);
+            //var content = new MultipartFormDataContent {
+            //            {
+            //            new ByteArrayContent(ms.GetBuffer()), folderName, file.Name
+            //        }
+            //        }
+            //string name = destination;
+            //string fileName = Path.GetFileName(destination);
+            //var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\fake-data\" + name + @"\");
+
+            //filePath = filePath.Replace("\\Server\\", "\\Client\\");
+
+            //if (!Directory.Exists(filePath))
+            //{
+            //    Directory.CreateDirectory(filePath);
+            //}
+            //using (var stream = new FileStream(filePath + fileName, FileMode.OpenOrCreate))
+            //{
+            //    await file.CopyToAsync(stream);
+            //}
+            //var assembly = typeof(App).Assembly;
+            //var filePaths = assembly.GetManifestResourceNames().Where(rnn => rnn.Contains("wwwroot"));
+
+            //var path = Path.Combine("/wwwroot", source, destination);
+            ////var path = "wwwroot\\fake-data\\" + source;
+            //string rootpath = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "wwwroot");
+            //if (!File.Exists(path))
+            //    path = string.Format("{0}\\fake-data\\{1}", Directory.GetCurrentDirectory(), source);
+            //if (File.Exists(path))
+            //{
+            //    File.WriteAllText(path, output, Encoding.UTF8);
+            //}
         }
-        public static string JsonReaderString(string source, string nameJson)
+        public static T JsonReader<T>(string source) where T : new()
         {
-            string jsonRead = string.Empty;
-            var path = "fake-data\\" + source + "\\" + nameJson;
+            T obj = default(T);
+            var path = "wwwroot\\fake-data\\" + source;
             if (!File.Exists(path))
-                path = string.Format("{0}\\fake-data\\{1}\\{2}", Directory.GetCurrentDirectory(), source, nameJson);
+                path = string.Format("{0}\\fake-data\\{1}", Directory.GetCurrentDirectory(), source);
             if (File.Exists(path))
             {
                 StreamReader stream = new(path, Encoding.GetEncoding("UTF-8"));
-                jsonRead = stream.ReadToEnd();
-
+                string jsonRead = stream.ReadToEnd();
+                obj = Deserialize<T>(jsonRead);
             }
-            return jsonRead;
+            return obj;
         }
 
         public static T JsonReader<T>(byte[] json) where T : new()
@@ -41,7 +68,6 @@ namespace BlazorApp.TechResourceManagement.Utils
             stream.Close();
             return obj;
         }
-
 
         public static T Deserialize<T>(string text)
         {

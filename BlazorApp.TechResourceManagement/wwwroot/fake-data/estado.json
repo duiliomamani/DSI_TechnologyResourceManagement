@@ -47,5 +47,33 @@
     "ambito": "RT",
     "esReservable": false,
     "esCancelable": false
+  },
+  {
+    "nombre": "PendienteConfirmacion",
+    "descripcion": "PendienteConfirmacion",
+    "ambito": "Turno",
+    "esReservable": false,
+    "esCancelable": false
+  },
+  {
+    "descripcion": "Reservado",
+    "nombre": "Reservado",
+    "ambito": "Turno",
+    "esReservable": false,
+    "esCancelable": false
+  },
+  {
+    "descripcion": "Disponible",
+    "nombre": "Disponible",
+    "ambito": "Turno",
+    "esReservable": false,
+    "esCancelable": false
+  },
+  {
+    "descripcion": "Cancelado",
+    "nombre": "Cancelado",
+    "ambito": "Turno",
+    "esReservable": false,
+    "esCancelable": false
   }
 ]

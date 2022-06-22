@@ -1,22 +1,20 @@
 ﻿using BlazorApp.TechResourceManagement.Domain;
 using BlazorApp.TechResourceManagement.Utils;
 using Microsoft.AspNetCore.Components.Authorization;
+using System.Net.Http.Json;
 
 namespace BlazorApp.TechResourceManagement.Bussiness
 {
     public class GestorRTRT
     {
-        private AuthenticationStateProvider _authStateProvider { get; set; }
-        private HttpClient _httpClient { get; set; }
+        private readonly IServiceProvider _serviceProvider;
 
         //Se injectan las dependencias del GestorRTRT
-        public GestorRTRT(AuthenticationStateProvider authenticationStateProvider,
-                          HttpClient httpClient)
+        public GestorRTRT(IServiceProvider serviceProvider)
         {
-            _authStateProvider = authenticationStateProvider;
-            _httpClient = httpClient;
+            _serviceProvider = serviceProvider;
         }
-        public Usuario usuarioActual { get; set; }
+        private Usuario usuarioActual { get; set; }
         private TipoRecursoTecnologico? tipoRecursoSeleccionado { get; set; }
         private RecursoTecnologico recursoTecnologicoSeleccionado { get; set; }
         private CentroDeInvestigacion centroInvestigacionSeleccionado { get; set; }
@@ -30,14 +28,12 @@ namespace BlazorApp.TechResourceManagement.Bussiness
             tiposRecursosTecnologicos = await BuscarTipoRecursoTecnologico();
             return tiposRecursosTecnologicos;
         }
-        public async Task<IList<TipoRecursoTecnologico>> BuscarTipoRecursoTecnologico()
+        private async Task<IList<TipoRecursoTecnologico>> BuscarTipoRecursoTecnologico()
         {
             //Obtengo todos los tipos de recursos
             try
             {
-                var fileJson = await _httpClient.GetByteArrayAsync("fake-data/tipoRecursoTecnologico.json");
-
-                IList<TipoRecursoTecnologico> tiposRecursos = JsonHelper.JsonReader<List<TipoRecursoTecnologico>>(fileJson);
+                IList<TipoRecursoTecnologico> tiposRecursos = await GetJsonAsync<List<TipoRecursoTecnologico>>("fake-data/tipoRecursoTecnologico.json");
 
                 return tiposRecursos ?? new List<TipoRecursoTecnologico>();
             }
@@ -53,7 +49,7 @@ namespace BlazorApp.TechResourceManagement.Bussiness
 
             return await BuscarRecursoTecnologicoPorCI(this.tipoRecursoSeleccionado);
         }
-        public async Task<IList<dynamic>> BuscarRecursoTecnologicoPorCI(TipoRecursoTecnologico? tipoRecursoSeleccionado)
+        private async Task<IList<dynamic>> BuscarRecursoTecnologicoPorCI(TipoRecursoTecnologico? tipoRecursoSeleccionado)
         {
             try
             {
@@ -61,9 +57,7 @@ namespace BlazorApp.TechResourceManagement.Bussiness
                 IList<dynamic> centrosDeInvestigacionFiltrados = new List<dynamic>();
 
                 //Obtengo los centros de investigacion
-                var fileJson = await _httpClient.GetByteArrayAsync("fake-data/centroDeInvestigacion.json");
-
-                centrosDeInvestigacion = JsonHelper.JsonReader<List<CentroDeInvestigacion>>(fileJson);
+                centrosDeInvestigacion = await GetJsonAsync<List<CentroDeInvestigacion>>("fake-data/centroDeInvestigacion.json");
 
                 foreach (var ci in centrosDeInvestigacion)
                 {
@@ -86,9 +80,7 @@ namespace BlazorApp.TechResourceManagement.Bussiness
                     IList<dynamic> ciRTAux = new List<dynamic>();
 
                     //Obtengo las marcas para hacer una dependencia hacia el modelo
-                    var fileMarcasJson = await _httpClient.GetByteArrayAsync("fake-data/marca.json");
-
-                    List<Marca> marcas = JsonHelper.JsonReader<List<Marca>>(fileMarcasJson);
+                    IList<Marca> marcas = await GetJsonAsync<List<Marca>>("fake-data/marca.json");
 
                     //Recorro toda la lista de recursos para buscar la marca
                     recursosFiltrados.ToList().ForEach(async recurso =>
@@ -119,22 +111,24 @@ namespace BlazorApp.TechResourceManagement.Bussiness
                 throw ex;
             }
         }
-        public async Task ObtenerUsuarioActual()
+        private async Task ObtenerUsuarioActual()
         {
             //A traves del estado actual de la sesion busco el usuario actual logueado
-            var authState = await _authStateProvider.GetAuthenticationStateAsync();
-            usuarioActual = new Usuario(authState.User.Identity.Name, "**********");
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var _authStateProvider = scope.ServiceProvider.GetRequiredService<AuthenticationStateProvider>();
+                // do something with context
+                var authState = await _authStateProvider.GetAuthenticationStateAsync();
+                usuarioActual = new Usuario(authState.User.Identity.Name, "**********");
+            }
         }
-
-        public async Task<bool> ValidarPertenencia(string siglaCI)
+        private async Task<bool> ValidarPertenencia(string siglaCI)
         {
             //Obtengo el usuario actual
             await ObtenerUsuarioActual();
 
-            var fileJson = await _httpClient.GetByteArrayAsync("fake-data/cientifico.json");
-
             //Obtengo todos los cientificos de los centros de investigaciones
-            IList<PersonalCientifico> personalCientificos = JsonHelper.JsonReader<List<PersonalCientifico>>(fileJson);
+            IList<PersonalCientifico> personalCientificos = await GetJsonAsync<List<PersonalCientifico>>("fake-data/cientifico.json");
 
             //Filtro dentro de todos los cientificos el usuario actual con su cientifico
             personalCientifico = personalCientificos.First(x => x.EsTuUsuario(usuarioActual));
@@ -145,20 +139,20 @@ namespace BlazorApp.TechResourceManagement.Bussiness
             //Verifico que sea el cientifico activo este dentro del CI selecciondo por el RecursoTecnologico
             return centroInvestigacionSeleccionado.EsCientificoDelCI(personalCientifico);
         }
-        public DateTime GetFechaHoraActual()
+        private DateTime GetFechaHoraActual()
         {
             return DateTime.Now;
         }
         public async Task<IList<Turno>> TomarRecursoTecnologico(RecursoTecnologico RT, string siglaCI)
         {
+            recursoTecnologicoSeleccionado = RT;
             IList<Turno> turnos;
             bool esCientificoActivo = await ValidarPertenencia(siglaCI);
-
             //Obtener Turnos Corresponde al cientifico usuario logueado
             if (esCientificoActivo)
             {
                 //RecursoTecnologico Seleccionado
-                BuscarTurnos(RT, out turnos);
+                BuscarTurnos(recursoTecnologicoSeleccionado, out turnos);
                 return turnos.Any() ? turnos : null;
             }
             else
@@ -166,11 +160,77 @@ namespace BlazorApp.TechResourceManagement.Bussiness
                 return null;
             }
         }
-
-        public void BuscarTurnos(RecursoTecnologico RT, out IList<Turno> turnos)
+        private void BuscarTurnos(RecursoTecnologico RT, out IList<Turno> turnos)
         {
             turnos = RT.MostrarMisTurnos(GetFechaHoraActual());
         }
+        public IDictionary<bool, Tuple<RecursoTecnologico, Turno>> TomarTurno(Turno turno)
+        {
+            bool disponibilidad = ValidarDisponibilidadTurno(turno);
 
+            MostrarDatosReserva(disponibilidad, turno, out Dictionary<bool, Tuple<RecursoTecnologico, Turno>> dictionary);
+
+            return dictionary;
+        }
+        private void MostrarDatosReserva(bool disponibilidad, Turno turno, out Dictionary<bool, Tuple<RecursoTecnologico, Turno>> dictionary)
+        {
+            dictionary = new Dictionary<bool, Tuple<RecursoTecnologico, Turno>>
+            {
+                { disponibilidad, new Tuple<RecursoTecnologico, Turno>(recursoTecnologicoSeleccionado.MostrarRT(), turno.MostrarTurno()) }
+            };
+        }
+        private bool ValidarDisponibilidadTurno(Turno turno)
+        {
+            return turno.EstoyDisponible();
+        }
+
+        public IList<Turno> TomarConfirmacion(Turno turno)
+        {
+            RegistrarReserva(turno);
+            return null;
+        }
+        public async void RegistrarReserva(Turno turno)
+        {
+            //Obtengo los centros de investigacion
+            IList<Estado> estados = await GetJsonAsync<List<Estado>>("fake-data/estado.json");
+
+            var reservado = estados.First(x => x.EsAmbitoTurno() && x.EsReservado());
+
+            turno.Reservar(reservado);
+
+            centrosDeInvestigacion.ToList().ForEach(ci => {
+                if (ci.EsCIActual(centroInvestigacionSeleccionado.Sigla)){
+                    ci.MisRecursosTecnologicos().Remove(recursoTecnologicoSeleccionado);
+                    recursoTecnologicoSeleccionado.MostrarMisTurnos(DateTime.Now).Remove(turno);
+                    recursoTecnologicoSeleccionado.MostrarMisTurnos(DateTime.Now).Add(turno);
+                    ci.MisRecursosTecnologicos().Add(recursoTecnologicoSeleccionado);
+                }
+            });
+            //PostJsonAsync("fake-data/centroDeInvestigacion.json", centrosDeInvestigacion);
+            //JsonHelper.JsonWriter("fake-data", "centroDeInvestigacion.json", JsonHelper.Serialize(centrosDeInvestigacion));
+        }
+
+        private async Task<T> GetJsonAsync<T>(string path) where T : new()
+        {
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var _httpClient = scope.ServiceProvider.GetRequiredService<HttpClient>();
+                // do something with context
+                var fileJson = await _httpClient.GetByteArrayAsync(path);
+                T ret = JsonHelper.JsonReader<T>(fileJson);
+                return ret;
+            }
+
+        }
+        //private async Task PostJsonAsync(string path, object T)
+        //{
+        //    using (var scope = _serviceProvider.CreateScope())
+        //    {
+        //        var _httpClient = scope.ServiceProvider.GetRequiredService<HttpClient>();
+        //        // do something with context
+        //        var fileJson = await _httpClient.PostAsJsonAsync(path, JsonHelper.Serialize(T));
+        //    }
+
+        //}
     }
 }

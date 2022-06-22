@@ -20,5 +20,7 @@
         {
             return estado.EsDisponible();
         }
+
+        public void SetFechaHoraFin() => fechaHoraHasta = DateTime.Now;
     }
 }

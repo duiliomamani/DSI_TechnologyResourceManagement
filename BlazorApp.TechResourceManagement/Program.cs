@@ -1,4 +1,5 @@
 using BlazorApp.TechResourceManagement.Bussiness;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Radzen;
@@ -20,7 +21,7 @@ namespace BlazorApp.TechResourceManagement
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-            builder.Services.AddScoped<GestorRTRT>();
+            builder.Services.AddSingleton<GestorRTRT>();
             builder.Services.AddOidcAuthentication(options =>
             {
                 builder.Configuration.Bind("Auth0", options.ProviderOptions);

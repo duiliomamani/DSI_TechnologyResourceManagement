@@ -1,4 +1,7 @@
+@using BlazorApp.TechResourceManagement.Bussiness
 @using BlazorApp.TechResourceManagement.Domain
+
+@inject GestorRTRT _gestorRTRT
 
 @if (gridTurnos != null)
 {
@@ -6,7 +9,7 @@
         <div class="px-3 py-4">
             <RadzenScheduler @ref=@scheduler SlotRender=@OnSlotRender style="height: 768px;" TItem="Turno" Data=@gridTurnos StartProperty="FechaHoraInicio" EndProperty="FechaHoraFin"
                          SelectedIndex="1" TextProperty="TextDisplay"
-                         SlotSelect=@OnSlotSelect AppointmentSelect=@OnAppointmentSelect AppointmentRender=@OnAppointmentRender>
+                         SlotSelect=@OnSlotSelect AppointmentSelect=@SolicitarSeleccionTurno AppointmentRender=@OnAppointmentRender>
                 <RadzenWeekView />
                 <RadzenMonthView />
             </RadzenScheduler>
@@ -19,14 +22,16 @@
     public IList<Turno> gridTurnos { get; set; }
 
     [Parameter]
-    public EventCallback<(string, Turno)> OnShowDialogCallback { get; set; }
+    public EventCallback<(string, Turno, RecursoTecnologico)> OnShowDialogCallback { get; set; }
 
     private RadzenScheduler<Turno> scheduler;
 
-    private async Task ShowDialogDetailTurn(Turno turno)
+    private async Task SolicitarConfirmacionTurno(Turno turno, RecursoTecnologico recursoTecnologico)
     {
-        await OnShowDialogCallback.InvokeAsync(("Informacion Reserva Turno", turno));
+        await OnShowDialogCallback.InvokeAsync(("Informacion Reserva Turno", turno, recursoTecnologico));
     }
+
+    //Render Schulder
     public void OnSlotRender(SchedulerSlotRenderEventArgs args)
     {
         // Highlight today in month view
@@ -57,27 +62,13 @@
             }
         }
     }
-
-    public async Task OnSlotSelect(SchedulerSlotSelectEventArgs args)
-    {
-        return;
-    }
-
-    public async Task OnAppointmentSelect(SchedulerAppointmentSelectEventArgs<Turno> args)
-    {
-        if (args.Data.EstoyDisponible())
-        {
-            ShowDialogDetailTurn(args.Data);
-        }
-        return;
-    }
-
+    //Render Schulder
     public void OnAppointmentRender(SchedulerAppointmentRenderEventArgs<Turno> args)
     {
         // Never call StateHasChanged in AppointmentRender - would lead to infinite loop
         args.Attributes["title"] = $"{args.Data.FechaHoraInicio.ToString("dd-MM-yyyy HH:mm")}-{args.Data.FechaHoraFin.ToString("dd-MM-yyyy HH:mm")}";
 
-        switch (args.Data.MostrarTurno().MostrarEstadoActual())
+        switch (args.Data.MostrarTurno().MostrarEstadoActual().Nombre)
         {
             case "Disponible":
                 args.Attributes["class"] = "mb-2 bg-primary bg-gradient border rounded text-white";
@@ -88,6 +79,31 @@
             case "Reservado":
                 args.Attributes["class"] = "mb-2 bg-danger bg-gradient rounded border text-white";
                 break;
+        }
+    }
+
+    public async Task OnSlotSelect(SchedulerSlotSelectEventArgs args)
+    {
+        return;
+    }
+
+    // Seleccion del turno
+    public async Task SolicitarSeleccionTurno(SchedulerAppointmentSelectEventArgs<Turno> args)
+    {
+        await this.TomarSeleccionTurno(args.Data);
+        return;
+    }
+
+    private async Task TomarSeleccionTurno(Turno turno)
+    {
+        var ret = _gestorRTRT.TomarTurno(turno);
+
+        if (ret.Keys.First())
+        {
+
+            var recursoSeleccionado = ret.Values.First().Item1;
+            var turnoSeleccionado = ret.Values.First().Item2;
+            await SolicitarConfirmacionTurno(turnoSeleccionado, recursoSeleccionado);
         }
     }
 }

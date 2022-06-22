@@ -68,16 +68,16 @@
                                                         <td>@rt.Recurso.NumeroRT</td>
                                                         <td>@rt.Recurso.ModeloDelRT.Nombre</td>
                                                         <td>@rt.MarcaDelRt.Nombre</td>
-                                                        @switch (rt.Recurso.GetEstadoActual())
+                                                        @switch (rt.Recurso.GetEstadoActual().Nombre)
                                                         {
                                                             case "Disponible":
-                                                                <td><h3 class="badge bg-primary">@rt.Recurso.GetEstadoActual()</h3></td>
+                                                                <td><h3 class="badge bg-primary">@rt.Recurso.GetEstadoActual().Nombre</h3></td>
                                                                 break;
                                                             case "EnMantenimiento":
-                                                                <td><h3 class="badge bg-success">@rt.Recurso.GetEstadoActual()</h3></td>
+                                                                <td><h3 class="badge bg-success">@rt.Recurso.GetEstadoActual().Nombre</h3></td>
                                                                 break;
                                                             case "ConIngresoEnMantenimientoCorrectivo":
-                                                                <td><h3 class="badge bg-secondary">@rt.Recurso.GetEstadoActual()</h3></td>
+                                                                <td><h3 class="badge bg-secondary">@rt.Recurso.GetEstadoActual().Nombre</h3></td>
                                                                 break;
                                                         }
                                                         <td>
@@ -119,7 +119,7 @@
     </div>
 </div>
 
-<SchulderTurn gridTurnos="@gridTurnos" OnShowDialogCallback="@((args)=> ShowDetailTurnoRecurso(args.Item1,args.Item2))"></SchulderTurn>
+<SchulderTurn gridTurnos="@gridTurnos" OnShowDialogCallback="@((args)=> SolicitarConfirmacionTurno(args.Item1,args.Item2, args.Item3))"></SchulderTurn>
 
 @code {
     private IList<Turno> gridTurnos { get; set; }
@@ -163,7 +163,7 @@
         if (gridTurnos == null)
         {
             //this.ClearRecursoSeleccionado();
-            this.ShowBusyDialog(true, "El recurso tecnologico seleccionado no posee turnos.");
+            this.SinTurnos(true, "El recurso tecnologico seleccionado no posee turnos.");
             this.ClearRecursoSeleccionado();
             //await JsRuntime.InvokeAsync<string>("alert", "El recurso tecnologico no posee turnos");
         }
@@ -194,7 +194,7 @@
     }
 
 
-    public async void ShowBusyDialog(bool withMessageAsString, string message)
+    public async void SinTurnos(bool withMessageAsString, string message)
     {
         InvokeAsync(async () =>
         {
@@ -207,41 +207,41 @@
 
         if (withMessageAsString)
         {
-            await BusyDialog(message, "images/resource-tech-background-1.jpg");
+            await MostrarDialogoSinTurnos(message, "images/resource-tech-background-1.jpg");
         }
         else
         {
-            await BusyDialog(string.Empty, "images/resource-tech-background-0.jpg");
+            await MostrarDialogoSinTurnos(string.Empty, "images/resource-tech-background-0.jpg");
         }
     }
 
     // Busy dialog from markup
-    public async Task BusyDialog(string message, string pathImage)
+    public async Task MostrarDialogoSinTurnos(string message, string pathImage)
     {
         await DialogService.OpenAsync("Información", ds =>
-        @<div>
-            <div class="row">
-                <div class="col text-center p-5">
-                    <RadzenImage Path="@pathImage"
-                             class=" d-inline-block justify-content-between align-items-center"
-                             Style="width: 200px; margin-bottom: 40px;" />
-                    <h3>@message</h3>
-                </div>
-            </div>
-        </div>,
-        new DialogOptions()
-        {
-            Style = "min-height:auto;min-width:auto;width:auto",
-            CloseDialogOnEsc = true,
-            CloseDialogOnOverlayClick = true
-        });
+                @<div>
+                    <div class="row">
+                        <div class="col text-center p-5">
+                            <RadzenImage Path="@pathImage"
+                                     class=" d-inline-block justify-content-between align-items-center"
+                                     Style="width: 200px; margin-bottom: 40px;" />
+                            <h3>@message</h3>
+                        </div>
+                    </div>
+                </div>,
+                new DialogOptions()
+                {
+                    Style = "min-height:auto;min-width:auto;width:auto",
+                    CloseDialogOnEsc = true,
+                    CloseDialogOnOverlayClick = true
+                });
     }
 
-    public async Task ShowDetailTurnoRecurso(string message, Turno turno)
+    public async Task SolicitarConfirmacionTurno(string message, Turno turno, RecursoTecnologico recursoTecnologico)
     {
         await DialogService.OpenAsync<DetailTurn>(message,
                 new Dictionary<string, object>() {
-                    { "recursoTecnologico", this.RTSeleccionado },
+                    { "recursoTecnologico", recursoTecnologico },
                     { "turno", turno } },
                 new DialogOptions() { Width = "700px", Height = "570px", Resizable = true, Draggable = true });
     }

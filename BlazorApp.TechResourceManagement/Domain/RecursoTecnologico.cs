@@ -56,7 +56,7 @@
             return cambioEstadoRT.Any(x => x.EsEstadoActual() && x.EsBaja());
         }
 
-        public string GetEstadoActual() => cambioEstadoRT.First(e => e.EsEstadoActual()).MostrarEstado().MostrarEstado();
+        public Estado GetEstadoActual() => cambioEstadoRT.First(e => e.EsEstadoActual()).MostrarEstado().MostrarEstado();
 
         public RecursoTecnologico MostrarRT() => this;
     }

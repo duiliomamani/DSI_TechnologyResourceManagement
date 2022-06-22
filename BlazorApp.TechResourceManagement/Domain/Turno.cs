@@ -23,15 +23,28 @@
         }
         //Metodos
         public Turno MostrarTurno() => this;
-        public string MostrarEstadoActual() => cambioEstadoTurno.First(e => e.EsActualCET()).MostrarActualEstado().MostrarEstado();
-
+        public Estado MostrarEstadoActual() => cambioEstadoTurno.First(e => e.EsActualCET()).MostrarActualEstado().MostrarEstado();
         public bool EsPosteriorAlDiaDeHoy(DateTime dateTime)
         {
             return fechaHoraInicio.Date >= dateTime.Date;
         }
         public bool EstoyDisponible()
         {
-            return cambioEstadoTurno.Any(e => e.EsActualCET() && e.EsDisponible());
+            return MostrarEstadoActual().EsDisponible();
+        }
+
+        public void Reservar(Estado estado)
+        {
+            cambioEstadoTurno.ToList().ForEach(e =>
+
+            {
+                if (e.EsActualCET())
+                {
+                    e.SetFechaHoraFin();
+                }
+            });
+
+            cambioEstadoTurno.Add(new CambioEstadoTurno(DateTime.Now, null, estado));
         }
     }
 }
