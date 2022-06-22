@@ -19,6 +19,8 @@
 
         //Getter
         public long NumeroRT { get => numeroRT; }
+        public IList<string> Imagenes { get => imagenes; }
+        public TipoRecursoTecnologico TipoRecursoTecnologico { get => tipoDelRT; }
         public Modelo ModeloDelRT { get => modeloDelRT; }
 
         //Constructor
@@ -40,9 +42,9 @@
         }
 
         //Metodos
-        public Modelo MostrarModelo() => modeloDelRT;
+        public Modelo MostrarModelo() => ModeloDelRT;
         public IList<Turno> MostrarMisTurnos(DateTime dateTime) => turnos.Where(tur => tur.EsPosteriorAlDiaDeHoy(dateTime)).ToList();
-        public bool EsRecursoActual(long numeroRT) => this.numeroRT == numeroRT;
+        public bool EsRecursoActual(long? numeroRT) => numeroRT.HasValue && this.numeroRT == numeroRT.Value;
         public bool EsTipoSeleccionado(TipoRecursoTecnologico tipoRecursoTecnologico)
         {
             //Verifica que es del tipo seleccionado

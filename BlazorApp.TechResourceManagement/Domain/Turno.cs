@@ -23,7 +23,7 @@
         }
         //Metodos
         public Turno MostrarTurno() => this;
-        public string MostrarEstadoActual() => cambioEstadoTurno.First(e => e.EsActualCET()).MostrarEstado().MostrarEstado();
+        public string MostrarEstadoActual() => cambioEstadoTurno.First(e => e.EsActualCET()).MostrarActualEstado().MostrarEstado();
 
         public bool EsPosteriorAlDiaDeHoy(DateTime dateTime)
         {

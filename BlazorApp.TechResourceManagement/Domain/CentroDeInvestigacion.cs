@@ -63,7 +63,7 @@
         public IList<AsignacionCientificoDelCI> MisCientificos() => cientificos;
         public bool EsCientificoDelCI(PersonalCientifico personalCientifico)
         {
-            return MisCientificos().Any(x => x.EsCientificoActual(personalCientifico));
+            return MisCientificos().Any(x => x.EsActual(personalCientifico));
         }
     }
 }

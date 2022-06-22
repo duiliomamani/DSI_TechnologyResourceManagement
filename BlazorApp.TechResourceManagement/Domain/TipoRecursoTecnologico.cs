@@ -15,7 +15,8 @@
             this.caracteristicas = caracteristicas;
         }
         //Metodos
-        public string MostrarCategoria { get => nombre; }
+        public string Nombre { get => nombre; }
+        public TipoRecursoTecnologico MostrarCategoria() => this;
         public bool EsTipoActual(string nombre)
         {
             return this.nombre == nombre;

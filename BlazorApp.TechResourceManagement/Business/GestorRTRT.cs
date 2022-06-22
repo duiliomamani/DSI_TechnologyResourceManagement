@@ -149,7 +149,7 @@ namespace BlazorApp.TechResourceManagement.Bussiness
         {
             return DateTime.Now;
         }
-        public async Task<IList<Turno>> TomarRecursoTecnologico(long numeroRT, string siglaCI)
+        public async Task<IList<Turno>> TomarRecursoTecnologico(RecursoTecnologico RT, string siglaCI)
         {
             IList<Turno> turnos;
             bool esCientificoActivo = await ValidarPertenencia(siglaCI);
@@ -158,14 +158,18 @@ namespace BlazorApp.TechResourceManagement.Bussiness
             if (esCientificoActivo)
             {
                 //RecursoTecnologico Seleccionado
-                recursoTecnologicoSeleccionado = centroInvestigacionSeleccionado.MisRecursosTecnologicos().First(x => x.EsRecursoActual(numeroRT));
-                turnos = recursoTecnologicoSeleccionado.MostrarMisTurnos(GetFechaHoraActual());
+                BuscarTurnos(RT, out turnos);
                 return turnos.Any() ? turnos : null;
             }
             else
             {
                 return null;
             }
+        }
+
+        public void BuscarTurnos(RecursoTecnologico RT, out IList<Turno> turnos)
+        {
+            turnos = RT.MostrarMisTurnos(GetFechaHoraActual());
         }
 
     }

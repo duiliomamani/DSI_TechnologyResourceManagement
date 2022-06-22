@@ -1,6 +1,5 @@
 ﻿@using BlazorApp.TechResourceManagement.Bussiness
 @using BlazorApp.TechResourceManagement.Domain
-@using BlazorApp.TechResourceManagement.Models
 @using BlazorApp.TechResourceManagement.Pages.Home.Components
 @using System.ComponentModel.DataAnnotations
 @using BlazorApp.TechResourceManagement.Pages.ReserveTurn.Components
@@ -31,8 +30,8 @@
                                     AllowFiltering="true" Class="w-100"
                                     Placeholder="Todas"
                                     Data=@cmbTiposRecursosTecnologicos
-                                    TextProperty="MostrarCategoria"
-                                    ValueProperty="MostrarCategoria"
+                                    TextProperty="Nombre"
+                                    ValueProperty="Nombre"
                                     Change=@(args => TomarSeleccionTipoRecurso(args)) />
                     </div>
                 </div>
@@ -83,15 +82,15 @@
                                                         }
                                                         <td>
                                                             <div class=" btn-group">
-                                                                @if (estaSeleccionado && rt.Recurso.NumeroRT == txtRTSeleccionado)
+                                                                @if (estaSeleccionado && rt.Recurso.NumeroRT == RTSeleccionado.NumeroRT)
                                                                 {
-                                                                    <button type="button" class="btn btn-primary btn-sm" @onclick="(args)=> SolicitarDeseleccionRecursoTecnologico(rt.Recurso.NumeroRT, ci.CI.Sigla)">
+                                                                    <button type="button" class="btn btn-primary btn-sm" @onclick="(args)=> SolicitarDeseleccionRecursoTecnologico(rt.Recurso, ci.CI.Sigla)">
                                                                         <i class="fa-solid fa-square-check"></i>
                                                                     </button>
                                                                 }
                                                                 else
                                                                 {
-                                                                    <button type="button" class="btn btn-danger btn-sm" @onclick="(args)=> SolicitarSeleccionRecursoTecnologico(rt.Recurso.NumeroRT, ci.CI.Sigla)">
+                                                                    <button type="button" class="btn btn-danger btn-sm" @onclick="(args)=> SolicitarSeleccionRecursoTecnologico(rt.Recurso, ci.CI.Sigla)">
                                                                         <i class="fa-solid fa-square-minus"></i>
                                                                     </button>
                                                                 }
@@ -120,29 +119,16 @@
     </div>
 </div>
 
-@if (gridTurnos != null)
-{
-    <div class="container-fluid">
-        <div class="px-3 py-4">
-            <RadzenScheduler @ref=@scheduler SlotRender=@OnSlotRender style="height: 768px;" TItem="Turno" Data=@gridTurnos StartProperty="FechaHoraInicio" EndProperty="FechaHoraFin"
-                         SelectedIndex="1" TextProperty="TextDisplay"
-                         SlotSelect=@OnSlotSelect AppointmentSelect=@OnAppointmentSelect AppointmentRender=@OnAppointmentRender>
-                <RadzenWeekView />
-                <RadzenMonthView />
-            </RadzenScheduler>
-        </div>
-    </div>
-}
+<SchulderTurn gridTurnos="@gridTurnos" OnShowDialogCallback="@((args)=> ShowDetailTurnoRecurso(args.Item1,args.Item2))"></SchulderTurn>
 
 @code {
+    private IList<Turno> gridTurnos { get; set; }
     private string cmbTpSeleccionado { get; set; }
-    private long txtRTSeleccionado { get; set; }
+    private RecursoTecnologico? RTSeleccionado { get; set; }
     private string txtCISeleccionado { get; set; }
     private bool estaSeleccionado { get; set; } = false;
-    private RadzenScheduler<Turno> scheduler;
     private IList<TipoRecursoTecnologico> cmbTiposRecursosTecnologicos { get; set; }
     private IList<dynamic> gridCIsConRecursosTecnologicos { get; set; }
-    private IList<Turno> gridTurnos { get; set; }
 
     //Metodo Inicilizador de la Pantalla
     protected override async Task OnInitializedAsync()
@@ -166,13 +152,14 @@
         this.gridCIsConRecursosTecnologicos = await _gestorRTRT.TomarTipoRecurso(this.cmbTpSeleccionado);
     }
 
+
     //On Change Seleccion Recurso Tecnologico
-    private async Task SolicitarSeleccionRecursoTecnologico(long txtRTSeleccionado, string txtCISeleccionado)
+    private async Task SolicitarSeleccionRecursoTecnologico(RecursoTecnologico RTSeleccionado, string txtCISeleccionado)
     {
-        this.TomarSeleccionRecursoTecnologico(txtRTSeleccionado, txtCISeleccionado);
+        this.TomarSeleccionRecursoTecnologico(RTSeleccionado, txtCISeleccionado);
 
         //Obtener los turnos
-        gridTurnos = await _gestorRTRT.TomarRecursoTecnologico(this.txtRTSeleccionado, this.txtCISeleccionado);
+        gridTurnos = await _gestorRTRT.TomarRecursoTecnologico(this.RTSeleccionado, this.txtCISeleccionado);
         if (gridTurnos == null)
         {
             //this.ClearRecursoSeleccionado();
@@ -183,19 +170,19 @@
     }
 
     //On Change Seleccion Recurso Tecnologico
-    private async Task SolicitarDeseleccionRecursoTecnologico(long txtRTSeleccionado, string txtCISeleccionado)
+    private async Task SolicitarDeseleccionRecursoTecnologico(RecursoTecnologico RTSeleccionado, string txtCISeleccionado)
     {
-        if (txtRTSeleccionado == this.txtRTSeleccionado)
+        if (RTSeleccionado.EsRecursoActual(this.RTSeleccionado.NumeroRT))
         {
             this.ClearRecursoSeleccionado();
             this.gridTurnos = null;
         }
     }
 
-    private void TomarSeleccionRecursoTecnologico(long txtRTSeleccionado, string txtCISeleccionado)
+    private void TomarSeleccionRecursoTecnologico(RecursoTecnologico RTSeleccionado, string txtCISeleccionado)
     {
-        this.estaSeleccionado = txtRTSeleccionado != this.txtRTSeleccionado ? true : !this.estaSeleccionado;
-        this.txtRTSeleccionado = txtRTSeleccionado;
+        this.estaSeleccionado = !RTSeleccionado.EsRecursoActual(this.RTSeleccionado?.NumeroRT) ? true : !this.estaSeleccionado;
+        this.RTSeleccionado = RTSeleccionado;
         this.txtCISeleccionado = txtCISeleccionado;
     }
 
@@ -203,78 +190,11 @@
     {
         this.estaSeleccionado = !this.estaSeleccionado;
         this.txtCISeleccionado = string.Empty;
-        this.txtRTSeleccionado = 0;
+        this.RTSeleccionado = null;
     }
 
-    public void OnSlotRender(SchedulerSlotRenderEventArgs args)
-    {
-        // Highlight today in month view
-        bool poseeTurno = gridTurnos.Any(turno => turno.FechaHoraInicio.Date == args.Start.Date && turno.EstoyDisponible());
-        if (args.View.Text == "Month" && poseeTurno)
-        {
-            args.Attributes["class"] = "bg-primary bg-gradient";
-        }
-        else
-        {
-            args.Attributes["class"] = "bg-danger bg-gradient";
-        }
 
-        // Highlight working hours (9-18)
-        if ((args.View.Text == "Week" || args.View.Text == "Day") )
-        {
-            if (args.Start.Hour > 8 && args.Start.Hour < 19 && poseeTurno)
-            {
-                args.Attributes["class"] = "bg-primary bg-gradient";
-            }
-            else if (args.Start.Hour > 8 && args.Start.Hour < 19 && !poseeTurno)
-            {
-                args.Attributes["class"] = "bg-danger bg-gradient";
-            }
-            else
-            {
-                args.Attributes["class"] = "bg-secondary bg-gradient";
-            }
-        }
-    }
-
-    public async Task OnSlotSelect(SchedulerSlotSelectEventArgs args)
-    {
-        Turno data = await DialogService.OpenAsync<AddAppointmentPage>("Add Appointment",
-            new Dictionary<string, object> { { "Start", args.Start }, { "End", args.End } });
-
-        if (data != null)
-        {
-            gridTurnos.Add(data);
-            // Either call the Reload method or reassign the Data property of the Scheduler
-            await scheduler.Reload();
-        }
-    }
-
-    public async Task OnAppointmentSelect(SchedulerAppointmentSelectEventArgs<Turno> args)
-    {
-        await scheduler.Reload();
-    }
-
-    public void OnAppointmentRender(SchedulerAppointmentRenderEventArgs<Turno> args)
-    {
-        // Never call StateHasChanged in AppointmentRender - would lead to infinite loop
-        args.Attributes["title"] = $"{args.Data.FechaHoraInicio.ToLongDateString()}-{args.Data.FechaHoraFin.ToLongDateString()}";
-
-        switch (args.Data.MostrarTurno().MostrarEstadoActual())
-        {
-            case "Disponible":
-                args.Attributes["class"] = "mb-2 bg-primary bg-gradient border rounded text-white";
-                break;
-            case "PendienteConfirmacion":
-                args.Attributes["class"] = "mb-2 bg-secondary bg-gradient border rounded text-white";
-                break;
-            case "Reservado":
-                args.Attributes["class"] = "mb-2 bg-danger bg-gradient rounded border text-white";
-                break;
-        }
-    }
-
-    public async Task ShowBusyDialog(bool withMessageAsString, string message)
+    public async void ShowBusyDialog(bool withMessageAsString, string message)
     {
         InvokeAsync(async () =>
         {
@@ -287,33 +207,42 @@
 
         if (withMessageAsString)
         {
-            await BusyDialog(message);
+            await BusyDialog(message, "images/resource-tech-background-1.jpg");
         }
         else
         {
-            await BusyDialog(string.Empty);
+            await BusyDialog(string.Empty, "images/resource-tech-background-0.jpg");
         }
     }
 
     // Busy dialog from markup
-    public async Task BusyDialog(string message)
+    public async Task BusyDialog(string message, string pathImage)
     {
         await DialogService.OpenAsync("Información", ds =>
-                @<div>
-                    <div class="row">
-                        <div class="col text-center p-5">
-                            <RadzenImage Path="images/resource-tech-background-1.jpg"
-                                     class=" d-inline-block justify-content-between align-items-center"
-                                     Style="width: 200px; margin-bottom: 40px;" />
-                            <h3>@message</h3>
-                        </div>
-                    </div>
-                </div>,
-                new DialogOptions()
-                {
-                    Style = "min-height:auto;min-width:auto;width:auto",
-                    CloseDialogOnEsc = true,
-                    CloseDialogOnOverlayClick = true
-                });
+        @<div>
+            <div class="row">
+                <div class="col text-center p-5">
+                    <RadzenImage Path="@pathImage"
+                             class=" d-inline-block justify-content-between align-items-center"
+                             Style="width: 200px; margin-bottom: 40px;" />
+                    <h3>@message</h3>
+                </div>
+            </div>
+        </div>,
+        new DialogOptions()
+        {
+            Style = "min-height:auto;min-width:auto;width:auto",
+            CloseDialogOnEsc = true,
+            CloseDialogOnOverlayClick = true
+        });
+    }
+
+    public async Task ShowDetailTurnoRecurso(string message, Turno turno)
+    {
+        await DialogService.OpenAsync<DetailTurn>(message,
+                new Dictionary<string, object>() {
+                    { "recursoTecnologico", this.RTSeleccionado },
+                    { "turno", turno } },
+                new DialogOptions() { Width = "700px", Height = "570px", Resizable = true, Draggable = true });
     }
 }

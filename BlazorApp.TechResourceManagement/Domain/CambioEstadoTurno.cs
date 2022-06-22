@@ -11,7 +11,7 @@
             this.fechaHoraHasta = fechaHoraHasta;
             this.estado = estado;
         }
-        public Estado MostrarEstado() => estado;
+        public Estado MostrarActualEstado() => estado;
         public bool EsActualCET()
         {
             return !fechaHoraHasta.HasValue;

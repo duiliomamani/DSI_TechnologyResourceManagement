@@ -1,0 +1,93 @@
+@using BlazorApp.TechResourceManagement.Domain
+
+@if (gridTurnos != null)
+{
+    <div class="container-fluid">
+        <div class="px-3 py-4">
+            <RadzenScheduler @ref=@scheduler SlotRender=@OnSlotRender style="height: 768px;" TItem="Turno" Data=@gridTurnos StartProperty="FechaHoraInicio" EndProperty="FechaHoraFin"
+                         SelectedIndex="1" TextProperty="TextDisplay"
+                         SlotSelect=@OnSlotSelect AppointmentSelect=@OnAppointmentSelect AppointmentRender=@OnAppointmentRender>
+                <RadzenWeekView />
+                <RadzenMonthView />
+            </RadzenScheduler>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public IList<Turno> gridTurnos { get; set; }
+
+    [Parameter]
+    public EventCallback<(string, Turno)> OnShowDialogCallback { get; set; }
+
+    private RadzenScheduler<Turno> scheduler;
+
+    private async Task ShowDialogDetailTurn(Turno turno)
+    {
+        await OnShowDialogCallback.InvokeAsync(("Informacion Reserva Turno", turno));
+    }
+    public void OnSlotRender(SchedulerSlotRenderEventArgs args)
+    {
+        // Highlight today in month view
+        bool poseeTurno = gridTurnos.Any(turno => turno.FechaHoraInicio.Date == args.Start.Date && turno.EstoyDisponible());
+        if (args.View.Text == "Month" && poseeTurno)
+        {
+            args.Attributes["class"] = "bg-primary bg-gradient";
+        }
+        else
+        {
+            args.Attributes["class"] = "bg-danger bg-gradient";
+        }
+
+        // Highlight working hours (9-18)
+        if ((args.View.Text == "Week" || args.View.Text == "Day"))
+        {
+            if (args.Start.Hour > 8 && args.Start.Hour < 19 && poseeTurno)
+            {
+                args.Attributes["class"] = "bg-primary bg-gradient";
+            }
+            else if (args.Start.Hour > 8 && args.Start.Hour < 19 && !poseeTurno)
+            {
+                args.Attributes["class"] = "bg-danger bg-gradient";
+            }
+            else
+            {
+                args.Attributes["class"] = "bg-secondary bg-gradient";
+            }
+        }
+    }
+
+    public async Task OnSlotSelect(SchedulerSlotSelectEventArgs args)
+    {
+        return;
+    }
+
+    public async Task OnAppointmentSelect(SchedulerAppointmentSelectEventArgs<Turno> args)
+    {
+        if (args.Data.EstoyDisponible())
+        {
+            ShowDialogDetailTurn(args.Data);
+        }
+        return;
+    }
+
+    public void OnAppointmentRender(SchedulerAppointmentRenderEventArgs<Turno> args)
+    {
+        // Never call StateHasChanged in AppointmentRender - would lead to infinite loop
+        args.Attributes["title"] = $"{args.Data.FechaHoraInicio.ToString("dd-MM-yyyy HH:mm")}-{args.Data.FechaHoraFin.ToString("dd-MM-yyyy HH:mm")}";
+
+        switch (args.Data.MostrarTurno().MostrarEstadoActual())
+        {
+            case "Disponible":
+                args.Attributes["class"] = "mb-2 bg-primary bg-gradient border rounded text-white";
+                break;
+            case "PendienteConfirmacion":
+                args.Attributes["class"] = "mb-2 bg-secondary bg-gradient border rounded text-white";
+                break;
+            case "Reservado":
+                args.Attributes["class"] = "mb-2 bg-danger bg-gradient rounded border text-white";
+                break;
+        }
+    }
+}

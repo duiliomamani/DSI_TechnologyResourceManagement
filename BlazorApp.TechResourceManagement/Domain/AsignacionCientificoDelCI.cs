@@ -15,9 +15,9 @@
             this.turnos = turnos;
         }
 
-        public bool EsCientificoActual(PersonalCientifico personalCientifico)
+        public bool EsActual(PersonalCientifico personalCientifico)
         {
-            return this.personalCientifico.EsCientificoActual(personalCientifico);
+            return this.personalCientifico.EsActual(personalCientifico);
         }
 
     }

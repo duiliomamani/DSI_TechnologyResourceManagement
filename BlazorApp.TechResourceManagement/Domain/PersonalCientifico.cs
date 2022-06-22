@@ -23,7 +23,7 @@
             this.telefonoCelular = telefonoCelular;
             this.usuario = usuario;
         }
-        public bool EsCientificoActual(PersonalCientifico cientificoActual)
+        public bool EsActual(PersonalCientifico cientificoActual)
         {
             return legajo == cientificoActual.legajo;
         }
